@@ -1,10 +1,8 @@
-import React from 'react';
+import React from "react";
 import Homepage from "./homepage";
 
 function StudentList() {
-    return (
-        <Homepage message = {"student list"}/>
-    );
+  return <Homepage message={"student list"} />;
 }
 
 export default StudentList;
