@@ -11,9 +11,8 @@ function Main(){
      return(
         <Router>
             <Route path="/login" component = {Login} />
-            <Route path="/homepage" component = {Homepage} />
             <Route path="/home" component = {Home} />
-            <Route path="/home" component = {StudentList} />
+            <Route path="/student/studentList" component = {StudentList} />
         </Router>
     )
 }

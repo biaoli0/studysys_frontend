@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { ReadOutlined, SolutionOutlined } from '@ant-design/icons';
 import "./homepage.css"
+import {Link} from "react-router-dom";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -17,8 +18,10 @@ function Homepage(props) {
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
 
                     <Menu.Item key="1">
-                        <Icon type="pie-chart" />
-                        <span>首页</span>
+                        <Link to = "/home" >
+                            <Icon type="pie-chart" />
+                            <span>首页</span>
+                        </Link>
                     </Menu.Item>
 
                     <SubMenu
@@ -29,7 +32,13 @@ function Homepage(props) {
                                 <span>学生管理</span>
                             </span>
                         }>
-                        <Menu.Item key="3">学生列表</Menu.Item>
+
+                        <Menu.Item key="3">
+                            <Link to = "/student/studentList" >
+                                <span>学生列表</span>
+                            </Link>
+                        </Menu.Item>
+
                         <Menu.Item key="4">新增学生</Menu.Item>
                     </SubMenu>
 
