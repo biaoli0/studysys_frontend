@@ -29,7 +29,7 @@ function Login(props) {
             color: "rgb(55, 51, 51)",
             height: "1.5px",
           }}
-        ></Divider>
+        />
         <Form
           onSubmit={handleSubmit}
           className="login-form"
