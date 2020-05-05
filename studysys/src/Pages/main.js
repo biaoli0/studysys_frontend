@@ -1,17 +1,20 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Login from "./login";
+import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
+import Login from "./login/login";
 import "./main.css";
-import Home from "./home";
-import StudentList from "./studentList";
+import Homepage from "./homepage";
+import { routes } from "./routeConfig";
 
 // main.js setup the router
 function Main() {
   return (
     <Router>
-      <Route path="/login" component={Login} />
-      <Route path="/home" component={Home} />
-      <Route path="/student/studentList" component={StudentList} />
+      <Route path="/" component={Homepage} />
+      {/*<Route exact path="/" render={<Redirect to={{ pathname: "/login" }} />} />*/}
+      <Route exact path="/login" component={Login} />
+      {/*{routes.map((route) => (*/}
+      {/*  <Route path={route.path} exact component={Homepage} />*/}
+      {/*))}*/}
     </Router>
   );
 }

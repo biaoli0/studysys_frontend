@@ -2,12 +2,20 @@ import React, { useState } from "react";
 import { Layout, Menu, Breadcrumb, Icon } from "antd";
 import { ReadOutlined, SolutionOutlined } from "@ant-design/icons";
 import "./homepage.css";
-import { Link } from "react-router-dom";
+import { Link, Route, Switch } from "react-router-dom";
+import {
+  homeRoutes,
+  studentRoutes,
+  classRoutes,
+  interviewRoutes,
+  teacherRoutes,
+  routes,
+} from "./routeConfig";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
-function Homepage(props) {
+function Homepage() {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -15,12 +23,14 @@ function Homepage(props) {
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          <Menu.Item key="1">
-            <Link to="/home">
-              <Icon type="pie-chart" />
-              <span>首页</span>
-            </Link>
-          </Menu.Item>
+          {homeRoutes.map((route) => (
+            <Menu.Item>
+              <Link to={route.path}>
+                <Icon type="pie-chart" />
+                <span>{route.title}</span>
+              </Link>
+            </Menu.Item>
+          ))}
 
           <SubMenu
             key="sub1"
@@ -31,13 +41,13 @@ function Homepage(props) {
               </span>
             }
           >
-            <Menu.Item key="3">
-              <Link to="/student/studentList">
-                <span>学生列表</span>
-              </Link>
-            </Menu.Item>
-
-            <Menu.Item key="4">新增学生</Menu.Item>
+            {studentRoutes.map((route) => (
+              <Menu.Item>
+                <Link to={route.path}>
+                  <span>{route.title}</span>
+                </Link>
+              </Menu.Item>
+            ))}
           </SubMenu>
 
           <SubMenu
@@ -49,9 +59,13 @@ function Homepage(props) {
               </span>
             }
           >
-            <Menu.Item key="5">课程列表</Menu.Item>
-            <Menu.Item key="6">添加课程</Menu.Item>
-            <Menu.Item key="7">课程类型</Menu.Item>
+            {classRoutes.map((route) => (
+              <Menu.Item>
+                <Link to={route.path}>
+                  <span>{route.title}</span>
+                </Link>
+              </Menu.Item>
+            ))}
           </SubMenu>
 
           <SubMenu
@@ -63,7 +77,13 @@ function Homepage(props) {
               </span>
             }
           >
-            <Menu.Item key="8">面试安排</Menu.Item>
+            {interviewRoutes.map((route) => (
+              <Menu.Item>
+                <Link to={route.path}>
+                  <span>{route.title}</span>
+                </Link>
+              </Menu.Item>
+            ))}
           </SubMenu>
 
           <SubMenu
@@ -75,8 +95,13 @@ function Homepage(props) {
               </span>
             }
           >
-            <Menu.Item key="9">教师列表</Menu.Item>
-            <Menu.Item key="10">添加教师</Menu.Item>
+            {teacherRoutes.map((route) => (
+              <Menu.Item>
+                <Link to={route.path}>
+                  <span>{route.title}</span>
+                </Link>
+              </Menu.Item>
+            ))}
           </SubMenu>
         </Menu>
       </Sider>
@@ -89,7 +114,16 @@ function Homepage(props) {
             <Breadcrumb.Item>工作台</Breadcrumb.Item>
           </Breadcrumb>
           <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
-            {props.message}
+            <Switch>
+              {routes.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  exact={route.exact}
+                  children={<route.subPage />}
+                />
+              ))}
+            </Switch>
           </div>
         </Content>
       </Layout>
