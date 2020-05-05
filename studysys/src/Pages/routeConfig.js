@@ -14,7 +14,7 @@ export const homeRoutes = [
     path: "/home",
     exact: true,
     title: "首页",
-    subPage: () => <Home />,
+    component: () => <Home />,
   },
 ];
 export const studentRoutes = [
@@ -22,13 +22,13 @@ export const studentRoutes = [
     path: "/student/studentList",
     exact: true,
     title: "学生列表",
-    subPage: () => <StudentList />,
+    component: () => <StudentList />,
   },
   {
     path: "/student/addStudent",
     exact: true,
     title: "新增学生",
-    subPage: () => <AddStudent />,
+    component: () => <AddStudent />,
   },
 ];
 export const classRoutes = [
@@ -36,19 +36,19 @@ export const classRoutes = [
     path: "/class/classList",
     exact: true,
     title: "课程列表",
-    subPage: () => <ClassList />,
+    component: () => <ClassList />,
   },
   {
     path: "/class/addClass",
     exact: true,
     title: "新增课程",
-    subPage: () => <AddClass />,
+    component: () => <AddClass />,
   },
   {
     path: "/class/classCategory",
     exact: true,
     title: "课程类型",
-    subPage: () => <ClassCategory />,
+    component: () => <ClassCategory />,
   },
 ];
 export const interviewRoutes = [
@@ -56,7 +56,7 @@ export const interviewRoutes = [
     path: "/interview/arrangement",
     exact: true,
     title: "面试安排",
-    subPage: () => <InterviewArrangement />,
+    component: () => <InterviewArrangement />,
   },
 ];
 export const teacherRoutes = [
@@ -64,13 +64,13 @@ export const teacherRoutes = [
     path: "/teacher/teacherList",
     exact: true,
     title: "教师列表",
-    subPage: () => <TeacherList />,
+    component: () => <TeacherList />,
   },
   {
     path: "/teacher/addTeacher",
     exact: true,
     title: "添加教师",
-    subPage: () => <AddTeacher />,
+    component: () => <AddTeacher />,
   },
 ];
 export const routes = [

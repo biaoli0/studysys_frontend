@@ -120,7 +120,7 @@ function Homepage() {
                   key={index}
                   path={route.path}
                   exact={route.exact}
-                  children={<route.subPage />}
+                  children={<route.component />}
                 />
               ))}
             </Switch>
