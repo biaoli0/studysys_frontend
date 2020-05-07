@@ -15,6 +15,16 @@ import {
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
+const renderMenuItemWithRoutes = (routes) => {
+  return routes.map((route) => (
+    <Menu.Item>
+      <Link to={route.path}>
+        <span>{route.title}</span>
+      </Link>
+    </Menu.Item>
+  ));
+};
+
 function Homepage() {
   const [collapsed, setCollapsed] = useState(false);
 
@@ -41,13 +51,7 @@ function Homepage() {
               </span>
             }
           >
-            {studentRoutes.map((route) => (
-              <Menu.Item>
-                <Link to={route.path}>
-                  <span>{route.title}</span>
-                </Link>
-              </Menu.Item>
-            ))}
+            {renderMenuItemWithRoutes(studentRoutes)}
           </SubMenu>
 
           <SubMenu
@@ -59,13 +63,7 @@ function Homepage() {
               </span>
             }
           >
-            {classRoutes.map((route) => (
-              <Menu.Item>
-                <Link to={route.path}>
-                  <span>{route.title}</span>
-                </Link>
-              </Menu.Item>
-            ))}
+            {renderMenuItemWithRoutes(classRoutes)}
           </SubMenu>
 
           <SubMenu
@@ -77,13 +75,7 @@ function Homepage() {
               </span>
             }
           >
-            {interviewRoutes.map((route) => (
-              <Menu.Item>
-                <Link to={route.path}>
-                  <span>{route.title}</span>
-                </Link>
-              </Menu.Item>
-            ))}
+            {renderMenuItemWithRoutes(interviewRoutes)}
           </SubMenu>
 
           <SubMenu
@@ -95,13 +87,7 @@ function Homepage() {
               </span>
             }
           >
-            {teacherRoutes.map((route) => (
-              <Menu.Item>
-                <Link to={route.path}>
-                  <span>{route.title}</span>
-                </Link>
-              </Menu.Item>
-            ))}
+            {renderMenuItemWithRoutes(teacherRoutes)}
           </SubMenu>
         </Menu>
       </Sider>
