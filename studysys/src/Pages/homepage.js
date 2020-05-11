@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Layout, Menu, Breadcrumb, Icon } from "antd";
-import { ReadOutlined, SolutionOutlined } from "@ant-design/icons";
+import {
+  ReadOutlined,
+  SolutionOutlined,
+  UserOutlined,
+  TeamOutlined,
+} from "@ant-design/icons";
 import "./homepage.css";
 import { Link, Route, Switch } from "react-router-dom";
 import {
@@ -15,11 +20,12 @@ import {
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
-const renderMenuItemWithRoutes = (routes) => {
-  return routes.map((route) => (
+const renderMenuItemWithRoutes = (menuItems) => {
+  return menuItems.map((menuItem) => (
     <Menu.Item>
-      <Link to={route.path}>
-        <span>{route.title}</span>
+      <Link to={menuItem.path}>
+        <menuItem.icon />
+        <span>{menuItem.title}</span>
       </Link>
     </Menu.Item>
   ));
@@ -33,25 +39,17 @@ function Homepage() {
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          {homeRoutes.map((route) => (
-            <Menu.Item>
-              <Link to={route.path}>
-                <Icon type="pie-chart" />
-                <span>{route.title}</span>
-              </Link>
-            </Menu.Item>
-          ))}
-
+          {renderMenuItemWithRoutes(homeRoutes)}
           <SubMenu
             key="sub1"
             title={
               <span>
-                <Icon type="user" />
+                <UserOutlined />
                 <span>学生管理</span>
               </span>
             }
           >
-            {renderMenuItemWithRoutes(studentRoutes)}
+            {renderMenuItemWithRoutes(studentRoutes.menuItems)}
           </SubMenu>
 
           <SubMenu
@@ -63,7 +61,7 @@ function Homepage() {
               </span>
             }
           >
-            {renderMenuItemWithRoutes(classRoutes)}
+            {renderMenuItemWithRoutes(classRoutes.menuItems)}
           </SubMenu>
 
           <SubMenu
@@ -75,19 +73,19 @@ function Homepage() {
               </span>
             }
           >
-            {renderMenuItemWithRoutes(interviewRoutes)}
+            {renderMenuItemWithRoutes(interviewRoutes.menuItems)}
           </SubMenu>
 
           <SubMenu
             key="sub4"
             title={
               <span>
-                <Icon type="team" />
+                <TeamOutlined />
                 <span>教师管理</span>
               </span>
             }
           >
-            {renderMenuItemWithRoutes(teacherRoutes)}
+            {renderMenuItemWithRoutes(teacherRoutes.menuItems)}
           </SubMenu>
         </Menu>
       </Sider>

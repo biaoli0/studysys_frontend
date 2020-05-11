@@ -9,12 +9,12 @@ import { routes } from "./routeConfig";
 function Main() {
   return (
     <Router>
-      <Route path="/" component={Homepage} />
-      {/*<Route exact path="/" render={<Redirect to={{ pathname: "/login" }} />} />*/}
       <Route exact path="/login" component={Login} />
-      {/*{routes.map((route) => (*/}
-      {/*  <Route path={route.path} exact component={Homepage} />*/}
-      {/*))}*/}
+      {/*  404 */}
+      {/*<PrivateRoute></PrivateRoute>*/}
+      <Route path="/*" component={Homepage} />
+      {/*  路由守卫*/}
+      {/*<Route exact path="/" render={<Redirect to={{ pathname: "/login" }} />} />*/}
     </Router>
   );
 }
