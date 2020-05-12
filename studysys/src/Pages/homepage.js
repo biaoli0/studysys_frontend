@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Menu, Breadcrumb, Icon } from "antd";
-import {
-  ReadOutlined,
-  SolutionOutlined,
-  UserOutlined,
-  TeamOutlined,
-} from "@ant-design/icons";
+import { Layout, Menu, Breadcrumb } from "antd";
 import "./homepage.css";
 import { Link, Route, Switch } from "react-router-dom";
 import {
@@ -15,12 +9,27 @@ import {
   interviewRoutes,
   teacherRoutes,
   routes,
-} from "./routeConfig";
+} from "./route/routeConfig";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
-const renderMenuItemWithRoutes = (menuItems) => {
+const renderMenu = (menu) => {
+  return (
+    <SubMenu
+      title={
+        <span>
+          <menu.icon />
+          <span>{menu.title}</span>
+        </span>
+      }
+    >
+      {renderMenuItems(menu.menuItems)}
+    </SubMenu>
+  );
+};
+
+const renderMenuItems = (menuItems) => {
   return menuItems.map((menuItem) => (
     <Menu.Item>
       <Link to={menuItem.path}>
@@ -39,54 +48,11 @@ function Homepage() {
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          {renderMenuItemWithRoutes(homeRoutes)}
-          <SubMenu
-            key="sub1"
-            title={
-              <span>
-                <UserOutlined />
-                <span>学生管理</span>
-              </span>
-            }
-          >
-            {renderMenuItemWithRoutes(studentRoutes.menuItems)}
-          </SubMenu>
-
-          <SubMenu
-            key="sub2"
-            title={
-              <span>
-                <ReadOutlined />
-                <span>课程管理</span>
-              </span>
-            }
-          >
-            {renderMenuItemWithRoutes(classRoutes.menuItems)}
-          </SubMenu>
-
-          <SubMenu
-            key="sub3"
-            title={
-              <span>
-                <SolutionOutlined />
-                <span>面试管理</span>
-              </span>
-            }
-          >
-            {renderMenuItemWithRoutes(interviewRoutes.menuItems)}
-          </SubMenu>
-
-          <SubMenu
-            key="sub4"
-            title={
-              <span>
-                <TeamOutlined />
-                <span>教师管理</span>
-              </span>
-            }
-          >
-            {renderMenuItemWithRoutes(teacherRoutes.menuItems)}
-          </SubMenu>
+          {renderMenuItems(homeRoutes)}
+          {renderMenu(studentRoutes)}
+          {renderMenu(classRoutes)}
+          {renderMenu(interviewRoutes)}
+          {renderMenu(teacherRoutes)}
         </Menu>
       </Sider>
 

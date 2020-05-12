@@ -1,20 +1,19 @@
 import React from "react";
-import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "./login/login";
 import "./main.css";
 import Homepage from "./homepage";
-import { routes } from "./routeConfig";
+import PrivateRoute from "./route/privateRoute";
 
-// main.js setup the router
+// main.js setup the route
 function Main() {
   return (
     <Router>
-      <Route exact path="/login" component={Login} />
-      {/*  404 */}
-      {/*<PrivateRoute></PrivateRoute>*/}
-      <Route path="/*" component={Homepage} />
-      {/*  路由守卫*/}
-      {/*<Route exact path="/" render={<Redirect to={{ pathname: "/login" }} />} />*/}
+      {/*/!*  404 *!/*/}
+      <PrivateRoute path="/home">
+        <Homepage />
+      </PrivateRoute>
+      <Route path="/login" component={Login} />
     </Router>
   );
 }

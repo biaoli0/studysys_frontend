@@ -1,23 +1,26 @@
 import React from "react";
-
 import { Form, Icon, Input, Button, Row, Col, Divider } from "antd";
+import { fakeAuth } from "../route/privateRoute";
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some((field) => fieldsError[field]);
 }
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  this.props.form.validateFields((err, values) => {
-    if (!err) {
-      console.log("Received values of form: ", values);
-    }
-  });
-};
-
 //Login page
 function Login(props) {
   const { getFieldDecorator } = props.form;
+  console.log(props.location.state.from);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log("Received values of form: ", values);
+        console.log(props.location.state.from);
+        props.history.push(props.location.state.from);
+      }
+    });
+  };
 
   return (
     <Row type="flex" justify="center" align="middle" style={{ height: "100%" }}>
@@ -72,6 +75,10 @@ function Login(props) {
               type="primary"
               htmlType="submit"
               className="login-form-button"
+              onClick={() => {
+                fakeAuth.authenticate();
+                console.log(fakeAuth.isAuthenticated);
+              }}
             >
               Login
             </Button>
