@@ -12,10 +12,6 @@ function Login(props) {
   const { getFieldDecorator } = props.form;
   // Verify user ID and password
   const verifyUser = (values) => {
-    // let postData = JSON.stringify({
-    //   user_id: values.username,
-    //   password: values.password,
-    // });
     let axiosConfig = {
       "Content-Type": "application/json",
       user_id: values.username,
