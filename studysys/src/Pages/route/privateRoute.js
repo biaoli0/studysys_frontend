@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import Axios from "axios";
-import userEvent from "@testing-library/user-event";
 
 function PrivateRoute({ children, ...rest }) {
   let isAuthenticated = false;
+
   const verifyUser = async (token) => {
     // const token = localStorage.getItem("token") || undefined;
     const BASE_URL = "http://localhost:8080/token";
@@ -27,7 +27,6 @@ function PrivateRoute({ children, ...rest }) {
     }
   };
 
-  const [isAuth, setIsAuth] = useState(false);
   const [token] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
@@ -35,7 +34,7 @@ function PrivateRoute({ children, ...rest }) {
     verifyUser(token).then(() => {
       console.log("isAuthenticated: " + isAuthenticated);
     });
-  });
+  }, []);
 
   return (
     <Route

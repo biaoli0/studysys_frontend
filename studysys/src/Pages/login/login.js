@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Form, Icon, Input, Button, Row, Col, Divider } from "antd";
 import Axios from "axios";
 import AlertMessage from "./alertMessage";
-import { useHistory } from "react-router-dom";
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some((field) => fieldsError[field]);
@@ -13,7 +12,6 @@ function Login(props) {
   const { getFieldDecorator } = props.form;
   const [isAuthenticated, setIsAuthenticated] = useState(undefined);
   const [message, setMessage] = useState(undefined);
-  let history = useHistory();
 
   const [token, setToken] = useState(
     localStorage.getItem("token") || undefined
@@ -23,8 +21,7 @@ function Login(props) {
   // Store new token in Local Storage
   const saveToken = async (token) => {
     console.log("save token to LocalStorage, token: " + token);
-    localStorage.setItem("token", token);
-    setToken(token);
+    await localStorage.setItem("token", token);
   };
 
   // Verify user authentication then fetch a token from backend server
@@ -75,9 +72,7 @@ function Login(props) {
             // console.log(path);
             saveToken(data.token).then(() => {
               console.log("redirect to /home");
-              history.push({
-                pathname: path,
-              });
+              props.history.push("/home");
               setMessage(data.message);
               setIsAuthenticated(data.isAuthenticated);
             });
