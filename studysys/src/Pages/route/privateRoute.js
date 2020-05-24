@@ -12,7 +12,7 @@ function PrivateRoute({ children, ...rest }) {
       "Content-Type": "application/json",
       Token: token,
     };
-    // Send a POST request for verify token
+    // Send a POST request for verifying token
     try {
       await Axios.post(BASE_URL, {}, { headers: headersConfig });
       console.log("have a successful token in local");
