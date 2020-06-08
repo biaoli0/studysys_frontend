@@ -10,10 +10,11 @@ function Main() {
   return (
     <Router>
       {/*/!*  404 *!/*/}
-      <PrivateRoute path="/home">
-        <Homepage />
-      </PrivateRoute>
-      <Route path="/login" component={Login} />
+      {/*<PrivateRoute path="/home">*/}
+      {/*  <Homepage />*/}
+      {/*</PrivateRoute>*/}
+      <Route exact path="/" component={Login} />
+      <Route exact path="/user/login" component={Login} />
     </Router>
   );
 }

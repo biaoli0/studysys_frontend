@@ -16,7 +16,7 @@ function Login(props) {
   const [token, setToken] = useState(
     localStorage.getItem("token") || undefined
   );
-  const BASE_URL = "http://localhost:8080/token";
+  const BASE_URL = "http://t.ztest.org/api/teacher/login";
 
   // Store new token in Local Storage
   const saveToken = async (token) => {
@@ -28,15 +28,17 @@ function Login(props) {
   const verifyUser = async (userId, password) => {
     // Headers config
     let headersConfig = {
-      "Content-Type": "application/json",
-      user_id: userId,
-      password: password,
+      "Content-Type": "application/x-www-form-urlencoded",
     };
 
     // Send a POST request with userId and password
     let response = undefined;
     try {
-      response = await Axios.post(BASE_URL, {}, { headers: headersConfig });
+      response = await Axios.post(
+        BASE_URL,
+        { email: "admin@admin.com", password: "admin" },
+        { headers: headersConfig }
+      );
     } catch (e) {
       response = e.response;
     } finally {
@@ -109,13 +111,19 @@ function Login(props) {
           <Form className="login-form" style={{ marginBottom: "20px" }}>
             <Form.Item>
               {getFieldDecorator("username", {
-                rules: [{ required: true, message: "Enter your userName" }],
+                rules: [
+                  {
+                    required: true,
+                    type: "email",
+                    message: "Enter your email",
+                  },
+                ],
               })(
                 <Input
                   prefix={
                     <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                   }
-                  placeholder="Username"
+                  placeholder="Email"
                 />
               )}
             </Form.Item>
