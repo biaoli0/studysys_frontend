@@ -67,19 +67,19 @@ function Login(props) {
 
       // Token
       const token =
-        !responseData && !responseData.datas
-          ? responseData.datas.token
-          : undefined;
+        !responseData || !responseData.datas
+          ? undefined
+          : responseData.datas.token;
 
       // Whether login is successful
-      const isAuthenticated = responseData ? false : responseData.code === 0;
+      const isAuthenticated = !responseData ? false : responseData.code === 0;
 
       return { message, token, isAuthenticated };
     }
   };
 
   /**
-   * Handle submit action. if user is authenticated, the website will redirect to the URL user input
+   * Handle submit action. if user is authenticated, the website will redirect to the URL user input*
    */
   function handleSubmit(e) {
     e.preventDefault();
