@@ -14,6 +14,7 @@ import TeamOutlined from "@ant-design/icons/lib/icons/TeamOutlined";
 
 export const homeRoutes = [
   {
+    key: "0",
     path: "/home",
     exact: true,
     title: "首页",
@@ -27,6 +28,7 @@ export const studentRoutes = {
   icon: () => <UserOutlined />,
   menuItems: [
     {
+      key: "sub1-0",
       path: "/home/student/studentList",
       exact: true,
       title: "学生列表",
@@ -34,6 +36,7 @@ export const studentRoutes = {
       component: () => <StudentList />,
     },
     {
+      key: "sub1-1",
       path: "/home/student/addStudent",
       exact: true,
       title: "新增学生",
@@ -49,6 +52,7 @@ export const classRoutes = {
   icon: () => <ReadOutlined />,
   menuItems: [
     {
+      key: "sub2-0",
       path: "/home/class/classList",
       exact: true,
       title: "课程列表",
@@ -56,6 +60,7 @@ export const classRoutes = {
       component: () => <ClassList />,
     },
     {
+      key: "sub2-1",
       path: "/home/class/addClass",
       exact: true,
       title: "新增课程",
@@ -63,6 +68,7 @@ export const classRoutes = {
       component: () => <AddClass />,
     },
     {
+      key: "sub2-2",
       path: "/home/class/classCategory",
       exact: true,
       title: "课程类型",
@@ -77,6 +83,7 @@ export const interviewRoutes = {
   icon: () => <SolutionOutlined />,
   menuItems: [
     {
+      key: "sub3-0",
       path: "/home/interview/arrangement",
       exact: true,
       title: "面试安排",
@@ -91,6 +98,7 @@ export const teacherRoutes = {
   icon: () => <TeamOutlined />,
   menuItems: [
     {
+      key: "sub4-0",
       path: "/home/teacher/teacherList",
       exact: true,
       title: "教师列表",
@@ -98,6 +106,7 @@ export const teacherRoutes = {
       component: () => <TeacherList />,
     },
     {
+      key: "sub4-1",
       path: "/home/teacher/addTeacher",
       exact: true,
       title: "添加教师",

@@ -13,7 +13,8 @@ function Main() {
       {/*<PrivateRoute path="/home">*/}
       {/*  <Homepage />*/}
       {/*</PrivateRoute>*/}
-      <Route exact path="/" component={Login} />
+      <Route path="/home" component={Homepage} />
+      {/*<Route exact path="/home" component={Login} />*/}
       <Route exact path="/user/login" component={Login} />
     </Router>
   );

@@ -32,7 +32,7 @@ const renderMenu = (menu) => {
 
 const renderMenuItems = (menuItems) => {
   return menuItems.map((menuItem) => (
-    <Menu.Item>
+    <Menu.Item key={menuItem.key}>
       <Link to={menuItem.path}>
         <menuItem.icon />
         <span>{menuItem.title}</span>
@@ -60,15 +60,17 @@ function Homepage() {
       <Layout>
         <Header style={{ height: "68px" }} />
         <Content style={{ margin: "0 16px" }}>
+          {/*TODO: navigation*/}
           <Breadcrumb style={{ margin: "16px 0" }}>
             <Breadcrumb.Item>后台管理系统</Breadcrumb.Item>
             <Breadcrumb.Item>工作台</Breadcrumb.Item>
           </Breadcrumb>
-          <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
+
+          <div style={{ padding: 24, background: "#fff", minHeight: 600 }}>
             <Switch>
-              {routes.map((route, index) => (
+              {routes.map((route) => (
                 <Route
-                  key={index}
+                  key={route.key}
                   path={route.path}
                   exact={route.exact}
                   children={<route.component />}

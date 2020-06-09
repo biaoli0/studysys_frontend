@@ -61,20 +61,18 @@ function Login(props) {
       const responseData = response === undefined ? undefined : response.data;
 
       // Message
-      const message =
-        responseData === undefined
-          ? "Server is down, please try again later"
-          : responseData.message;
+      const message = !responseData
+        ? "Server is down, please try again later"
+        : responseData.message;
 
       // Token
       const token =
-        responseData !== undefined && responseData.datas !== undefined
+        !responseData && !responseData.datas
           ? responseData.datas.token
           : undefined;
 
       // Whether login is successful
-      const isAuthenticated =
-        responseData === undefined ? false : responseData.code === 0;
+      const isAuthenticated = responseData ? false : responseData.code === 0;
 
       return { message, token, isAuthenticated };
     }
