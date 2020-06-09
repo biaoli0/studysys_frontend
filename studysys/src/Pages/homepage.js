@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
-import "./homepage.css";
+import "../public/css/pages/teacher/homepage.css";
 import { Link, Route, Switch } from "react-router-dom";
 import {
   homeRoutes,
@@ -17,6 +17,7 @@ const { SubMenu } = Menu;
 const renderMenu = (menu) => {
   return (
     <SubMenu
+      key={menu.key}
       title={
         <span>
           <menu.icon />

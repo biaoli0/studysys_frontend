@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "./login/login";
-import "./main.css";
+import "../public/css/pages/teacher/main.css";
 import Homepage from "./homepage";
 import PrivateRoute from "./route/privateRoute";
 

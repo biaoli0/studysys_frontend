@@ -22,6 +22,7 @@ export const homeRoutes = [
   },
 ];
 export const studentRoutes = {
+  key: "sub1",
   title: "学生管理",
   icon: () => <UserOutlined />,
   menuItems: [
@@ -43,6 +44,7 @@ export const studentRoutes = {
 };
 
 export const classRoutes = {
+  key: "sub2",
   title: "课程管理",
   icon: () => <ReadOutlined />,
   menuItems: [
@@ -70,6 +72,7 @@ export const classRoutes = {
   ],
 };
 export const interviewRoutes = {
+  key: "sub3",
   title: "面试管理",
   icon: () => <SolutionOutlined />,
   menuItems: [
@@ -83,6 +86,7 @@ export const interviewRoutes = {
   ],
 };
 export const teacherRoutes = {
+  key: "sub4",
   title: "教师管理",
   icon: () => <TeamOutlined />,
   menuItems: [

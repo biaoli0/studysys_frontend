@@ -2,86 +2,104 @@ import React, { useState } from "react";
 import { Form, Icon, Input, Button, Row, Col, Divider } from "antd";
 import Axios from "axios";
 import AlertMessage from "./alertMessage";
+import qs from "qs";
+import { inputConfig } from "./formConfig";
 
-function hasErrors(fieldsError) {
-  return Object.keys(fieldsError).some((field) => fieldsError[field]);
-}
+// function hasErrors(fieldsError) {
+//   return Object.keys(fieldsError).some((field) => fieldsError[field]);
+// }
 
 //Login page
 function Login(props) {
   const { getFieldDecorator } = props.form;
   const [isAuthenticated, setIsAuthenticated] = useState(undefined);
   const [message, setMessage] = useState(undefined);
-
-  const [token, setToken] = useState(
-    localStorage.getItem("token") || undefined
-  );
+  // const [token, setToken] = useState(
+  //   localStorage.getItem("token") || undefined
+  // );
   const BASE_URL = "http://t.ztest.org/api/teacher/login";
 
-  // Store new token in Local Storage
+  /**
+   * Store new token in Local Storage
+   * @param {token} The token needed to save
+   */
   const saveToken = async (token) => {
     console.log("save token to LocalStorage, token: " + token);
     await localStorage.setItem("token", token);
   };
 
-  // Verify user authentication then fetch a token from backend server
-  const verifyUser = async (userId, password) => {
+  /**
+   * Verify user authentication with backend server
+   * @param {email} User email
+   * @param {password} User password
+   * @return {data} Data contains: {message, token, isAuthenticated }
+   *            {message} The result of authentication.
+   *            {token} If login succeed, this is the token from backend server.
+   *            {isAuthenticated} Whether login succeed.
+   */
+  const verifyUser = async (email, password) => {
     // Headers config
-    let headersConfig = {
-      "Content-Type": "application/x-www-form-urlencoded",
+    const headersConfig = {
+      "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+    };
+
+    const requestBody = {
+      email: email,
+      password: password,
     };
 
     // Send a POST request with userId and password
     let response = undefined;
     try {
-      response = await Axios.post(
-        BASE_URL,
-        { email: "admin@admin.com", password: "admin" },
-        { headers: headersConfig }
-      );
+      response = await Axios.post(BASE_URL, qs.stringify(requestBody), {
+        headers: headersConfig,
+      });
     } catch (e) {
       response = e.response;
     } finally {
-      setIsAuthenticated(
-        response === undefined ? false : response.status === 200
-      );
+      // Handle response data
+      const responseData = response === undefined ? undefined : response.data;
 
-      let message, token, isAuthenticated;
-      message =
-        response === undefined
+      // Message
+      const message =
+        responseData === undefined
           ? "Server is down, please try again later"
-          : response.data.Message;
-      token =
-        response === undefined
-          ? undefined
-          : response.data.Token === undefined
-          ? undefined
-          : response.data.Token;
-      isAuthenticated =
-        response === undefined ? false : response.status === 200;
+          : responseData.message;
+
+      // Token
+      const token =
+        responseData !== undefined && responseData.datas !== undefined
+          ? responseData.datas.token
+          : undefined;
+
+      // Whether login is successful
+      const isAuthenticated =
+        responseData === undefined ? false : responseData.code === 0;
 
       return { message, token, isAuthenticated };
     }
   };
 
+  /**
+   * Handle submit action. if user is authenticated, the website will redirect to the URL user input
+   */
   function handleSubmit(e) {
     e.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
         verifyUser(values.username, values.password).then((data) => {
+          console.log(data.message, data.token, data.isAuthenticated);
+          // If user is authenticated, save the token and redirect to the URL user input
           if (data.isAuthenticated) {
-            let path = props.location.state.from;
+            // let path = props.location.state.from || "/home";
             // console.log(path);
             saveToken(data.token).then(() => {
               console.log("redirect to /home");
               props.history.push("/home");
-              setMessage(data.message);
-              setIsAuthenticated(data.isAuthenticated);
             });
-          } else {
-            setMessage(data.message);
-            setIsAuthenticated(data.isAuthenticated);
           }
+          setMessage(data.message);
+          setIsAuthenticated(data.isAuthenticated);
         });
       }
     });
@@ -101,52 +119,34 @@ function Login(props) {
       >
         <Col span={4}>
           <h4>Study System</h4>
-          <Divider
-            style={{
-              margin: "20px 0px 20px 0px",
-              color: "rgb(55, 51, 51)",
-              height: "1.5px",
-            }}
-          />
+
+          <Divider className={"divider"} />
+
+          {/*Email and password input items*/}
           <Form className="login-form" style={{ marginBottom: "20px" }}>
-            <Form.Item>
-              {getFieldDecorator("username", {
-                rules: [
-                  {
-                    required: true,
-                    type: "email",
-                    message: "Enter your email",
-                  },
-                ],
-              })(
-                <Input
-                  prefix={
-                    <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  placeholder="Email"
-                />
-              )}
-            </Form.Item>
+            {inputConfig.map((item) => {
+              return (
+                <Form.Item key={item.key}>
+                  {getFieldDecorator(item.fieldDecorator.name, {
+                    rules: [
+                      {
+                        required: true,
+                        type: item.fieldDecorator.type,
+                        message: item.fieldDecorator.message,
+                      },
+                    ],
+                  })(
+                    <Input
+                      prefix={<Icon type={item.prefix.iconType} />}
+                      type={item.prefix.type}
+                      placeholder={item.prefix.placeholder}
+                    />
+                  )}
+                </Form.Item>
+              );
+            })}
 
-            <Form.Item>
-              {getFieldDecorator("password", {
-                rules: [
-                  {
-                    required: true,
-                    message: "Please input your Password",
-                  },
-                ],
-              })(
-                <Input.Password
-                  prefix={
-                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  type="password"
-                  placeholder="Enter your password"
-                />
-              )}
-            </Form.Item>
-
+            {/*Login button*/}
             <Form.Item>
               <Button
                 type="primary"
