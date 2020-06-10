@@ -1,0 +1,27 @@
+{
+  "ast": null,
+  "code": "export const inputConfig = [{\n  key: \"0\",\n  fieldDecorator: {\n    name: \"username\",\n    type: \"email\",\n    message: \"Enter your email\"\n  },\n  prefix: {\n    iconType: \"user\",\n    type: \"\",\n    placeholder: \"Email\"\n  }\n}, {\n  key: \"1\",\n  fieldDecorator: {\n    name: \"password\",\n    type: \"\",\n    message: \"Please input your Password\"\n  },\n  prefix: {\n    iconType: \"lock\",\n    type: \"password\",\n    placeholder: \"Enter your password\"\n  }\n}];",
+  "map": {
+    "version": 3,
+    "sources": [
+      "C:/Users/AAA/Documents/It_Works_Wear/studysys_frontend/studysys/src/pages/login/formConfig.js"
+    ],
+    "names": [
+      "inputConfig",
+      "key",
+      "fieldDecorator",
+      "name",
+      "type",
+      "message",
+      "prefix",
+      "iconType",
+      "placeholder"
+    ],
+    "mappings": "AAAA,OAAO,MAAMA,WAAW,GAAG,CACzB;AACEC,EAAAA,GAAG,EAAE,GADP;AAEEC,EAAAA,cAAc,EAAE;AACdC,IAAAA,IAAI,EAAE,UADQ;AAEdC,IAAAA,IAAI,EAAE,OAFQ;AAGdC,IAAAA,OAAO,EAAE;AAHK,GAFlB;AAOEC,EAAAA,MAAM,EAAE;AACNC,IAAAA,QAAQ,EAAE,MADJ;AAENH,IAAAA,IAAI,EAAE,EAFA;AAGNI,IAAAA,WAAW,EAAE;AAHP;AAPV,CADyB,EAczB;AACEP,EAAAA,GAAG,EAAE,GADP;AAEEC,EAAAA,cAAc,EAAE;AACdC,IAAAA,IAAI,EAAE,UADQ;AAEdC,IAAAA,IAAI,EAAE,EAFQ;AAGdC,IAAAA,OAAO,EAAE;AAHK,GAFlB;AAOEC,EAAAA,MAAM,EAAE;AACNC,IAAAA,QAAQ,EAAE,MADJ;AAENH,IAAAA,IAAI,EAAE,UAFA;AAGNI,IAAAA,WAAW,EAAE;AAHP;AAPV,CAdyB,CAApB",
+    "sourcesContent": [
+      "export const inputConfig = [\n  {\n    key: \"0\",\n    fieldDecorator: {\n      name: \"username\",\n      type: \"email\",\n      message: \"Enter your email\",\n    },\n    prefix: {\n      iconType: \"user\",\n      type: \"\",\n      placeholder: \"Email\",\n    },\n  },\n  {\n    key: \"1\",\n    fieldDecorator: {\n      name: \"password\",\n      type: \"\",\n      message: \"Please input your Password\",\n    },\n    prefix: {\n      iconType: \"lock\",\n      type: \"password\",\n      placeholder: \"Enter your password\",\n    },\n  },\n];\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

@@ -1,0 +1,9 @@
+{
+  "h": "5f8b52439e09259f6118",
+  "c": {
+    "static\\development\\pages\\homepage.js": false,
+    "static\\development\\pages\\next\\dist\\pages\\_error.js": false,
+    "static\\development\\pages\\user\\login.js": false,
+    "styles": true
+  }
+}

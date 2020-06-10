@@ -1,0 +1,24 @@
+{
+  "ast": null,
+  "code": "var _jsxFileName = \"C:\\\\Users\\\\AAA\\\\Documents\\\\It_Works_Wear\\\\studysys_frontend\\\\studysys\\\\src\\\\pages\\\\index.js\";\nvar __jsx = React.createElement;\nimport React from \"react\";\nimport ReactDOM from \"react-dom\";\nimport Main from \"./main\";\nimport \"./css/index.css\";\nReactDOM.render(__jsx(Main, {\n  __self: this,\n  __source: {\n    fileName: _jsxFileName,\n    lineNumber: 6,\n    columnNumber: 17\n  }\n}), document.getElementById(\"root\")); // export default () => <p1>Hello11</p1>;",
+  "map": {
+    "version": 3,
+    "sources": [
+      "C:/Users/AAA/Documents/It_Works_Wear/studysys_frontend/studysys/src/pages/index.js"
+    ],
+    "names": [
+      "React",
+      "ReactDOM",
+      "Main",
+      "render",
+      "document",
+      "getElementById"
+    ],
+    "mappings": ";;AAAA,OAAOA,KAAP,MAAkB,OAAlB;AACA,OAAOC,QAAP,MAAqB,WAArB;AACA,OAAOC,IAAP,MAAiB,QAAjB;AACA,OAAO,iBAAP;AAEAD,QAAQ,CAACE,MAAT,CAAgB,MAAC,IAAD;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,EAAhB,EAA0BC,QAAQ,CAACC,cAAT,CAAwB,MAAxB,CAA1B,E,CAEA",
+    "sourcesContent": [
+      "import React from \"react\";\nimport ReactDOM from \"react-dom\";\nimport Main from \"./main\";\nimport \"./css/index.css\";\n\nReactDOM.render(<Main />, document.getElementById(\"root\"));\n\n// export default () => <p1>Hello11</p1>;\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}
