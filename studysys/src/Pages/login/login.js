@@ -40,7 +40,7 @@ function Login(props) {
   const verifyUser = async (email, password) => {
     // Headers config
     const headersConfig = {
-      "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      // "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
     };
 
     const requestBody = {
@@ -51,7 +51,7 @@ function Login(props) {
     // Send a POST request with userId and password
     let response = undefined;
     try {
-      response = await Axios.post(BASE_URL, qs.stringify(requestBody), {
+      response = await Axios.post(BASE_URL, requestBody, {
         headers: headersConfig,
       });
     } catch (e) {
