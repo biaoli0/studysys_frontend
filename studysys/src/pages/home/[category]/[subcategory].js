@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
-import "./css/pages/teacher/homepage.css";
-import { Link, Route, Switch } from "react-router-dom";
+import "../../css/pages/teacher/homepage.css";
+
 import {
   homeRoutes,
   studentRoutes,
@@ -9,7 +9,10 @@ import {
   interviewRoutes,
   teacherRoutes,
   routes,
-} from "./route/routeConfig";
+} from "../../route/routeConfig";
+
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -30,19 +33,23 @@ const renderMenu = (menu) => {
   );
 };
 
-const renderMenuItems = (menuItems) => {
+function renderMenuItems(menuItems) {
   return menuItems.map((menuItem) => (
     <Menu.Item key={menuItem.key}>
-      <Link to={menuItem.path}>
-        <menuItem.icon />
-        <span>{menuItem.title}</span>
+      <Link href={menuItem.path}>
+        <a>
+          <menuItem.icon />
+          <span>{menuItem.title}</span>
+        </a>
       </Link>
     </Menu.Item>
   ));
-};
+}
 
-function Homepage() {
+export default function Subcategory() {
   const [collapsed, setCollapsed] = useState(false);
+  const router = useRouter();
+  const { query } = router.query;
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -67,21 +74,20 @@ function Homepage() {
           </Breadcrumb>
 
           <div style={{ padding: 24, background: "#fff", minHeight: 600 }}>
-            <Switch>
-              {routes.map((route) => (
-                <Route
-                  key={route.key}
-                  path={route.path}
-                  exact={route.exact}
-                  children={<route.component />}
-                />
-              ))}
-            </Switch>
+            {/*<Switch>*/}
+            {/*  {routes.map((route) => (*/}
+            {/*    <Route*/}
+            {/*      key={route.key}*/}
+            {/*      path={route.path}*/}
+            {/*      exact={route.exact}*/}
+            {/*      children={<route.component />}*/}
+            {/*    />*/}
+            {/*  ))}*/}
+            {/*</Switch>*/}
+            <p>Post:{`${query.category} + ${query.subcategory}`}</p>
           </div>
         </Content>
       </Layout>
     </Layout>
   );
 }
-
-export default Homepage;

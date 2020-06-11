@@ -78,7 +78,7 @@ function Login(props) {
   };
 
   /**
-   * Handle submit action. if user is authenticated, the website will redirect to the URL user input*
+   * Handle submit action. if user is authenticated, the website will redirect to the URL user input
    */
   function handleSubmit(e) {
     e.preventDefault();
