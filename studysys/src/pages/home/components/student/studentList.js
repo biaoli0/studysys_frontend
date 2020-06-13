@@ -1,50 +1,8 @@
 import React from "react";
-import { Table, Switch, Radio, Form } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { Table } from "antd";
+import { ColumnsConfig } from "./config/studentListConfig";
 
 function StudentList() {
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "name",
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      sorter: (a, b) => a.age - b.age,
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      filters: [
-        {
-          text: "London",
-          value: "London",
-        },
-        {
-          text: "New York",
-          value: "New York",
-        },
-      ],
-      onFilter: (value, record) => record.address.indexOf(value) === 0,
-    },
-    {
-      title: "Action",
-      key: "action",
-      sorter: true,
-      filters: [],
-      onFilter: () => {},
-      render: () => (
-        <span>
-          <a style={{ marginRight: 16 }}>Delete</a>
-          <a className="ant-dropdown-link">
-            More actions <DownOutlined />
-          </a>
-        </span>
-      ),
-    },
-  ];
-
   const data = [];
   for (let i = 1; i <= 120; i++) {
     data.push({
@@ -56,46 +14,27 @@ function StudentList() {
     });
   }
 
-  const pagination = { position: "bottom" };
-  const expandable = {
-    expandedRowRender: (record) => <p>{record.description}</p>,
-  };
-  const showHeader = true;
+  const tableColumns = ColumnsConfig.map((item) => ({
+    ...item,
+    ellipsis: false,
+  }));
 
   const state = {
     bordered: false,
     loading: false,
-    pagination,
+    pagination: { position: "bottom" },
     size: "default",
-    expandable,
     title: undefined,
-    showHeader,
+    showHeader: true,
     rowSelection: {},
-    scroll: undefined,
-    hasData: true,
     tableLayout: undefined,
-    top: "topRight",
     bottom: "bottomRight",
-    ellipsis: false,
+    scroll: { y: 300 },
   };
-
-  const tableColumns = columns.map((item) => ({
-    ...item,
-    ellipsis: state.ellipsis,
-  }));
-
-  const scroll = {};
-  scroll.y = 300;
-  // scroll.x = "100vw";
 
   return (
     <div>
-      <Table
-        {...state}
-        columns={tableColumns}
-        dataSource={state.hasData ? data : null}
-        scroll={scroll}
-      />
+      <Table {...state} columns={tableColumns} dataSource={data} />
     </div>
   );
 }

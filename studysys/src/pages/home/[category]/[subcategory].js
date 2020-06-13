@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
-import "../../css/pages/teacher/homepage.css";
-
 import {
   homeRoutes,
   studentRoutes,
   classRoutes,
-  interviewRoutes,
-  teacherRoutes,
+  // interviewRoutes,
+  // teacherRoutes,
   routes,
 } from "../../route/routeConfig";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import ComponentRouter from "../route/componentRouter";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
+const ROUTE_PATH = "home";
 
 const renderMenu = (menu) => {
   return (
@@ -36,7 +36,10 @@ const renderMenu = (menu) => {
 function renderMenuItems(menuItems) {
   return menuItems.map((menuItem) => (
     <Menu.Item key={menuItem.key}>
-      <Link href={menuItem.path}>
+      <Link
+        href={`/${ROUTE_PATH}/[category]/[subcategory]`}
+        as={`/${ROUTE_PATH}/${menuItem.category}/${menuItem.subcategory}`}
+      >
         <a>
           <menuItem.icon />
           <span>{menuItem.title}</span>
@@ -49,8 +52,8 @@ function renderMenuItems(menuItems) {
 export default function Subcategory() {
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
-  const { query } = router.query;
-
+  const { category, subcategory } = router.query;
+  const MyContent = ComponentRouter(category, subcategory);
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
@@ -59,8 +62,8 @@ export default function Subcategory() {
           {renderMenuItems(homeRoutes)}
           {renderMenu(studentRoutes)}
           {renderMenu(classRoutes)}
-          {renderMenu(interviewRoutes)}
-          {renderMenu(teacherRoutes)}
+          {/*{renderMenu(interviewRoutes)}*/}
+          {/*{renderMenu(teacherRoutes)}*/}
         </Menu>
       </Sider>
 
@@ -74,17 +77,7 @@ export default function Subcategory() {
           </Breadcrumb>
 
           <div style={{ padding: 24, background: "#fff", minHeight: 600 }}>
-            {/*<Switch>*/}
-            {/*  {routes.map((route) => (*/}
-            {/*    <Route*/}
-            {/*      key={route.key}*/}
-            {/*      path={route.path}*/}
-            {/*      exact={route.exact}*/}
-            {/*      children={<route.component />}*/}
-            {/*    />*/}
-            {/*  ))}*/}
-            {/*</Switch>*/}
-            <p>Post:{`${query.category} + ${query.subcategory}`}</p>
+            <ComponentRouter category={category} subcategory={subcategory} />
           </div>
         </Content>
       </Layout>

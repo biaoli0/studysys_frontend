@@ -10,8 +10,8 @@ function AlertMessage(props) {
       }}
       message={props.message}
       type={props.isAuthenticated ? "success" : "error"}
-      showIcon
-      closable
+      showIcon={true}
+      closable={false}
     />
   );
 }

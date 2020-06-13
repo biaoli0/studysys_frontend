@@ -1,6 +1,6 @@
 import React from "react";
 
-function AddClass(props) {
+function AddClass() {
   return (
     <div>
       <h3>Add Class</h3>

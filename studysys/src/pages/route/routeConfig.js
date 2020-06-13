@@ -1,4 +1,4 @@
-import Home from "../home/components/home";
+import Blank from "../home/components/others/blank";
 import StudentList from "../home/components/student/studentList";
 import AddStudent from "../home/components/student/addStudent";
 import ClassList from "../home/components/class/classList";
@@ -19,7 +19,7 @@ export const homeRoutes = [
     exact: true,
     title: "首页",
     icon: () => <HomeOutlined />,
-    component: () => <Home />,
+    component: () => <Blank />,
   },
 ];
 export const studentRoutes = {
@@ -29,7 +29,8 @@ export const studentRoutes = {
   menuItems: [
     {
       key: "sub1-0",
-      path: "/home/student/studentList",
+      category: "student",
+      subcategory: "list",
       exact: true,
       title: "学生列表",
       icon: () => null,
@@ -37,7 +38,8 @@ export const studentRoutes = {
     },
     {
       key: "sub1-1",
-      path: "/home/student/addStudent",
+      category: "student",
+      subcategory: "add",
       exact: true,
       title: "新增学生",
       icon: () => null,
@@ -53,7 +55,8 @@ export const classRoutes = {
   menuItems: [
     {
       key: "sub2-0",
-      path: "/home/class/classList",
+      category: "class",
+      subcategory: "list",
       exact: true,
       title: "课程列表",
       icon: () => null,
@@ -61,7 +64,8 @@ export const classRoutes = {
     },
     {
       key: "sub2-1",
-      path: "/home/class/addClass",
+      category: "class",
+      subcategory: "add",
       exact: true,
       title: "新增课程",
       icon: () => null,
@@ -69,7 +73,8 @@ export const classRoutes = {
     },
     {
       key: "sub2-2",
-      path: "/home/class/classCategory",
+      category: "class",
+      subcategory: "category",
       exact: true,
       title: "课程类型",
       icon: () => null,
@@ -77,48 +82,48 @@ export const classRoutes = {
     },
   ],
 };
-export const interviewRoutes = {
-  key: "sub3",
-  title: "面试管理",
-  icon: () => <SolutionOutlined />,
-  menuItems: [
-    {
-      key: "sub3-0",
-      path: "/home/interview/arrangement",
-      exact: true,
-      title: "面试安排",
-      icon: () => null,
-      component: () => <InterviewArrangement />,
-    },
-  ],
-};
-export const teacherRoutes = {
-  key: "sub4",
-  title: "教师管理",
-  icon: () => <TeamOutlined />,
-  menuItems: [
-    {
-      key: "sub4-0",
-      path: "/home/teacher/teacherList",
-      exact: true,
-      title: "教师列表",
-      icon: () => null,
-      component: () => <TeacherList />,
-    },
-    {
-      key: "sub4-1",
-      path: "/home/teacher/addTeacher",
-      exact: true,
-      title: "添加教师",
-      icon: () => null,
-      component: () => <AddTeacher />,
-    },
-  ],
-};
+// export const interviewRoutes = {
+//   key: "sub3",
+//   title: "面试管理",
+//   icon: () => <SolutionOutlined />,
+//   menuItems: [
+//     {
+//       key: "sub3-0",
+//       path: "/home/interview/arrangement",
+//       exact: true,
+//       title: "面试安排",
+//       icon: () => null,
+//       component: () => <InterviewArrangement />,
+//     },
+//   ],
+// };
+// export const teacherRoutes = {
+//   key: "sub4",
+//   title: "教师管理",
+//   icon: () => <TeamOutlined />,
+//   menuItems: [
+//     {
+//       key: "sub4-0",
+//       path: "/home/teacher/teacherList",
+//       exact: true,
+//       title: "教师列表",
+//       icon: () => null,
+//       component: () => <TeacherList />,
+//     },
+//     {
+//       key: "sub4-1",
+//       path: "/home/teacher/addTeacher",
+//       exact: true,
+//       title: "添加教师",
+//       icon: () => null,
+//       component: () => <AddTeacher />,
+//     },
+//   ],
+// };
 export const routes = [
   ...homeRoutes,
   ...studentRoutes.menuItems,
   ...classRoutes.menuItems,
-  ...interviewRoutes.menuItems,
-  ...teacherRoutes.menuItems,
+  // ...interviewRoutes.menuItems,
+  // ...teacherRoutes.menuItems,
 ];

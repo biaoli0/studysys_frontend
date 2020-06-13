@@ -1,28 +1,21 @@
+import React from "react";
+import { Form, Icon, Input, Button, Row, Col, Divider } from "antd";
+
 export const inputConfig = [
   {
     key: "0",
-    fieldDecorator: {
-      name: "username",
-      type: "email",
-      message: "Enter your email",
-    },
-    prefix: {
-      iconType: "user",
-      type: "",
-      placeholder: "Email",
-    },
+    label: "Email",
+    name: "username",
+    type: "email",
+    message: "Your input email format is not valid",
+    input: <Input />,
   },
   {
     key: "1",
-    fieldDecorator: {
-      name: "password",
-      type: "",
-      message: "Please input your Password",
-    },
-    prefix: {
-      iconType: "lock",
-      type: "password",
-      placeholder: "Enter your password",
-    },
+    label: "Password",
+    name: "password",
+    type: "",
+    message: "Please input your Password",
+    input: <Input.Password />,
   },
 ];
