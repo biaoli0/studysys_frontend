@@ -4,6 +4,7 @@ import Axios from "axios";
 import AlertMessage from "./alertMessage";
 import { inputConfig } from "./formConfig";
 import styled from "styled-components";
+import { api } from "../axios/api";
 
 // function hasErrors(fieldsError) {
 //   return Object.keys(fieldsError).some((field) => fieldsError[field]);
@@ -38,7 +39,6 @@ export default function Login(props) {
   // const [token, setToken] = useState(
   //   localStorage.getItem("token") || undefined
   // );
-  const BASE_URL = "http://t.ztest.org/api/teacher/login";
 
   /**
    * Store new token in Local Storage
@@ -50,62 +50,12 @@ export default function Login(props) {
   };
 
   /**
-   * Verify user authentication with backend server
-   * @param {email} User email
-   * @param {password} User password
-   * @return {data} Data contains: {message, token, isAuthenticated }
-   *            {message} The result of authentication.
-   *            {token} If user succeed, this is the token from backend server.
-   *            {isAuthenticated} Whether user succeed.
-   */
-  const verifyUser = async (email, password) => {
-    // Headers config
-    const headersConfig = {
-      // "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-    };
-
-    const requestBody = {
-      email: email,
-      password: password,
-    };
-
-    // Send a POST request with userId and password
-    let response = undefined;
-    try {
-      response = await Axios.post(BASE_URL, requestBody, {
-        headers: headersConfig,
-      });
-    } catch (e) {
-      response = e.response;
-    } finally {
-      // Handle response data
-      const responseData = response === undefined ? undefined : response.data;
-
-      // Message
-      const message = !responseData
-        ? "Server is down, please try again later"
-        : responseData.message;
-
-      // Token
-      const token =
-        !responseData || !responseData.datas
-          ? undefined
-          : responseData.datas.token;
-
-      // Whether user is successful
-      const isAuthenticated = !responseData ? false : responseData.code === 0;
-
-      return { message, token, isAuthenticated };
-    }
-  };
-
-  /**
    * Handle submit action. if user is authenticated, the website will redirect to the URL user input
    */
 
   const onFinish = (values) => {
     console.log(values);
-    verifyUser(values.username, values.password).then((data) => {
+    api.verifyUser(values.username, values.password).then((data) => {
       console.log(data);
       // If user is authenticated, save the token and redirect to the URL user input
       if (data.isAuthenticated) {

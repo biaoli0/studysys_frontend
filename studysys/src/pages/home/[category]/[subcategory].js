@@ -72,8 +72,10 @@ export default function Subcategory() {
         <Content style={{ margin: "0 16px" }}>
           {/*TODO: navigation*/}
           <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>后台管理系统</Breadcrumb.Item>
-            <Breadcrumb.Item>工作台</Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <a>Admin</a>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>{`${category} ${subcategory}`}</Breadcrumb.Item>
           </Breadcrumb>
 
           <div style={{ padding: 24, background: "#fff", minHeight: 600 }}>
