@@ -1,23 +1,15 @@
-import React from "react";
-import { Table } from "antd";
+import React, { useState } from "react";
+import { Table, Input } from "antd";
 import { ColumnsConfig } from "./config/studentListConfig";
+import mokeJson from "./config/moke";
+
+const originDatas = mokeJson.datas.map((item, key) => ({
+  ...item,
+  key: key,
+}));
 
 function StudentList() {
-  const data = [];
-  for (let i = 1; i <= 120; i++) {
-    data.push({
-      key: i,
-      name: "John Brown",
-      age: `${i}2`,
-      address: `New York No. ${i} Lake Park`,
-      description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
-    });
-  }
-
-  const tableColumns = ColumnsConfig.map((item) => ({
-    ...item,
-    ellipsis: false,
-  }));
+  const [datas, setDatas] = useState(originDatas);
 
   const state = {
     bordered: false,
@@ -26,15 +18,28 @@ function StudentList() {
     size: "default",
     title: undefined,
     showHeader: true,
-    rowSelection: {},
     tableLayout: undefined,
     bottom: "bottomRight",
-    scroll: { y: 300 },
+    scroll: { y: 400 },
+  };
+
+  const onChange = (target) => {
+    const result = originDatas.filter((item) =>
+      item.student_name.includes(target.value)
+    );
+    console.log(result);
+    setDatas(result);
   };
 
   return (
     <div>
-      <Table {...state} columns={tableColumns} dataSource={data} />
+      <Input
+        placeholder="search with student name..."
+        style={{ width: 220 }}
+        onChange={(value) => onChange(value.target)}
+      />
+
+      <Table {...state} columns={ColumnsConfig} dataSource={datas} />
     </div>
   );
 }

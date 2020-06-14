@@ -1,43 +1,63 @@
 import { DownOutlined } from "@ant-design/icons";
 import React from "react";
+import mokeJson from "./moke";
+
+const arr = [];
+
+mokeJson.datas.filter((item) =>
+  !arr.includes(item.course_name) ? arr.push(item.course_name) : false
+);
+
+const filter = arr.map((course_name) => {
+  return {
+    text: course_name,
+    value: course_name,
+  };
+});
 
 export const ColumnsConfig = [
   {
+    title: "ID",
+    dataIndex: "student_id",
+    defaultSortOrder: "descend",
+    sorter: (a, b) => a.student_id - b.student_id,
+    ellipsis: false,
+  },
+  {
     title: "Name",
-    dataIndex: "name",
+    dataIndex: "student_name",
+    ellipsis: false,
   },
   {
-    title: "Age",
-    dataIndex: "age",
-    sorter: (a, b) => a.age - b.age,
+    title: "Area",
+    dataIndex: "adress",
+    ellipsis: false,
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    filters: [
-      {
-        text: "London",
-        value: "London",
-      },
-      {
-        text: "New York",
-        value: "New York",
-      },
-    ],
-    onFilter: (value, record) => record.address.indexOf(value) === 0,
+    title: "Selected Curriculum",
+    dataIndex: "course_name",
+    ellipsis: false,
+    filters: filter,
+    onFilter: (value, record) => record.course_name.indexOf(value) === 0,
+  },
+  {
+    title: "Student Type",
+    dataIndex: "course_type",
+    ellipsis: false,
+  },
+  {
+    title: "Join time",
+    dataIndex: "update_date",
+    ellipsis: false,
   },
   {
     title: "Action",
     key: "action",
-    sorter: true,
-    filters: [],
-    onFilter: () => {},
+    ellipsis: false,
     render: () => (
       <span>
-        <a style={{ marginRight: 16 }}>Delete</a>
-        <a className="ant-dropdown-link">
-          More actions <DownOutlined />
-        </a>
+        <a style={{ marginRight: 16 }}>Edit</a>
+        <a>Delete</a>
       </span>
     ),
   },
