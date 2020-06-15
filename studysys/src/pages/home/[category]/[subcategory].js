@@ -88,15 +88,10 @@ export default function Subcategory() {
       </Sider>
 
       <Layout>
-<<<<<<< Updated upstream
-        <Header style={{ height: "68px" }} />
-        <Content style={{ margin: "0 16px" }}>
-=======
         <Styled_Header>
           <Logout>logout</Logout>
         </Styled_Header>
         <Styled_Content>
->>>>>>> Stashed changes
           {/*TODO: navigation*/}
           <Styled_Breadcrumb>
             <Breadcrumb.Item>
@@ -105,15 +100,8 @@ export default function Subcategory() {
             <Breadcrumb.Item>{`${category} ${subcategory}`}</Breadcrumb.Item>
           </Styled_Breadcrumb>
 
-<<<<<<< Updated upstream
-          <div style={{ padding: 24, background: "#fff", minHeight: 600 }}>
-            <ComponentRouter category={category} subcategory={subcategory} />
-          </div>
-        </Content>
-=======
           <ComponentRouter category={category} subcategory={subcategory} />
         </Styled_Content>
->>>>>>> Stashed changes
       </Layout>
     </Layout>
   );
