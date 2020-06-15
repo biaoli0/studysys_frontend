@@ -2,20 +2,26 @@ import Axios from "axios";
 
 const BASE_URL = "http://t.ztest.org/api/";
 
-const headersConfig = {};
+function getToken() {
+  return localStorage.getItem("token");
+}
 
-let res = undefined;
+function getHeadersConfig() {
+  return { token: getToken() };
+}
 
 export const REST = {
   post: async (requestBody, api_url) => {
+    let res = undefined;
+
     try {
       res = await Axios.post(BASE_URL + api_url, requestBody, {
-        headers: headersConfig,
+        headers: getHeadersConfig(),
       });
+      return res.data;
     } catch (e) {
-      res = e.response;
-    } finally {
-      return res;
+      console.log(e);
+      return false;
     }
   },
 };

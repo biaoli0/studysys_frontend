@@ -6,10 +6,6 @@ import { inputConfig } from "./formConfig";
 import styled from "styled-components";
 import { api } from "../axios/api";
 
-// function hasErrors(fieldsError) {
-//   return Object.keys(fieldsError).some((field) => fieldsError[field]);
-// }
-
 const layout = {
   labelCol: {
     span: 5,
@@ -33,26 +29,12 @@ const DemoBox = styled.p`
 `;
 //Login page
 export default function Login(props) {
-  // const { getFieldDecorator } = props.form;
   const [isAuthenticated, setIsAuthenticated] = useState(undefined);
   const [message, setMessage] = useState(undefined);
-  // const [token, setToken] = useState(
-  //   localStorage.getItem("token") || undefined
-  // );
-
-  /**
-   * Store new token in Local Storage
-   * @param {token} The token needed to save
-   */
-  const saveToken = async (token) => {
-    console.log("save token to LocalStorage, token: " + token);
-    await localStorage.setItem("token", token);
-  };
 
   /**
    * Handle submit action. if user is authenticated, the website will redirect to the URL user input
    */
-
   const onFinish = (values) => {
     console.log(values);
     api.verifyUser(values.username, values.password).then((data) => {
@@ -61,10 +43,8 @@ export default function Login(props) {
       if (data.isAuthenticated) {
         // let path = props.location.state.from || "/home";
         // console.log(path);
-        saveToken(data.token).then(() => {
-          console.log("redirect to /home");
-          props.history.push("/home");
-        });
+        console.log("redirect to /home");
+        props.history.push("/home");
       }
       setMessage(data.message);
       setIsAuthenticated(data.isAuthenticated);

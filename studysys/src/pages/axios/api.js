@@ -19,31 +19,39 @@ export const api = {
    *            {isAuthenticated} Whether user succeed.
    */
   verifyUser: async (email, password) => {
+    /**
+     * Store new token in Local Storage
+     * @param {token} The token needed to save
+     */
+    async function saveToken(token) {
+      if (token !== undefined) {
+        console.log("save token to LocalStorage, token: " + token);
+        await localStorage.setItem("token", token);
+      }
+    }
+
     const requestBody = {
       email: email,
       password: password,
     };
 
     // Send a POST request with userId and password
-    const response = await api.post(requestBody, URL_TARGET.TEACHER_LOGIN);
+    const responseData = await api.post(requestBody, URL_TARGET.TEACHER_LOGIN);
+    if (!responseData) {
+      return {
+        message: "Server is down, please try again later",
+        isAuthenticated: false,
+      };
+    } else {
+      // Message
+      const message = responseData.message;
+      // Token
+      const token = !responseData.datas ? undefined : responseData.datas.token;
+      await saveToken(token);
+      // Whether user is successful
+      const isAuthenticated = responseData.code === 0;
 
-    // Handle response data
-    const responseData = response === undefined ? undefined : response.data;
-
-    // Message
-    const message = !responseData
-      ? "Server is down, please try again later"
-      : responseData.message;
-
-    // Token
-    const token =
-      !responseData || !responseData.datas
-        ? undefined
-        : responseData.datas.token;
-
-    // Whether user is successful
-    const isAuthenticated = !responseData ? false : responseData.code === 0;
-
-    return { message, token, isAuthenticated };
+      return { message, isAuthenticated };
+    }
   },
 };
