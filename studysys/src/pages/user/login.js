@@ -23,11 +23,16 @@ const tailLayout = {
 };
 
 const Styled_Button = styled(Button)`
-  width: 50%;
+  &&& {
+    width: 50%;
+  }
 `;
 const DemoBox = styled.p`
-  height: 100px;
+  &&& {
+    height: 100px;
+  }
 `;
+
 //Login page
 export default function Login(props) {
   const [isAuthenticated, setIsAuthenticated] = useState(undefined);

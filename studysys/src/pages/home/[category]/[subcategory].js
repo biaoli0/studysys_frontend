@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
+import styled from "styled-components";
 import {
   homeRoutes,
   studentRoutes,
@@ -16,7 +17,26 @@ import ComponentRouter from "../route/componentRouter";
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 const ROUTE_PATH = "home";
-
+const Styled_Header = styled(Header)`
+  &&& {
+    height: 68px;
+  }
+`;
+const Styled_Content = styled(Content)`
+  &&& {
+    margin: 0 16px;
+  }
+`;
+const Styled_Breadcrumb = styled(Breadcrumb)`
+  &&& {
+    margin: 16px 0;
+  }
+`;
+const Logout = styled.a`
+  &&& {
+    float: right;
+  }
+`;
 const renderMenu = (menu) => {
   return (
     <SubMenu
@@ -68,20 +88,32 @@ export default function Subcategory() {
       </Sider>
 
       <Layout>
+<<<<<<< Updated upstream
         <Header style={{ height: "68px" }} />
         <Content style={{ margin: "0 16px" }}>
+=======
+        <Styled_Header>
+          <Logout>logout</Logout>
+        </Styled_Header>
+        <Styled_Content>
+>>>>>>> Stashed changes
           {/*TODO: navigation*/}
-          <Breadcrumb style={{ margin: "16px 0" }}>
+          <Styled_Breadcrumb>
             <Breadcrumb.Item>
               <a>Admin</a>
             </Breadcrumb.Item>
             <Breadcrumb.Item>{`${category} ${subcategory}`}</Breadcrumb.Item>
-          </Breadcrumb>
+          </Styled_Breadcrumb>
 
+<<<<<<< Updated upstream
           <div style={{ padding: 24, background: "#fff", minHeight: 600 }}>
             <ComponentRouter category={category} subcategory={subcategory} />
           </div>
         </Content>
+=======
+          <ComponentRouter category={category} subcategory={subcategory} />
+        </Styled_Content>
+>>>>>>> Stashed changes
       </Layout>
     </Layout>
   );
