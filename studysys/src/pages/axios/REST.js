@@ -1,6 +1,7 @@
 import Axios from "axios";
 import { LoginError } from "../error/loginError";
 import { TokenError } from "../error/tokenError";
+import Router from "next/router";
 
 const BASE_URL = "http://t.ztest.org/api/";
 
@@ -42,7 +43,7 @@ export const REST = {
       return res.data;
     } catch (e) {
       if (e instanceof TokenError) {
-        //TODO Redirect to login page
+        Router.push("/user/login");
       }
       console.log(e);
       return false;

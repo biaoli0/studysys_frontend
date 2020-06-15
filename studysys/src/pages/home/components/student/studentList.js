@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Input } from "antd";
 import { ColumnsConfig } from "./config/studentListConfig";
-import mokeJson from "./config/moke";
 import { api } from "../../../axios/api";
 
 function StudentList() {
