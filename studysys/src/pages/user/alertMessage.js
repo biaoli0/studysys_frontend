@@ -8,7 +8,7 @@ function AlertMessage(props) {
         width: "fit-content",
         marginTop: "20px",
       }}
-      message={props.message}
+      message={props.isAuthenticated ? "登录成功！" : props.message}
       type={props.isAuthenticated ? "success" : "error"}
       showIcon={true}
       closable={false}

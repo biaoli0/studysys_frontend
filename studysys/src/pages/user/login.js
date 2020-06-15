@@ -45,15 +45,15 @@ export default function Login(props) {
     console.log(values);
     api.verifyUser(values.username, values.password).then((data) => {
       console.log(data);
+      setMessage(data.message);
+      setIsAuthenticated(data.isAuthenticated);
       // If user is authenticated, save the token and redirect to the URL user input
       if (data.isAuthenticated) {
         // let path = props.location.state.from || "/home";
         // console.log(path);
         console.log("redirect to /home");
-        // Router.push("/home/student/list");
+        Router.push("/home/student/list");
       }
-      setMessage(data.message);
-      setIsAuthenticated(data.isAuthenticated);
     });
   };
 
