@@ -5,13 +5,12 @@ import mokeJson from "./config/moke";
 import { api } from "../../../axios/api";
 
 function getOriginDatas() {
-  const data = api.getStudentList();
-  if (data !== undefined) {
-    return data.map((item, key) => ({
-      ...item,
-      key: key,
-    }));
-  } else return null;
+  let data = api.getStudentList();
+  data = !data ? mokeJson.datas : data;
+  return data.map((item, key) => ({
+    ...item,
+    key: key,
+  }));
 }
 
 function StudentList() {

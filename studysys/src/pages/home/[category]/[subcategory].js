@@ -53,7 +53,6 @@ export default function Subcategory() {
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
   const { category, subcategory } = router.query;
-  const MyContent = ComponentRouter(category, subcategory);
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
@@ -68,7 +67,9 @@ export default function Subcategory() {
       </Sider>
 
       <Layout>
-        <Header style={{ height: "68px" }} />
+        <Header style={{ height: "68px" }}>
+          <a>logout</a>
+        </Header>
         <Content style={{ margin: "0 16px" }}>
           {/*TODO: navigation*/}
           <Breadcrumb style={{ margin: "16px 0" }}>
@@ -78,9 +79,7 @@ export default function Subcategory() {
             <Breadcrumb.Item>{`${category} ${subcategory}`}</Breadcrumb.Item>
           </Breadcrumb>
 
-          <div style={{ padding: 24, background: "#fff", minHeight: 600 }}>
-            <ComponentRouter category={category} subcategory={subcategory} />
-          </div>
+          <ComponentRouter category={category} subcategory={subcategory} />
         </Content>
       </Layout>
     </Layout>
