@@ -36,7 +36,7 @@ export const REST = {
     let res = undefined;
 
     try {
-      res = await Axios.get(BASE_URL + api_url, {}, getHeadersConfig());
+      res = await Axios.get(BASE_URL + api_url, getHeadersConfig());
       if (res.data.code == 5) throw new LoginError();
       if (res.data.code == 555) throw new TokenError();
       return res.data;

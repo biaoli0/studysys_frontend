@@ -56,10 +56,9 @@ export const api = {
     }
   },
 
-  getStudentList: () => {
-    const responseData = REST.get(URL_TARGET.STUDENT_LIST);
-    if (!responseData) {
-      return responseData;
-    }
+  getStudentList: async () => {
+    const responseData = await REST.get(URL_TARGET.STUDENT_LIST);
+    console.log(responseData);
+    return responseData.datas;
   },
 };

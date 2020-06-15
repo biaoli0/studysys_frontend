@@ -50,7 +50,7 @@ export default function Login(props) {
         // let path = props.location.state.from || "/home";
         // console.log(path);
         console.log("redirect to /home");
-        Router.push("/home/student/list");
+        // Router.push("/home/student/list");
       }
       setMessage(data.message);
       setIsAuthenticated(data.isAuthenticated);

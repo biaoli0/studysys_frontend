@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Input } from "antd";
 import { ColumnsConfig } from "./config/studentListConfig";
 import mokeJson from "./config/moke";
 import { api } from "../../../axios/api";
 
-function getOriginDatas() {
-  const data = api.getStudentList();
-  if (data !== undefined) {
-    return data.map((item, key) => ({
-      ...item,
-      key: key,
-    }));
-  } else return null;
-}
-
 function StudentList() {
-  const originDatas = getOriginDatas();
-  const [datas, setDatas] = useState(originDatas);
+  const [datas, setDatas] = useState(null);
+
+  useEffect(() => {
+    let data;
+    api.getStudentList().then((res) => {
+      if (res !== undefined) {
+        data = res.map((item, key) => ({
+          ...item,
+          key: key,
+        }));
+      } else data = null;
+      setDatas(data);
+    });
+  }, []);
+
   const state = {
     bordered: false,
     loading: false,

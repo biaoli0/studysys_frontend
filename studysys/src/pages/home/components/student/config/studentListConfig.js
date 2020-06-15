@@ -30,7 +30,7 @@ export const ColumnsConfig = [
   },
   {
     title: "Area",
-    dataIndex: "adress",
+    dataIndex: "address",
     ellipsis: false,
   },
   {
@@ -42,12 +42,12 @@ export const ColumnsConfig = [
   },
   {
     title: "Student Type",
-    dataIndex: "course_type",
+    dataIndex: "student_type_name",
     ellipsis: false,
   },
   {
     title: "Join time",
-    dataIndex: "update_date",
+    dataIndex: "homework",
     ellipsis: false,
   },
   {
