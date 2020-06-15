@@ -5,6 +5,7 @@ import { api } from "../../../axios/api";
 
 function StudentList() {
   const [datas, setDatas] = useState(null);
+  const [originDatas, setOriginDatas] = useState(null);
 
   useEffect(() => {
     let data;
@@ -16,6 +17,7 @@ function StudentList() {
         }));
       } else data = null;
       setDatas(data);
+      setOriginDatas(data);
     });
   }, []);
 
