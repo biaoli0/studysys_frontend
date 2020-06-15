@@ -5,6 +5,7 @@ import AlertMessage from "./alertMessage";
 import { inputConfig } from "./formConfig";
 import styled from "styled-components";
 import { api } from "../axios/api";
+import Router from "next/router";
 
 const layout = {
   labelCol: {
@@ -44,7 +45,7 @@ export default function Login(props) {
         // let path = props.location.state.from || "/home";
         // console.log(path);
         console.log("redirect to /home");
-        props.history.push("/home");
+        Router.push("/home/student/list");
       }
       setMessage(data.message);
       setIsAuthenticated(data.isAuthenticated);

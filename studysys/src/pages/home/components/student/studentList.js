@@ -2,15 +2,21 @@ import React, { useState } from "react";
 import { Table, Input } from "antd";
 import { ColumnsConfig } from "./config/studentListConfig";
 import mokeJson from "./config/moke";
+import { api } from "../../../axios/api";
 
-const originDatas = mokeJson.datas.map((item, key) => ({
-  ...item,
-  key: key,
-}));
+function getOriginDatas() {
+  const data = api.getStudentList();
+  if (data !== undefined) {
+    return data.map((item, key) => ({
+      ...item,
+      key: key,
+    }));
+  } else return null;
+}
 
 function StudentList() {
+  const originDatas = getOriginDatas();
   const [datas, setDatas] = useState(originDatas);
-
   const state = {
     bordered: false,
     loading: false,
