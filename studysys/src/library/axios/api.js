@@ -1,6 +1,7 @@
 import { REST } from "./REST";
 import { URL_TARGET } from "./url_target";
 import { Log } from "../log";
+import Router from "next/router";
 
 /**
  * Store new token in Local Storage
@@ -53,5 +54,9 @@ export const api = {
     const responseData = await REST.get(URL_TARGET.STUDENT_LIST);
     Log.print(responseData);
     return responseData.datas;
+  },
+  logout: async () => {
+    localStorage.removeItem("token");
+    Router.push(URL_TARGET.TEACHER_LOGIN);
   },
 };

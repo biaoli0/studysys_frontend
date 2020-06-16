@@ -12,6 +12,7 @@ import {
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { api } from "../axios/api";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -87,7 +88,13 @@ export default function HomepageWrapper({ children }) {
 
       <Layout>
         <Styled_Header>
-          <Logout>logout</Logout>
+          <Logout
+            onclick={() => {
+              api.logout();
+            }}
+          >
+            logout
+          </Logout>
         </Styled_Header>
         <Styled_Content>
           {/*TODO: navigation*/}

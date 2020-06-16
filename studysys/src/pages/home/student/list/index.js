@@ -12,7 +12,7 @@ function StudentList() {
   useEffect(() => {
     let fetchData;
     api.getStudentList().then((res) => {
-      if (res !== undefined) {
+      if (res) {
         fetchData = res.map((item, key) => ({
           ...item,
           key: key,
