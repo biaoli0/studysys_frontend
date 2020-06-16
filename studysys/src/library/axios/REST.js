@@ -1,7 +1,7 @@
 import Axios from "axios";
-import { LoginError } from "../error/loginError";
-import { TokenError } from "../error/tokenError";
 import Router from "next/router";
+import { URL_TARGET } from "./url_target";
+import { Log } from "../log";
 
 const BASE_URL = "http://t.ztest.org/api/";
 
@@ -28,7 +28,7 @@ export const REST = {
       );
       return res.data;
     } catch (e) {
-      console.log(e);
+      Log.print(e);
       return false;
     }
   },
@@ -38,14 +38,11 @@ export const REST = {
 
     try {
       res = await Axios.get(BASE_URL + api_url, getHeadersConfig());
-      if (res.data.code == 5) throw new LoginError();
-      if (res.data.code == 555) throw new TokenError();
+      if (res.data.code === 5) Router.push(URL_TARGET.TEACHER_LOGIN);
+      if (res.data.code === 555) Router.push(URL_TARGET.TEACHER_LOGIN);
       return res.data;
     } catch (e) {
-      if (e instanceof TokenError) {
-        Router.push("/user/login");
-      }
-      console.log(e);
+      Log.print(e);
       return false;
     }
   },

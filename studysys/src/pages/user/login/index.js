@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Form, Icon, Input, Button, Row, Col, Divider } from "antd";
-import Axios from "axios";
-import AlertMessage from "./alertMessage";
-import { inputConfig } from "./formConfig";
+import { Form, Button, Row, Col, Divider } from "antd";
+import { inputConfig } from "../../../library/component/user/formConfig";
 import styled from "styled-components";
-import { api } from "../axios/api";
 import Router from "next/router";
+import { api } from "../../../library/axios/api";
+import AlertMessage from "../../../library/component/user/alertMessage";
+import { Log } from "../../../library/log";
+import { URL_TARGET } from "../../../library/axios/url_target";
 
 const layout = {
   labelCol: {
@@ -34,7 +35,7 @@ const DemoBox = styled.p`
 `;
 
 //Login page
-export default function Login(props) {
+export default function Login() {
   const [isAuthenticated, setIsAuthenticated] = useState(undefined);
   const [message, setMessage] = useState(undefined);
 
@@ -44,15 +45,14 @@ export default function Login(props) {
   const onFinish = (values) => {
     console.log(values);
     api.verifyUser(values.username, values.password).then((data) => {
-      console.log(data);
+      Log.print(data);
       setMessage(data.message);
       setIsAuthenticated(data.isAuthenticated);
       // If user is authenticated, save the token and redirect to the URL user input
       if (data.isAuthenticated) {
         // let path = props.location.state.from || "/home";
         // console.log(path);
-        console.log("redirect to /home");
-        Router.push("/home/student/list");
+        Router.push(URL_TARGET.STUDENT_LIST);
       }
     });
   };

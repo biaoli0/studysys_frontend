@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Table, Input } from "antd";
-import { ColumnsConfig } from "./config/studentListConfig";
-import { api } from "../../../axios/api";
+import { ColumnsConfig } from "../../../../library/component/student/studentListConfig";
+import { api } from "../../../../library/axios/api";
+import HomepageWrapper from "../../../../library/component/homepageWrapper";
+import { Log } from "../../../../library/log";
 
 function StudentList() {
-  const [datas, setDatas] = useState(null);
-  const [originDatas, setOriginDatas] = useState(null);
+  const [displayData, setDisplayData] = useState(null);
+  const [originData, setOriginData] = useState(null);
 
   useEffect(() => {
-    let data;
+    let fetchData;
     api.getStudentList().then((res) => {
       if (res !== undefined) {
-        data = res.map((item, key) => ({
+        fetchData = res.map((item, key) => ({
           ...item,
           key: key,
         }));
-      } else data = null;
-      setDatas(data);
-      setOriginDatas(data);
+      } else fetchData = null;
+      setDisplayData(fetchData);
+      setOriginData(fetchData);
     });
   }, []);
 
@@ -34,23 +36,23 @@ function StudentList() {
   };
 
   const onChange = (target) => {
-    const result = originDatas.filter((item) =>
+    const result = originData.filter((item) =>
       item.student_name.includes(target.value)
     );
-    console.log(result);
-    setDatas(result);
+    Log.print(result);
+    setDisplayData(result);
   };
 
   return (
-    <div>
+    <HomepageWrapper>
       <Input
         placeholder="search with student name..."
         style={{ width: 220 }}
         onChange={(value) => onChange(value.target)}
       />
 
-      <Table {...state} columns={ColumnsConfig} dataSource={datas} />
-    </div>
+      <Table {...state} columns={ColumnsConfig} dataSource={displayData} />
+    </HomepageWrapper>
   );
 }
 

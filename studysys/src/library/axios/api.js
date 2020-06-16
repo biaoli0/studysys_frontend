@@ -1,9 +1,6 @@
 import { REST } from "./REST";
-
-const URL_TARGET = {
-  TEACHER_LOGIN: "teacher/login",
-  STUDENT_LIST: "student/list",
-};
+import { URL_TARGET } from "./url_target";
+import { Log } from "../log";
 
 /**
  * Store new token in Local Storage
@@ -11,16 +8,12 @@ const URL_TARGET = {
  */
 async function saveToken(token) {
   if (token !== undefined) {
-    console.log("save token to LocalStorage, token: " + token);
+    Log.print("save token to LocalStorage, token: " + token);
     await localStorage.setItem("token", token);
   }
 }
 
 export const api = {
-  post: (requestBody, api_url) => {
-    return REST.post(requestBody, api_url);
-  },
-
   /**
    * Verify user authentication with backend server
    * @param {email} User email
@@ -58,7 +51,7 @@ export const api = {
 
   getStudentList: async () => {
     const responseData = await REST.get(URL_TARGET.STUDENT_LIST);
-    console.log(responseData);
+    Log.print(responseData);
     return responseData.datas;
   },
 };

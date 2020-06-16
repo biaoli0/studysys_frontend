@@ -8,11 +8,10 @@ import {
   // interviewRoutes,
   // teacherRoutes,
   routes,
-} from "../../route/routeConfig";
+} from "./home_left_bar_config";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
-import ComponentRouter from "../route/componentRouter";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -69,11 +68,10 @@ function renderMenuItems(menuItems) {
   ));
 }
 
-export default function Subcategory() {
+export default function HomepageWrapper({ children }) {
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
   const { category, subcategory } = router.query;
-  const MyContent = ComponentRouter(category, subcategory);
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
@@ -99,8 +97,7 @@ export default function Subcategory() {
             </Breadcrumb.Item>
             <Breadcrumb.Item>{`${category} ${subcategory}`}</Breadcrumb.Item>
           </Styled_Breadcrumb>
-
-          <ComponentRouter category={category} subcategory={subcategory} />
+          {children}
         </Styled_Content>
       </Layout>
     </Layout>

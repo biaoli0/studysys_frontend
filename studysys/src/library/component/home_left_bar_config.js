@@ -1,12 +1,3 @@
-import Blank from "../home/components/others/blank";
-import StudentList from "../home/components/student/studentList";
-import AddStudent from "../home/components/student/addStudent";
-import ClassList from "../home/components/class/classList";
-import AddClass from "../home/components/class/addClass";
-import ClassCategory from "../home/components/class/classCategory";
-import InterviewArrangement from "../home/components/interview/interviewArrangement";
-import TeacherList from "../home/components/teacher/teacherList";
-import AddTeacher from "../home/components/teacher/addTeacher";
 import React from "react";
 import { HomeOutlined, UserOutlined, ReadOutlined } from "@ant-design/icons";
 import SolutionOutlined from "@ant-design/icons/lib/icons/SolutionOutlined";
@@ -19,7 +10,6 @@ export const homeRoutes = [
     exact: true,
     title: "首页",
     icon: () => <HomeOutlined />,
-    component: () => <Blank />,
   },
 ];
 export const studentRoutes = {
@@ -34,7 +24,6 @@ export const studentRoutes = {
       exact: true,
       title: "学生列表",
       icon: () => null,
-      component: () => <StudentList />,
     },
     {
       key: "sub1-1",
@@ -43,7 +32,6 @@ export const studentRoutes = {
       exact: true,
       title: "新增学生",
       icon: () => null,
-      component: () => <AddStudent />,
     },
   ],
 };
@@ -60,7 +48,6 @@ export const classRoutes = {
       exact: true,
       title: "课程列表",
       icon: () => null,
-      component: () => <ClassList />,
     },
     {
       key: "sub2-1",
@@ -69,7 +56,6 @@ export const classRoutes = {
       exact: true,
       title: "新增课程",
       icon: () => null,
-      component: () => <AddClass />,
     },
     {
       key: "sub2-2",
@@ -78,7 +64,6 @@ export const classRoutes = {
       exact: true,
       title: "课程类型",
       icon: () => null,
-      component: () => <ClassCategory />,
     },
   ],
 };
