@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Table, Input } from "antd";
-import { ColumnsConfig } from "../../../../library/component/student/studentListConfig";
+import { Table } from "antd";
+import { ColumnsConfig } from "../../../../component/student/student_list_config";
 import { api } from "../../../../library/axios/api";
-import HomepageWrapper from "../../../../library/component/homepageWrapper";
+import Homepage_wrapper from "../../../../component/global/homepage_wrapper";
 import { Log } from "../../../../library/log";
+import SearchBar from "../../../../component/global/search_bar";
+import { DisplayDataContext } from "../../../../component/global/context_config";
 
 function StudentList() {
   const [displayData, setDisplayData] = useState(null);
@@ -35,24 +37,14 @@ function StudentList() {
     scroll: { y: 400 },
   };
 
-  const onChange = (target) => {
-    const result = originData.filter((item) =>
-      item.student_name.includes(target.value)
-    );
-    Log.print(result);
-    setDisplayData(result);
-  };
-
   return (
-    <HomepageWrapper>
-      <Input
-        placeholder="search with student name..."
-        style={{ width: 220 }}
-        onChange={(value) => onChange(value.target)}
-      />
+    <Homepage_wrapper>
+      <DisplayDataContext.Provider value={{ setDisplayData, originData }}>
+        <SearchBar />
+      </DisplayDataContext.Provider>
 
       <Table {...state} columns={ColumnsConfig} dataSource={displayData} />
-    </HomepageWrapper>
+    </Homepage_wrapper>
   );
 }
 

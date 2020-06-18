@@ -12,7 +12,7 @@ import {
 
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { api } from "../axios/api";
+import { api } from "../../library/axios/api";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -69,7 +69,7 @@ function renderMenuItems(menuItems) {
   ));
 }
 
-export default function HomepageWrapper({ children }) {
+export default function Homepage_wrapper({ children }) {
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
   const { category, subcategory } = router.query;

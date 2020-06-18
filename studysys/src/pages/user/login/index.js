@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Col, Divider } from "antd";
-import { inputConfig } from "../../../library/component/user/formConfig";
+import { inputConfig } from "../../../component/user/form_config";
 import styled from "styled-components";
 import Router from "next/router";
 import { api } from "../../../library/axios/api";
-import AlertMessage from "../../../library/component/user/alertMessage";
+import Alert_message from "../../../component/user/alert_message";
 import { Log } from "../../../library/log";
 import { URL_TARGET } from "../../../library/axios/url_target";
 
@@ -52,7 +52,7 @@ export default function Login() {
       if (data.isAuthenticated) {
         // let path = props.location.state.from || "/home";
         // console.log(path);
-        Router.push(URL_TARGET.STUDENT_LIST);
+        Router.push("/home/student/list");
       }
     });
   };
@@ -60,7 +60,7 @@ export default function Login() {
   return (
     <div align="middle" style={{ height: "100%" }}>
       {isAuthenticated !== undefined ? (
-        <AlertMessage isAuthenticated={isAuthenticated} message={message} />
+        <Alert_message isAuthenticated={isAuthenticated} message={message} />
       ) : null}
       <Row justify="space-around">
         <Col span={8}>

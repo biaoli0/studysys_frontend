@@ -31,7 +31,7 @@ export const api = {
     };
 
     // Send a POST request with userId and password
-    const responseData = await api.post(requestBody, URL_TARGET.TEACHER_LOGIN);
+    const responseData = await REST.post(requestBody, URL_TARGET.TEACHER_LOGIN);
     if (!responseData) {
       return {
         message: "Server is down, please try again later",
