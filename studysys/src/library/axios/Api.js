@@ -1,6 +1,6 @@
-import { REST } from "./REST";
-import { BACKEND_API_TARGET } from "./url_target";
-import { Log } from "../log";
+import { Rest } from "./Rest";
+import { BACKEND_API_TARGET } from "./UrlTarget";
+import { Log } from "../Log";
 import Router from "next/router";
 
 /**
@@ -31,7 +31,7 @@ export const api = {
     };
 
     // Send a POST request with userId and password
-    const responseData = await REST.post(
+    const responseData = await Rest.post(
       requestBody,
       BACKEND_API_TARGET.TEACHER_LOGIN
     );
@@ -54,13 +54,13 @@ export const api = {
   },
 
   getStudentList: async () => {
-    const responseData = await REST.get(BACKEND_API_TARGET.STUDENT_LIST);
+    const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_LIST);
     Log.print(responseData);
     return responseData.datas;
   },
 
   getCourseList: async () => {
-    const responseData = await REST.get(BACKEND_API_TARGET.COURSE_LIST);
+    const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_LIST);
     Log.print(responseData);
     return responseData.datas;
   },

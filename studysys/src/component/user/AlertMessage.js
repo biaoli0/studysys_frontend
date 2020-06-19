@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert } from "antd";
 
-function Alert_message(props) {
+function AlertMessage(props) {
   return (
     <Alert
       style={{
@@ -16,4 +16,4 @@ function Alert_message(props) {
   );
 }
 
-export default Alert_message;
+export default AlertMessage;

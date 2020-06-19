@@ -1,7 +1,7 @@
 import Axios from "axios";
 import Router from "next/router";
-import { URL_TARGET } from "./url_target";
-import { Log } from "../log";
+import { URL_TARGET } from "./UrlTarget";
+import { Log } from "../Log";
 
 const BASE_URL = "http://t.ztest.org/api/";
 
@@ -16,7 +16,7 @@ function getHeadersConfig() {
   };
 }
 
-export const REST = {
+export const Rest = {
   post: async (requestBody, api_url) => {
     let res = undefined;
 

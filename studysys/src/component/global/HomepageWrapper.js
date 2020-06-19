@@ -8,12 +8,12 @@ import {
   // interviewRoutes,
   // teacherRoutes,
   routes,
-} from "../../config/global/home_left_bar_config";
+} from "../../config/global/HomeLeftBarConfig";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { api } from "../../library/axios/api";
-import { Log } from "../../library/log";
+import { api } from "../../library/axios/Api";
+import { Log } from "../../library/Log";
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 const ROUTE_PATH = "home";

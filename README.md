@@ -1,1 +1,0 @@
-# studysys_frontend

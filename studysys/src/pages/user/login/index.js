@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Col, Divider } from "antd";
-import { inputConfig } from "../../../config/user/form_config";
+import { inputConfig } from "../../../config/user/FormConfig";
 import styled from "styled-components";
 import Router from "next/router";
-import { api } from "../../../library/axios/api";
-import Alert_message from "../../../component/user/alert_message";
-import { Log } from "../../../library/log";
-import { BACKEND_API_TARGET } from "../../../library/axios/url_target";
+import { api } from "../../../library/axios/Api";
+import AlertMessage from "../../../component/user/AlertMessage";
+import { Log } from "../../../library/Log";
+import { BACKEND_API_TARGET } from "../../../library/axios/UrlTarget";
 
 const layout = {
   labelCol: {
@@ -60,7 +60,7 @@ export default function Login() {
   return (
     <div align="middle" style={{ height: "100%" }}>
       {isAuthenticated !== undefined ? (
-        <Alert_message isAuthenticated={isAuthenticated} message={message} />
+        <AlertMessage isAuthenticated={isAuthenticated} message={message} />
       ) : null}
       <Row justify="space-around">
         <Col span={8}>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "antd";
-import { ColumnsConfig } from "../../../../config/course/course_list_config";
-import { api } from "../../../../library/axios/api";
-import HomepageWrapper from "../../../../component/global/homepage_wrapper";
-import SearchBar from "../../../../component/global/search_bar";
-import { DisplayDataContext } from "../../../../config/global/context_config";
+import { ColumnsConfig } from "../../../../config/course/CourseListConfig";
+import { api } from "../../../../library/axios/Api";
+import HomepageWrapper from "../../../../component/global/HomepageWrapper";
+import SearchBar from "../../../../component/global/SearchBar";
+import { DisplayDataContext } from "../../../../config/global/ContextConfig";
 
 export default function CourseList() {
   const [displayData, setDisplayData] = useState(null);

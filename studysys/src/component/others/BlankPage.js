@@ -1,6 +1,6 @@
 import React from "react";
 
-function Blank_page() {
+function BlankPage() {
   return (
     <div>
       <h3>Home page</h3>
@@ -8,4 +8,4 @@ function Blank_page() {
   );
 }
 
-export default Blank_page;
+export default BlankPage;

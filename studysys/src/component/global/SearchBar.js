@@ -1,7 +1,7 @@
 import React from "react";
 import { Input } from "antd";
-import { Log } from "../../library/log";
-import { DisplayDataContext } from "../../config/global/context_config";
+import { Log } from "../../library/Log";
+import { DisplayDataContext } from "../../config/global/ContextConfig";
 
 function SearchBar() {
   const { originData, setDisplayData } = React.useContext(DisplayDataContext);
