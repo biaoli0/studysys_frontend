@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "antd";
-import { ColumnsConfig } from "../../../../config/student/student_list_config";
+import { ColumnsConfig } from "../../../../config/course/course_list_config";
 import { api } from "../../../../library/axios/api";
 import HomepageWrapper from "../../../../component/global/homepage_wrapper";
 import SearchBar from "../../../../component/global/search_bar";
 import { DisplayDataContext } from "../../../../config/global/context_config";
 
-function StudentList() {
+export default function CourseList() {
   const [displayData, setDisplayData] = useState(null);
   const [originData, setOriginData] = useState(null);
 
   useEffect(() => {
     let fetchData;
-    api.getStudentList().then((res) => {
+    api.getCourseList().then((res) => {
       if (res) {
         fetchData = res.map((item, key) => ({
           ...item,
@@ -46,5 +46,3 @@ function StudentList() {
     </HomepageWrapper>
   );
 }
-
-export default StudentList;

@@ -1,12 +1,6 @@
-import { DownOutlined } from "@ant-design/icons";
 import React from "react";
-import mokeJson from "./moke";
 
 const arr = [];
-
-mokeJson.datas.filter((item) =>
-  !arr.includes(item.course_name) ? arr.push(item.course_name) : false
-);
 
 const filter = arr.map((course_name) => {
   return {

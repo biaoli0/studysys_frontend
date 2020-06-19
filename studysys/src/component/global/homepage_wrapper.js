@@ -8,12 +8,12 @@ import {
   // interviewRoutes,
   // teacherRoutes,
   routes,
-} from "./home_left_bar_config";
+} from "../../config/global/home_left_bar_config";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { api } from "../../library/axios/api";
-
+import { Log } from "../../library/log";
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 const ROUTE_PATH = "home";
@@ -57,8 +57,7 @@ function renderMenuItems(menuItems) {
   return menuItems.map((menuItem) => (
     <Menu.Item key={menuItem.key}>
       <Link
-        href={`/${ROUTE_PATH}/[category]/[subcategory]`}
-        as={`/${ROUTE_PATH}/${menuItem.category}/${menuItem.subcategory}`}
+        href={`/${ROUTE_PATH}/${menuItem.category}/${menuItem.subcategory}`}
       >
         <a>
           <menuItem.icon />
@@ -69,10 +68,13 @@ function renderMenuItems(menuItems) {
   ));
 }
 
-export default function Homepage_wrapper({ children }) {
+export default function HomepageWrapper({ children }) {
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
-  const { category, subcategory } = router.query;
+  const location = router.pathname.split("/");
+  Log.print(location);
+  const locationString = location[2] + " " + location[3];
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
@@ -102,7 +104,7 @@ export default function Homepage_wrapper({ children }) {
             <Breadcrumb.Item>
               <a>Admin</a>
             </Breadcrumb.Item>
-            <Breadcrumb.Item>{`${category} ${subcategory}`}</Breadcrumb.Item>
+            <Breadcrumb.Item>{`${locationString}`}</Breadcrumb.Item>
           </Styled_Breadcrumb>
           {children}
         </Styled_Content>

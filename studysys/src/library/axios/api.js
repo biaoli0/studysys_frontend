@@ -1,5 +1,5 @@
 import { REST } from "./REST";
-import { URL_TARGET } from "./url_target";
+import { BACKEND_API_TARGET } from "./url_target";
 import { Log } from "../log";
 import Router from "next/router";
 
@@ -31,7 +31,10 @@ export const api = {
     };
 
     // Send a POST request with userId and password
-    const responseData = await REST.post(requestBody, URL_TARGET.TEACHER_LOGIN);
+    const responseData = await REST.post(
+      requestBody,
+      BACKEND_API_TARGET.TEACHER_LOGIN
+    );
     if (!responseData) {
       return {
         message: "Server is down, please try again later",
@@ -51,12 +54,19 @@ export const api = {
   },
 
   getStudentList: async () => {
-    const responseData = await REST.get(URL_TARGET.STUDENT_LIST);
+    const responseData = await REST.get(BACKEND_API_TARGET.STUDENT_LIST);
     Log.print(responseData);
     return responseData.datas;
   },
+
+  getCourseList: async () => {
+    const responseData = await REST.get(BACKEND_API_TARGET.COURSE_LIST);
+    Log.print(responseData);
+    return responseData.datas;
+  },
+
   logout: async () => {
     localStorage.removeItem("token");
-    Router.push(URL_TARGET.TEACHER_LOGIN);
+    Router.push(BACKEND_API_TARGET.TEACHER_LOGIN);
   },
 };

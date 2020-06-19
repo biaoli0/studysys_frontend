@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Col, Divider } from "antd";
-import { inputConfig } from "../../../component/user/form_config";
+import { inputConfig } from "../../../config/user/form_config";
 import styled from "styled-components";
 import Router from "next/router";
 import { api } from "../../../library/axios/api";
 import Alert_message from "../../../component/user/alert_message";
 import { Log } from "../../../library/log";
-import { URL_TARGET } from "../../../library/axios/url_target";
+import { BACKEND_API_TARGET } from "../../../library/axios/url_target";
 
 const layout = {
   labelCol: {

@@ -43,7 +43,7 @@ export const classRoutes = {
   menuItems: [
     {
       key: "sub2-0",
-      category: "class",
+      category: "course",
       subcategory: "list",
       exact: true,
       title: "课程列表",
@@ -51,7 +51,7 @@ export const classRoutes = {
     },
     {
       key: "sub2-1",
-      category: "class",
+      category: "course",
       subcategory: "add",
       exact: true,
       title: "新增课程",
@@ -59,7 +59,7 @@ export const classRoutes = {
     },
     {
       key: "sub2-2",
-      category: "class",
+      category: "course",
       subcategory: "category",
       exact: true,
       title: "课程类型",
