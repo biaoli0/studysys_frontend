@@ -14,7 +14,7 @@ export const homeRoutes = [
 ];
 export const studentRoutes = {
   key: "student",
-  title: "学生管理",
+  title: "Students",
   icon: () => <UserOutlined />,
   menuItems: [
     {
@@ -22,7 +22,7 @@ export const studentRoutes = {
       category: "student",
       subcategory: "list",
       exact: true,
-      title: "学生列表",
+      title: "Student List",
       icon: () => null,
     },
     {
@@ -30,7 +30,7 @@ export const studentRoutes = {
       category: "student",
       subcategory: "add",
       exact: true,
-      title: "新增学生",
+      title: "Add Student",
       icon: () => null,
     },
   ],
@@ -38,7 +38,7 @@ export const studentRoutes = {
 
 export const courseRoutes = {
   key: "course",
-  title: "课程管理",
+  title: "Course",
   icon: () => <ReadOutlined />,
   menuItems: [
     {
@@ -46,7 +46,7 @@ export const courseRoutes = {
       category: "course",
       subcategory: "list",
       exact: true,
-      title: "课程列表",
+      title: "Course List",
       icon: () => null,
     },
     {
@@ -54,7 +54,7 @@ export const courseRoutes = {
       category: "course",
       subcategory: "add",
       exact: true,
-      title: "新增课程",
+      title: "Add Course",
       icon: () => null,
     },
     {
@@ -62,7 +62,7 @@ export const courseRoutes = {
       category: "course",
       subcategory: "type",
       exact: true,
-      title: "课程类型",
+      title: "Course Type",
       icon: () => null,
     },
   ],

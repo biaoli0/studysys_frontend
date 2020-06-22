@@ -65,10 +65,10 @@ export const api = {
     return responseData.datas;
   },
 
-  getCourseType:async ()=>{
-    api.getCourseList().then(res=>{
-
-    })
+  getCourseTypeList:async ()=>{
+    const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_TYPE_LIST);
+    Log.print(responseData);
+    return responseData.datas;
   },
 
   logout: async () => {
