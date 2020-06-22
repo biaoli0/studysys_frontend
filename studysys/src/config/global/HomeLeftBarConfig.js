@@ -13,12 +13,12 @@ export const homeRoutes = [
   },
 ];
 export const studentRoutes = {
-  key: "sub1",
+  key: "student",
   title: "学生管理",
   icon: () => <UserOutlined />,
   menuItems: [
     {
-      key: "sub1-0",
+      key: "student list",
       category: "student",
       subcategory: "list",
       exact: true,
@@ -26,7 +26,7 @@ export const studentRoutes = {
       icon: () => null,
     },
     {
-      key: "sub1-1",
+      key: "student add",
       category: "student",
       subcategory: "add",
       exact: true,
@@ -36,13 +36,13 @@ export const studentRoutes = {
   ],
 };
 
-export const classRoutes = {
-  key: "sub2",
+export const courseRoutes = {
+  key: "course",
   title: "课程管理",
   icon: () => <ReadOutlined />,
   menuItems: [
     {
-      key: "sub2-0",
+      key: "course list",
       category: "course",
       subcategory: "list",
       exact: true,
@@ -50,7 +50,7 @@ export const classRoutes = {
       icon: () => null,
     },
     {
-      key: "sub2-1",
+      key: "course add",
       category: "course",
       subcategory: "add",
       exact: true,
@@ -58,9 +58,9 @@ export const classRoutes = {
       icon: () => null,
     },
     {
-      key: "sub2-2",
+      key: "course type",
       category: "course",
-      subcategory: "category",
+      subcategory: "type",
       exact: true,
       title: "课程类型",
       icon: () => null,
@@ -108,7 +108,7 @@ export const classRoutes = {
 export const routes = [
   ...homeRoutes,
   ...studentRoutes.menuItems,
-  ...classRoutes.menuItems,
+  ...courseRoutes.menuItems,
   // ...interviewRoutes.menuItems,
   // ...teacherRoutes.menuItems,
 ];

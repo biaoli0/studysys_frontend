@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {
   homeRoutes,
   studentRoutes,
-  classRoutes,
+  courseRoutes,
   // interviewRoutes,
   // teacherRoutes,
   routes,
@@ -79,10 +79,10 @@ export default function HomepageWrapper({ children }) {
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
         <div className="logo" />
-        <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+        <Menu theme="dark" defaultSelectedKeys={[locationString]} mode="inline" defaultOpenKeys={[location[2]]}>
           {renderMenuItems(homeRoutes)}
           {renderMenu(studentRoutes)}
-          {renderMenu(classRoutes)}
+          {renderMenu(courseRoutes)}
           {/*{renderMenu(interviewRoutes)}*/}
           {/*{renderMenu(teacherRoutes)}*/}
         </Menu>

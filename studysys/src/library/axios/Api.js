@@ -65,6 +65,12 @@ export const api = {
     return responseData.datas;
   },
 
+  getCourseType:async ()=>{
+    api.getCourseList().then(res=>{
+
+    })
+  },
+
   logout: async () => {
     localStorage.removeItem("token");
     Router.push(BACKEND_API_TARGET.TEACHER_LOGIN);
