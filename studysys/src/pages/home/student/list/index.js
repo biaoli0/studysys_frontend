@@ -4,11 +4,11 @@ import { ColumnsConfig } from "../../../../config/student/StudentListConfig";
 import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
 import SearchBar from "../../../../component/global/SearchBar";
-import { DisplayDataContext } from "../../../../config/global/ContextConfig";
 
 function StudentList() {
-  const [displayData, setDisplayData] = useState(null);
   const [originData, setOriginData] = useState(null);
+  const [displayData, setDisplayData] = useState(null);
+  const searchBarTarget = "student_name";
 
   useEffect(() => {
     let fetchData;
@@ -38,9 +38,7 @@ function StudentList() {
 
   return (
     <HomepageWrapper>
-      <DisplayDataContext.Provider value={{ setDisplayData, originData }}>
-        <SearchBar />
-      </DisplayDataContext.Provider>
+      <SearchBar originData={originData} setDisplayData={setDisplayData} searchBarTarget={searchBarTarget}/>
 
       <Table {...state} columns={ColumnsConfig} dataSource={displayData} />
     </HomepageWrapper>

@@ -1,14 +1,13 @@
 import React from "react";
 import { Input } from "antd";
 import { Log } from "../../library/Log";
-import { DisplayDataContext } from "../../config/global/ContextConfig";
 
-function SearchBar() {
-  const { originData, setDisplayData } = React.useContext(DisplayDataContext);
+function SearchBar(props) {
+  const { originData, setDisplayData,searchBarTarget } = props;
 
   const onChange = (target) => {
     const result = originData.filter((item) =>
-      item.student_name.includes(target.value)
+        item[searchBarTarget]!==null && item[searchBarTarget].includes(target.value)
     );
     Log.print(result);
     setDisplayData(result);
@@ -16,7 +15,7 @@ function SearchBar() {
 
   return (
     <Input
-      placeholder="search with student name..."
+      placeholder={`search with ${searchBarTarget}...`}
       style={{ width: 220 }}
       onChange={(value) => onChange(value.target)}
     />

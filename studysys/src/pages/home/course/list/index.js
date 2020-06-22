@@ -4,11 +4,11 @@ import { ColumnsConfig } from "../../../../config/course/CourseListConfig";
 import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
 import SearchBar from "../../../../component/global/SearchBar";
-import { DisplayDataContext } from "../../../../config/global/ContextConfig";
 
 export default function CourseList() {
-  const [displayData, setDisplayData] = useState(null);
   const [originData, setOriginData] = useState(null);
+  const [displayData, setDisplayData] = useState(null);
+  const searchBarTarget = "type_name";
 
   useEffect(() => {
     let fetchData;
@@ -38,9 +38,7 @@ export default function CourseList() {
 
   return (
     <HomepageWrapper>
-      <DisplayDataContext.Provider value={{ setDisplayData, originData }}>
-        <SearchBar />
-      </DisplayDataContext.Provider>
+      <SearchBar originData={originData} setDisplayData={setDisplayData} searchBarTarget={searchBarTarget}/>
 
       <Table {...state} columns={ColumnsConfig} dataSource={displayData} />
     </HomepageWrapper>
