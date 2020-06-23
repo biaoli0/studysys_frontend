@@ -10,5 +10,5 @@ export const URL_TARGET = {
   TEACHER_LOGIN: "/user/login",
   STUDENT_LIST: "/home/student/list",
   COURSE_LIST: "/home/course/list",
-  ADD_COURSE:"/home/course/add",
+  ADD_COURSE: "/home/course/add",
 };

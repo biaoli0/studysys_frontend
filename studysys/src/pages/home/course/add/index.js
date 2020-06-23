@@ -3,7 +3,7 @@ import { Select } from "antd";
 import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
 import SelectionGroup from "../../../../component/global/SelectionGroup";
-import {Log} from "../../../../library/Log";
+import { Log } from "../../../../library/Log";
 
 const { Option } = Select;
 
@@ -18,10 +18,9 @@ export default function CourseAdd() {
     });
   }, []);
 
-
   return (
     <HomepageWrapper>
-<SelectionGroup list = {courseTypeList} itemkey={"name"}/>
+      <SelectionGroup list={courseTypeList} itemkey={"name"} />
     </HomepageWrapper>
   );
 }

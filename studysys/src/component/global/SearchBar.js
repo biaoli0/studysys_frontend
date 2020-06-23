@@ -3,11 +3,13 @@ import { Input } from "antd";
 import { Log } from "../../library/Log";
 
 function SearchBar(props) {
-  const { originData, setDisplayData,searchBarTarget } = props;
+  const { originData, setDisplayData, searchBarTarget } = props;
 
   const onChange = (target) => {
-    const result = originData.filter((item) =>
-        item[searchBarTarget]!==null && item[searchBarTarget].includes(target.value)
+    const result = originData.filter(
+      (item) =>
+        item[searchBarTarget] !== null &&
+        item[searchBarTarget].includes(target.value)
     );
     Log.print(result);
     setDisplayData(result);

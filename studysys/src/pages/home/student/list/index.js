@@ -38,7 +38,11 @@ function StudentList() {
 
   return (
     <HomepageWrapper>
-      <SearchBar originData={originData} setDisplayData={setDisplayData} searchBarTarget={searchBarTarget}/>
+      <SearchBar
+        originData={originData}
+        setDisplayData={setDisplayData}
+        searchBarTarget={searchBarTarget}
+      />
 
       <Table {...state} columns={ColumnsConfig} dataSource={displayData} />
     </HomepageWrapper>

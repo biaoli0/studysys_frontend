@@ -65,22 +65,26 @@ export const api = {
     return responseData.datas;
   },
 
-  getCourseTypeList:async ()=>{
+  getCourseTypeList: async () => {
     const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_TYPE_LIST);
     Log.print(responseData);
     return responseData.datas;
   },
 
-  addCourse:async (courseName, typeId)=>{
+  addCourse: async (courseName, typeId) => {
     const requestBody = {
       name: courseName,
       homework: "no",
-      typeId: typeId
+      typeId: typeId,
     };
 
-    const responseData = await Rest.post(requestBody, BACKEND_API_TARGET.ADD_COURSE);
+    const responseData = await Rest.post(
+      requestBody,
+      BACKEND_API_TARGET.ADD_COURSE
+    );
     Log.print(responseData);
-    if (responseData) return responseData.datas; else return false;
+    if (responseData) return responseData.datas;
+    else return false;
   },
 
   logout: async () => {
