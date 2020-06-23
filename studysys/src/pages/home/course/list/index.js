@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "antd";
-import { ColumnsConfig } from "../../../../config/course/CourseListConfig";
+import { CourseListColumnsConfig } from "../../../../config/course/CourseListConfig";
 import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
 import SearchBar from "../../../../component/global/SearchBar";
@@ -44,7 +44,11 @@ export default function CourseList() {
         searchBarTarget={searchBarTarget}
       />
 
-      <Table {...state} columns={ColumnsConfig} dataSource={displayData} />
+      <Table
+        {...state}
+        columns={CourseListColumnsConfig}
+        dataSource={displayData}
+      />
     </HomepageWrapper>
   );
 }

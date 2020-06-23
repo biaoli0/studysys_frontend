@@ -1,6 +1,6 @@
 import React from "react";
 
-export const CourseListColumnsConfig = [
+export const CourseTypeListColumnsConfig = [
   {
     title: "ID",
     dataIndex: "id",
@@ -16,7 +16,7 @@ export const CourseListColumnsConfig = [
     ellipsis: false,
   },
   {
-    title: "Type",
+    title: "Create At",
     dataIndex: "type_name",
     ellipsis: false,
   },

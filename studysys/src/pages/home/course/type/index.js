@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "antd";
-import { ColumnsConfig } from "../../../../config/course/CourseListConfig";
+import {Button, Table} from "antd";
+import { CourseTypeListColumnsConfig } from "../../../../config/course/CourseTypeListConfig";
 import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
 import SearchBar from "../../../../component/global/SearchBar";
+import { Log } from "../../../../library/Log";
+import AddCourseTypeModalDialog from "../../../../component/course/AddCourseTypeModalDialog";
 
 export default function CourseType() {
   const [originData, setOriginData] = useState(null);
   const [displayData, setDisplayData] = useState(null);
-  const searchBarTarget = "type_name";
+  const searchBarTarget = "name";
 
   useEffect(() => {
     let fetchData;
-    api.getCourseType().then((res) => {
+    api.getCourseTypeList().then((res) => {
+      Log.print(res);
       if (res) {
         fetchData = res.map((item, key) => ({
           ...item,
@@ -44,7 +47,12 @@ export default function CourseType() {
         searchBarTarget={searchBarTarget}
       />
 
-      <Table {...state} columns={ColumnsConfig} dataSource={displayData} />
+      <AddCourseTypeModalDialog/>
+      <Table
+        {...state}
+        columns={CourseTypeListColumnsConfig}
+        dataSource={displayData}
+      />
     </HomepageWrapper>
   );
 }

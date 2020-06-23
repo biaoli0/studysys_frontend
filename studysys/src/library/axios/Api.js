@@ -86,6 +86,21 @@ export const api = {
     if (responseData) return true;
     else return false;
   },
+  addCourseType: async (typeName, typeId) => {
+    const requestBody = {
+      name: courseName,
+      homework: "no",
+      typeId: typeId,
+    };
+
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.ADD_COURSE
+    );
+    Log.print(responseData);
+    if (responseData) return true;
+    else return false;
+  },
 
   logout: async () => {
     localStorage.removeItem("token");
