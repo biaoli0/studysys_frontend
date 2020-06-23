@@ -83,7 +83,7 @@ export const api = {
       BACKEND_API_TARGET.ADD_COURSE
     );
     Log.print(responseData);
-    if (responseData) return responseData.datas;
+    if (responseData) return true;
     else return false;
   },
 

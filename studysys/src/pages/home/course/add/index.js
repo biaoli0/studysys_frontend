@@ -20,7 +20,7 @@ export default function CourseAdd() {
 
   return (
     <HomepageWrapper>
-      <SelectionGroup list={courseTypeList} itemkey={"name"} />
+      <SelectionGroup list={courseTypeList} itemkey={"id"} itemname={"name"} />
     </HomepageWrapper>
   );
 }
