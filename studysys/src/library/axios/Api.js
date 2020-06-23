@@ -71,6 +71,18 @@ export const api = {
     return responseData.datas;
   },
 
+  addCourse:async (courseName, typeId)=>{
+    const requestBody = {
+      name: courseName,
+      homework: "no",
+      typeId: typeId
+    };
+
+    const responseData = await Rest.post(requestBody, BACKEND_API_TARGET.ADD_COURSE);
+    Log.print(responseData);
+    if (responseData) return responseData.datas; else return false;
+  },
+
   logout: async () => {
     localStorage.removeItem("token");
     Router.push(BACKEND_API_TARGET.TEACHER_LOGIN);

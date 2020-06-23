@@ -1,17 +1,23 @@
 import React from 'react';
-import {Button, Col, Input, Row, Select} from "antd";
+import {Button, Space, Input, Row, Select} from "antd";
 import styled from "styled-components";
 
 const { Option } = Select;
-
 const Styled_Input = styled(Input)`
   &&& {
-    width: 200px;
+    width: 300px;
+  }
+`;
+
+const Styled_Select = styled(Select)`
+  &&& {
+    width: 300px;
   }
 `;
 
 function onChange(value) {
     console.log(`selected ${value}`);
+    console.log(`inputValue ${inputValue}`);
 }
 
 function onBlur() {
@@ -26,19 +32,21 @@ function onSearch(val) {
     console.log('search:', val);
 }
 
+function onclick(val) {
+    console.log('search:', val);
+}
 
 function SelectionGroup(props) {
+    let inputValue;
     const {list,itemkey} = props;
     return (
-        <Row gutter={[16,6]}>
-            <Col span={6}>
-            <Styled_Input placeholder="Course name" />
-            </Col>
-
-            <Col span={6}>
-                <Select
+        <Space direction="vertical" size="large">
+        <Row>
+            <Styled_Input value = {inputValue} placeholder="Course name" />
+        </Row>
+        <Row>
+                <Styled_Select
                 showSearch
-                style={{ width: 200 }}
                 placeholder="Select a course type"
                 optionFilterProp="children"
                 onChange={onChange}
@@ -53,14 +61,14 @@ function SelectionGroup(props) {
                     list?list.map((item,key)=>{
                         return <Option key ={key} value={item[itemkey]}>{item[itemkey]}</Option>
                     }):false}
-                </Select>
-            </Col>
+                </Styled_Select>
+            </Row>
 
-            <Col span={6}>
-                <Button type="primary">Save Course</Button>
-            </Col>
+            <Row>
+                <Button type="primary" onclick = {onclick}>Save Course</Button>
+            </Row>
 
-        </Row>
+        </Space>
 
 
     );
