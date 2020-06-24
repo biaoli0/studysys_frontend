@@ -3,16 +3,41 @@ import { HomeOutlined, UserOutlined, ReadOutlined } from "@ant-design/icons";
 import SolutionOutlined from "@ant-design/icons/lib/icons/SolutionOutlined";
 import TeamOutlined from "@ant-design/icons/lib/icons/TeamOutlined";
 
-export const homeRoutes = [
+export default class LeftMenuConfig {
+  static getAll() {
+    return [
+      ...homeRoutes,
+      ...studentRoutes.menuItems,
+      ...courseRoutes.menuItems,
+      // ...interviewRoutes.menuItems,
+      // ...teacherRoutes.menuItems,
+    ];
+  }
+
+  static getHome() {
+    return [...homeRoutes];
+  }
+
+  static getStudent() {
+    return { ...studentRoutes };
+  }
+
+  static getCourse() {
+    return { ...courseRoutes };
+  }
+}
+
+const homeRoutes = [
   {
     key: "0",
     path: "/home",
     exact: true,
-    title: "首页",
+    title: "Home",
     icon: () => <HomeOutlined />,
   },
 ];
-export const studentRoutes = {
+
+const studentRoutes = {
   key: "student",
   title: "Students",
   icon: () => <UserOutlined />,
@@ -36,7 +61,7 @@ export const studentRoutes = {
   ],
 };
 
-export const courseRoutes = {
+const courseRoutes = {
   key: "course",
   title: "Course",
   icon: () => <ReadOutlined />,
@@ -105,10 +130,3 @@ export const courseRoutes = {
 //     },
 //   ],
 // };
-export const routes = [
-  ...homeRoutes,
-  ...studentRoutes.menuItems,
-  ...courseRoutes.menuItems,
-  // ...interviewRoutes.menuItems,
-  // ...teacherRoutes.menuItems,
-];

@@ -105,7 +105,6 @@ export const api = {
   },
 
   updateCourse: async (updateCourse) => {
-    Log.print(updateCourse);
     const requestBody = {
       id: updateCourse.id,
       name: updateCourse.name,
@@ -138,6 +137,7 @@ export const api = {
     if (responseData) return true;
     else return false;
   },
+
   getStudentTypeList: async () => {
     const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_TYPE_LIST);
     Log.print(responseData);
