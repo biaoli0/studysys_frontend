@@ -12,14 +12,14 @@ const filter = arr.map((course_name) => {
 export const ColumnsConfig = [
   {
     title: "ID",
-    dataIndex: "student_id",
+    dataIndex: "id",
     defaultSortOrder: "descend",
     sorter: (a, b) => a.student_id - b.student_id,
     ellipsis: false,
   },
   {
     title: "Name",
-    dataIndex: "student_name",
+    dataIndex: "name",
     ellipsis: false,
   },
   {
@@ -36,7 +36,7 @@ export const ColumnsConfig = [
   },
   {
     title: "Student Type",
-    dataIndex: "student_type_name",
+    dataIndex: "type_name",
     ellipsis: false,
   },
   {

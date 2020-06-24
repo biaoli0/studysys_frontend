@@ -87,6 +87,23 @@ export const api = {
     else return false;
   },
 
+  addStudent: async (name, typeId, courseId, address) => {
+    const requestBody = {
+      name: name,
+      type_id: typeId,
+      course_id: courseId,
+      address: address,
+    };
+
+    const responseData = await Rest.post(
+      requestBody,
+      BACKEND_API_TARGET.ADD_STUDENT
+    );
+    Log.print(responseData);
+    if (responseData) return true;
+    else return false;
+  },
+
   updateCourse: async (updateCourse) => {
     Log.print(updateCourse);
     const requestBody = {
@@ -121,7 +138,11 @@ export const api = {
     if (responseData) return true;
     else return false;
   },
-
+  getStudentTypeList: async () => {
+    const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_TYPE_LIST);
+    Log.print(responseData);
+    return responseData.datas;
+  },
   logout: async () => {
     localStorage.removeItem("token");
     Router.push(BACKEND_API_TARGET.TEACHER_LOGIN);

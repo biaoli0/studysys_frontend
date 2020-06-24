@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Icon, Input, Button, Row, Col, Divider } from "antd";
+import { Input } from "antd";
 
 export const inputConfig = [
   {
