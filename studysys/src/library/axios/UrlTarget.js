@@ -4,6 +4,7 @@ export const BACKEND_API_TARGET = {
   COURSE_LIST: "course/list",
   COURSE_TYPE_LIST: "course/type/list",
   ADD_COURSE: "course/add",
+  UPDATE_COURSE: "student/update",
 };
 
 export const URL_TARGET = {

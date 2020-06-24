@@ -47,7 +47,7 @@ export default function CourseType() {
         searchBarTarget={searchBarTarget}
       />
 
-      <AddCourseTypeModalDialog/>
+      <AddCourseTypeModalDialog />
       <Table
         {...state}
         columns={CourseTypeListColumnsConfig}

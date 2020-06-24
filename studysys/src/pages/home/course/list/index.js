@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "antd";
-import { CourseListColumnsConfig } from "../../../../config/course/CourseListConfig";
 import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
 import SearchBar from "../../../../component/global/SearchBar";
+import EditableTable from "../../../../component/global/EditableTable";
+import {
+  editableCell,
+  editDataIndex,
+  columnsSetting
+} from "../../../../config/course/CourseListConfig";
 
 export default function CourseList() {
   const [originData, setOriginData] = useState(null);
@@ -17,24 +21,13 @@ export default function CourseList() {
         fetchData = res.map((item, key) => ({
           ...item,
           key: key,
+          create_at: "2020-06-23",
         }));
       } else fetchData = null;
       setDisplayData(fetchData);
       setOriginData(fetchData);
     });
   }, []);
-
-  const state = {
-    bordered: false,
-    loading: false,
-    pagination: { position: "bottom" },
-    size: "default",
-    title: undefined,
-    showHeader: true,
-    tableLayout: undefined,
-    bottom: "bottomRight",
-    scroll: { y: 400 },
-  };
 
   return (
     <HomepageWrapper>
@@ -44,10 +37,14 @@ export default function CourseList() {
         searchBarTarget={searchBarTarget}
       />
 
-      <Table
-        {...state}
-        columns={CourseListColumnsConfig}
-        dataSource={displayData}
+      <EditableTable
+        EditableCell={editableCell}
+        originData={originData}
+        setOriginData={setOriginData}
+        displayData={displayData}
+        setDisplayData={setDisplayData}
+        editDataIndex={editDataIndex}
+        columnsSetting={columnsSetting}
       />
     </HomepageWrapper>
   );

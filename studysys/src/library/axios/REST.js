@@ -26,6 +26,7 @@ export const Rest = {
         requestBody,
         getHeadersConfig()
       );
+      if (res.data.code === 555) Router.push(URL_TARGET.TEACHER_LOGIN);
       return res.data;
     } catch (e) {
       Log.print(e);

@@ -86,16 +86,36 @@ export const api = {
     if (responseData) return true;
     else return false;
   },
+
+  updateCourse: async (updateCourse) => {
+    Log.print(updateCourse);
+    const requestBody = {
+      id: updateCourse.id,
+      name: updateCourse.name,
+      homework: "no",
+      type_Id: updateCourse.type_id,
+    };
+    Log.print(requestBody);
+
+    const responseData = await Rest.post(
+      requestBody,
+      BACKEND_API_TARGET.UPDATE_COURSE
+    );
+    Log.print(responseData);
+    if (responseData) return true;
+    else return false;
+  },
+
   addCourseType: async (typeName, typeId) => {
     const requestBody = {
-      name: courseName,
+      name: typeName,
       homework: "no",
-      typeId: typeId,
+      type_id: typeId,
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.ADD_COURSE
+      requestBody,
+      BACKEND_API_TARGET.ADD_COURSE
     );
     Log.print(responseData);
     if (responseData) return true;
