@@ -8,11 +8,17 @@ import {StudentAddConfig} from "../../../../config/student/StudentAddConfig";
 
 export default function StudentAdd() {
   const [studentTypeList, setStudentTypeList] = useState(null);
+  const [courseList, setCourseList] = useState(null);
 
   useEffect(() => {
     api.getStudentTypeList().then((res) => {
       if (res) {
         setStudentTypeList(res);
+      }
+    });
+    api.getCourseList().then((res) => {
+      if (res) {
+        setCourseList(res);
       }
     });
   }, []);
@@ -36,9 +42,9 @@ export default function StudentAdd() {
   return (
     <HomepageWrapper>
       <GlobalForm
-        list={[studentTypeList]}
-        itemkey={"id"}
-        itemname={"name"}
+        list={[studentTypeList, courseList]}
+        itemkey={["id", "id"]}
+        itemname={["name","name"]}
         formConfig={StudentAddConfig}
         callBack={onFinish}
       />{" "}

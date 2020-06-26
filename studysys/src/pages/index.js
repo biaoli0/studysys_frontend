@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Form, Button, Row, Col, Divider } from "antd";
+import { Row, Col } from "antd";
 
 function Index(props) {
   return (

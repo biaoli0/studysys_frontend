@@ -54,8 +54,8 @@ export const columnsSetting = [
     width: "20%",
   },
   {
-    title: "Create At",
-    dataIndex: "create_at",
+    title: "Join Time",
+    dataIndex: "join_time",
     width: "20%",
   },
 ];

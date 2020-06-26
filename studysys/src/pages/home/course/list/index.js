@@ -8,6 +8,7 @@ import {
   editDataIndex,
   columnsSetting
 } from "../../../../config/course/CourseListConfig";
+import MyTimeAgo from "../../../../library/MyTimeAgo";
 
 export default function CourseList() {
   const [originData, setOriginData] = useState(null);
@@ -21,7 +22,7 @@ export default function CourseList() {
         fetchData = res.map((item, key) => ({
           ...item,
           key: key,
-          create_at: "2020-06-23",
+          join_time:<MyTimeAgo ctime = {item["ctime"]}/>,
         }));
       } else fetchData = null;
       setDisplayData(fetchData);

@@ -41,7 +41,7 @@ export const ColumnsConfig = [
   },
   {
     title: "Join time",
-    dataIndex: "homework",
+    dataIndex: "join_time",
     ellipsis: false,
   },
   {

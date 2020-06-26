@@ -4,6 +4,7 @@ import { ColumnsConfig } from "../../../../config/student/StudentListConfig";
 import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
 import SearchBar from "../../../../component/global/SearchBar";
+import MyTimeAgo from "../../../../library/MyTimeAgo";
 
 function StudentList() {
   const [originData, setOriginData] = useState(null);
@@ -17,6 +18,7 @@ function StudentList() {
         fetchData = res.map((item, key) => ({
           ...item,
           key: key,
+          join_time:<MyTimeAgo ctime = {item["ctime"]}/>
         }));
       } else fetchData = null;
       setDisplayData(fetchData);
