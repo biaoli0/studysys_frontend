@@ -16,11 +16,6 @@ export const CourseTypeListColumnsConfig = [
     ellipsis: false,
   },
   {
-    title: "Create At",
-    dataIndex: "type_name",
-    ellipsis: false,
-  },
-  {
     title: "Action",
     key: "action",
     ellipsis: false,

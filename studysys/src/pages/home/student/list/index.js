@@ -5,6 +5,8 @@ import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
 import SearchBar from "../../../../component/global/SearchBar";
 import MyTimeAgo from "../../../../library/MyTimeAgo";
+import StudentTypeListService from "../../../../library/StudentTypeListService";
+import {Log} from "../../../../library/Log";
 
 function StudentList() {
   const [originData, setOriginData] = useState(null);
@@ -12,17 +14,23 @@ function StudentList() {
   const searchBarTarget = "student_name";
 
   useEffect(() => {
-    let fetchData;
+   let fetchData;
     api.getStudentList().then((res) => {
       if (res) {
-        fetchData = res.map((item, key) => ({
-          ...item,
-          key: key,
-          join_time:<MyTimeAgo ctime = {item["ctime"]}/>
-        }));
-      } else fetchData = null;
-      setDisplayData(fetchData);
-      setOriginData(fetchData);
+        StudentTypeListService.updateList().then(r=>{
+          fetchData = res.map((item, key) => ({
+            ...item,
+            key: key,
+            join_time:<MyTimeAgo ctime = {item["ctime"]}/>,
+            type_name: StudentTypeListService.findNameById(item["type_id"])
+          }));
+          Log.print(fetchData);
+          setDisplayData(fetchData);
+          setOriginData(fetchData);
+        })
+
+      }
+
     });
   }, []);
 
