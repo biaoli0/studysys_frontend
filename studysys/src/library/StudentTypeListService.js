@@ -19,5 +19,4 @@ export default class StudentTypeListService {
                return type["name"];
           }
      }
-     
 }

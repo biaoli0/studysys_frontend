@@ -58,6 +58,14 @@ const studentRoutes = {
       title: "Add Student",
       icon: () => null,
     },
+    {
+      key: "student selection",
+      category: "student",
+      subcategory: "selection",
+      exact: true,
+      title: "Selection",
+      icon: () => null,
+    },
   ],
 };
 

@@ -65,6 +65,12 @@ export const api = {
     return responseData.datas;
   },
 
+  getStudentCourseList: async () => {
+    const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_COURSE_LIST);
+    Log.print(responseData);
+    return responseData.datas;
+  },
+
   getCourseTypeList: async () => {
     const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_TYPE_LIST);
     Log.print(responseData);

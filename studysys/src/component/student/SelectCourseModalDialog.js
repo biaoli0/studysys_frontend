@@ -2,10 +2,25 @@ import React, {useEffect, useState} from "react";
 import { Button, Input, Modal } from "antd";
 import {api} from "../../library/axios/Api";
 
-function AddCourseTypeModalDialog(props) {
+export function SelectCourseModalDialog(props) {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [newTypeName, setNewTypeName] = useState(null);
+  const [studentList, setStudentList] = useState(null);
+  const [courseList, setCourseList] = useState(null);
+
+  useEffect(()=>{
+    api.getStudentList().then(res=>{
+        if (res){
+            setStudentList(res);
+        }
+    })
+    api.getCourseList().then(res=>{
+        if (res){
+            setCourseList(res);
+        }
+    })
+},[]);
 
   const onSave = () => {
     setConfirmLoading(true);
@@ -23,7 +38,7 @@ function AddCourseTypeModalDialog(props) {
           setVisible(true);
         }}
       >
-        Add Type
+          Add Selection
       </Button>
 
       <Modal
@@ -36,10 +51,8 @@ function AddCourseTypeModalDialog(props) {
         }}
       >
         <Input onChange={onChange} />
-
       </Modal>
     </div>
   );
 }
 
-export default AddCourseTypeModalDialog;
