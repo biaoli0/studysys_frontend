@@ -1,8 +1,6 @@
 import React from "react";
 import { Menu } from "antd";
 import Link from "next/link";
-import HomeLeftBarConfig from "../../config/global/HomeLeftBarConfig";
-
 const ROUTE_PATH = "home";
 const { SubMenu } = Menu;
 
@@ -38,7 +36,7 @@ function renderMenuItems(menuItems) {
 }
 
 export default function LeftMenu(props) {
-  const { location, locationString } = props;
+  const { location, locationString, homeLeftBarConfig } = props;
 
   return (
     <Menu
@@ -47,9 +45,9 @@ export default function LeftMenu(props) {
       mode="inline"
       defaultOpenKeys={[location[2]]}
     >
-      {renderMenuItems(HomeLeftBarConfig.getHome())}
-      {renderMenu(HomeLeftBarConfig.getStudent())}
-      {renderMenu(HomeLeftBarConfig.getCourse())}
+      {renderMenuItems(homeLeftBarConfig.getHome())}
+      {renderMenu(homeLeftBarConfig.getStudent())}
+      {renderMenu(homeLeftBarConfig.getCourse())}
     </Menu>
   );
 }

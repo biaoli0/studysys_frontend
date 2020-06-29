@@ -6,7 +6,6 @@ import Router from "next/router";
 import { api } from "../../../library/axios/Api";
 import AlertMessage from "../../../component/user/AlertMessage";
 import { Log } from "../../../library/Log";
-import { BACKEND_API_TARGET } from "../../../library/axios/UrlTarget";
 
 const layout = {
   labelCol: {

@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Left Menu Function Left Menu render 1`] = `
+<Menu
+  defaultOpenKeys={
+    Array [
+      undefined,
+    ]
+  }
+  defaultSelectedKeys={
+    Array [
+      "course list",
+    ]
+  }
+  mode="inline"
+  theme="dark"
+>
+  <MenuItem
+    key="0"
+  >
+    <Link
+      href="/home/undefined/undefined"
+    >
+      <a>
+        <icon />
+        <span>
+          Home
+        </span>
+      </a>
+    </Link>
+  </MenuItem>
+  <SubMenu
+    key="student"
+    title={
+      <span>
+        <icon />
+        <span>
+          Students
+        </span>
+      </span>
+    }
+  >
+    <MenuItem
+      key="student list"
+    >
+      <Link
+        href="/home/student/list"
+      >
+        <a>
+          <icon />
+          <span>
+            Student List
+          </span>
+        </a>
+      </Link>
+    </MenuItem>
+    <MenuItem
+      key="student add"
+    >
+      <Link
+        href="/home/student/add"
+      >
+        <a>
+          <icon />
+          <span>
+            Add Student
+          </span>
+        </a>
+      </Link>
+    </MenuItem>
+    <MenuItem
+      key="student selection"
+    >
+      <Link
+        href="/home/student/selection"
+      >
+        <a>
+          <icon />
+          <span>
+            Selection
+          </span>
+        </a>
+      </Link>
+    </MenuItem>
+  </SubMenu>
+  <SubMenu
+    key="course"
+    title={
+      <span>
+        <icon />
+        <span>
+          Course
+        </span>
+      </span>
+    }
+  >
+    <MenuItem
+      key="course list"
+    >
+      <Link
+        href="/home/course/list"
+      >
+        <a>
+          <icon />
+          <span>
+            Course List
+          </span>
+        </a>
+      </Link>
+    </MenuItem>
+    <MenuItem
+      key="course add"
+    >
+      <Link
+        href="/home/course/add"
+      >
+        <a>
+          <icon />
+          <span>
+            Add Course
+          </span>
+        </a>
+      </Link>
+    </MenuItem>
+    <MenuItem
+      key="course type"
+    >
+      <Link
+        href="/home/course/type"
+      >
+        <a>
+          <icon />
+          <span>
+            Course Type
+          </span>
+        </a>
+      </Link>
+    </MenuItem>
+  </SubMenu>
+</Menu>
+`;

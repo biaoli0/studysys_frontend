@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
-import {Button, Table} from "antd";
+import { Button, Row, Col, Table } from "antd";
 import { CourseTypeListColumnsConfig } from "../../../../config/course/CourseTypeListConfig";
 import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
 import SearchBar from "../../../../component/global/SearchBar";
 import { Log } from "../../../../library/Log";
 import AddCourseTypeModalDialog from "../../../../component/course/AddCourseTypeModalDialog";
+import styled from "styled-components";
+
+const Styled_Row = styled(Row)`
+  &&& {
+    margin-bottom: 6px;
+  }
+`;
 
 export default function CourseType() {
   const [originData, setOriginData] = useState(null);
@@ -41,13 +48,19 @@ export default function CourseType() {
 
   return (
     <HomepageWrapper>
-      <SearchBar
-        originData={originData}
-        setDisplayData={setDisplayData}
-        searchBarTarget={searchBarTarget}
-      />
+      <Styled_Row gutter={8}>
+        <Col>
+          <AddCourseTypeModalDialog />
+        </Col>
+        <Col>
+          <SearchBar
+            originData={originData}
+            setDisplayData={setDisplayData}
+            searchBarTarget={searchBarTarget}
+          />
+        </Col>
+      </Styled_Row>
 
-      <AddCourseTypeModalDialog />
       <Table
         {...state}
         columns={CourseTypeListColumnsConfig}

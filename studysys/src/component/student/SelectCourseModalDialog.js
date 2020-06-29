@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { message, Button, DatePicker, Modal, Radio, Select } from "antd";
+import { message, Button, DatePicker, Modal, Select } from "antd";
 import { api } from "../../library/axios/Api";
 import Form from "antd/lib/form";
 import styled from "styled-components";
-import moment from "moment";
+const { Option } = Select;
 
 export function SelectCourseModalDialog(props) {
   const [visible, setVisible] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
   const [studentList, setStudentList] = useState(null);
   const [courseList, setCourseList] = useState(null);
-
-  const { Option } = Select;
   const dateFormat = "DD/MM/YYYY";
 
   const Styled_Select = styled(Select)`
@@ -39,10 +36,6 @@ export function SelectCourseModalDialog(props) {
     });
   }, []);
 
-  function onChange(value) {
-    console.log(`selected ${value}`);
-  }
-
   function onSearch(val) {
     console.log("search:", val);
   }
@@ -62,7 +55,6 @@ export function SelectCourseModalDialog(props) {
           showSearch
           placeholder={listName}
           optionFilterProp="children"
-          onChange={onChange}
           onSearch={onSearch}
           filterOption={(input, option) =>
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -82,6 +74,7 @@ export function SelectCourseModalDialog(props) {
       </Form.Item>
     );
   }
+
   const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
     const [form] = Form.useForm();
     return (
@@ -123,6 +116,10 @@ export function SelectCourseModalDialog(props) {
     );
   };
 
+  /**
+   * Submit form to backend when click save button.
+   * @param values: Form value.
+   */
   const onCreate = (values) => {
     console.log("Received values of form: ", values);
     api
@@ -147,7 +144,7 @@ export function SelectCourseModalDialog(props) {
           setVisible(true);
         }}
       >
-        New Collection
+        Add Selection
       </Button>
       <CollectionCreateForm
         visible={visible}

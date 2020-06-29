@@ -118,14 +118,13 @@ export const api = {
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.STUDENT_COURSE_SELECTION
+      requestBody,
+      BACKEND_API_TARGET.STUDENT_COURSE_SELECTION
     );
     Log.print(responseData);
     if (responseData) {
       return responseData;
-    }
-    else return false;
+    } else return false;
   },
 
   updateCourse: async (updateCourse) => {

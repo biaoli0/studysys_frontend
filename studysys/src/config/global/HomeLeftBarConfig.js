@@ -1,7 +1,5 @@
 import React from "react";
 import { HomeOutlined, UserOutlined, ReadOutlined } from "@ant-design/icons";
-import SolutionOutlined from "@ant-design/icons/lib/icons/SolutionOutlined";
-import TeamOutlined from "@ant-design/icons/lib/icons/TeamOutlined";
 
 export default class LeftMenuConfig {
   static getAll() {
@@ -9,8 +7,6 @@ export default class LeftMenuConfig {
       ...homeRoutes,
       ...studentRoutes.menuItems,
       ...courseRoutes.menuItems,
-      // ...interviewRoutes.menuItems,
-      // ...teacherRoutes.menuItems,
     ];
   }
 
@@ -100,41 +96,3 @@ const courseRoutes = {
     },
   ],
 };
-// export const interviewRoutes = {
-//   key: "sub3",
-//   title: "面试管理",
-//   icon: () => <SolutionOutlined />,
-//   menuItems: [
-//     {
-//       key: "sub3-0",
-//       path: "/home/interview/arrangement",
-//       exact: true,
-//       title: "面试安排",
-//       icon: () => null,
-//       component: () => <InterviewArrangement />,
-//     },
-//   ],
-// };
-// export const teacherRoutes = {
-//   key: "sub4",
-//   title: "教师管理",
-//   icon: () => <TeamOutlined />,
-//   menuItems: [
-//     {
-//       key: "sub4-0",
-//       path: "/home/teacher/teacherList",
-//       exact: true,
-//       title: "教师列表",
-//       icon: () => null,
-//       component: () => <TeacherList />,
-//     },
-//     {
-//       key: "sub4-1",
-//       path: "/home/teacher/addTeacher",
-//       exact: true,
-//       title: "添加教师",
-//       icon: () => null,
-//       component: () => <AddTeacher />,
-//     },
-//   ],
-// };
