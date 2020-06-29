@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, DatePicker, Modal, Radio, Select } from "antd";
+import { message, Button, DatePicker, Modal, Radio, Select } from "antd";
 import { api } from "../../library/axios/Api";
 import Form from "antd/lib/form";
 import styled from "styled-components";
@@ -103,14 +103,9 @@ export function SelectCourseModalDialog(props) {
             });
         }}
       >
-        <Form
-          form={form}
-          layout="vertical"
-          name="form_in_modal"
-          initialValues={{ modifier: "public" }}
-        >
-          {renderList(studentList, "student", "id", "name")}
-          {renderList(courseList, "course", "id", "name")}
+        <Form form={form} layout="vertical" name="form_in_modal">
+          {renderList(studentList, "Student", "id", "name")}
+          {renderList(courseList, "Course", "id", "name")}
 
           <Form.Item
             name="date"
@@ -121,10 +116,7 @@ export function SelectCourseModalDialog(props) {
               },
             ]}
           >
-            <Styled_DatePicker
-              defaultValue={moment(new Date(), dateFormat)}
-              format={dateFormat}
-            />
+            <Styled_DatePicker format={dateFormat} />
           </Form.Item>
         </Form>
       </Modal>
@@ -133,7 +125,18 @@ export function SelectCourseModalDialog(props) {
 
   const onCreate = (values) => {
     console.log("Received values of form: ", values);
-    setVisible(false);
+    api
+      .courseSelection(
+        values["Student"],
+        values["Course"],
+        values["date"].format("YYYY-MM-DD")
+      )
+      .then((res) => {
+        if (res) {
+          if (res["code"] === 0) message.success(res["datas"]);
+          else message.error(res["message"]);
+        }
+      });
   };
 
   return (

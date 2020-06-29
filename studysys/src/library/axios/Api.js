@@ -110,6 +110,24 @@ export const api = {
     else return false;
   },
 
+  courseSelection: async (studentId, courseId, courseDate) => {
+    const requestBody = {
+      student_id: studentId,
+      course_id: courseId,
+      course_date: courseDate,
+    };
+
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.STUDENT_COURSE_SELECTION
+    );
+    Log.print(responseData);
+    if (responseData) {
+      return responseData;
+    }
+    else return false;
+  },
+
   updateCourse: async (updateCourse) => {
     const requestBody = {
       id: updateCourse.id,
