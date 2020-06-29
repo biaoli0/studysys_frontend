@@ -59,6 +59,12 @@ export const api = {
     return responseData.datas;
   },
 
+  getStudentById: async (id) => {
+    const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_LIST);
+    Log.print(responseData);
+    return responseData.datas;
+  },
+
   getCourseList: async () => {
     const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_LIST);
     Log.print(responseData);
@@ -75,6 +81,18 @@ export const api = {
     const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_TYPE_LIST);
     Log.print(responseData);
     return responseData.datas;
+  },
+
+  deleteCourse: async () => {
+    const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_TYPE_LIST);
+    Log.print(responseData);
+    return responseData;
+  },
+
+  deleteStudent: async () => {
+    const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_TYPE_LIST);
+    Log.print(responseData);
+    return responseData;
   },
 
   addCourse: async (courseName, typeId) => {

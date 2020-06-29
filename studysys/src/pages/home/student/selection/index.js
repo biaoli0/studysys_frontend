@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
-import { Col, Menu, message, Row, Table } from "antd";
+import {Calendar, Col, Menu, message, Row, Table, Tabs} from "antd";
 import { ColumnsConfig } from "../../../../config/student/StudentSelectionConfig";
 import { SelectCourseModalDialog } from "../../../../component/student/SelectCourseModalDialog";
 import SearchBar from "../../../../component/global/SearchBar";
 import styled from "styled-components";
+import SelectionCalendar from "../../../../component/student/SelectionCalendar";
+
+const { TabPane } = Tabs;
 
 const Styled_Row = styled(Row)`
   &&& {
@@ -14,7 +17,6 @@ const Styled_Row = styled(Row)`
 `;
 
 export default function StudentAdd() {
-  const [current, setCurrent] = useState("list");
   const [list, setList] = useState(null);
   const [displayList, setDisplayList] = useState(null);
   const searchBarTarget = "student_name";
@@ -47,10 +49,6 @@ export default function StudentAdd() {
     scroll: { y: 400 },
   };
 
-  const handleClick = (e) => {
-    setCurrent(e.key);
-  };
-
   return (
     <HomepageWrapper>
       <Styled_Row gutter={8}>
@@ -65,11 +63,14 @@ export default function StudentAdd() {
           />
         </Col>
       </Styled_Row>
-      <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-        <Menu.Item key="list">List Mode</Menu.Item>
-        <Menu.Item key="calendar">Calendar Mode</Menu.Item>
-      </Menu>
-      <Table {...state} columns={ColumnsConfig} dataSource={displayList} />
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="List Mode" key="1">
+          <Table {...state} columns={ColumnsConfig} dataSource={displayList} />
+        </TabPane>
+        <TabPane tab="Calendar Mode" key="2">
+          <SelectionCalendar />
+        </TabPane>
+      </Tabs>
     </HomepageWrapper>
   );
 }

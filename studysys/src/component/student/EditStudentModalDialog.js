@@ -11,7 +11,8 @@ const Styled_DatePicker = styled(DatePicker)`
   }
 `;
 
-export function SelectCourseModalDialog(props) {
+export function EditStudentModalDialog(props) {
+  const { record } = props;
   const [visible, setVisible] = useState(false);
   const [studentList, setStudentList] = useState(null);
   const [courseList, setCourseList] = useState(null);
@@ -48,8 +49,7 @@ export function SelectCourseModalDialog(props) {
           if (res["code"] === 0) {
             message.success(res["datas"]);
             form.resetFields();
-          }
-          else message.error(res["message"]);
+          } else message.error(res["message"]);
         }
       });
   };
@@ -84,8 +84,18 @@ export function SelectCourseModalDialog(props) {
         }}
       >
         <Form form={form} layout="vertical" name="form_in_modal">
-          <ListSelection list={studentList} listName="Student" itemKey="id" itemName="name"/>
-          <ListSelection list={courseList} listName="Course" itemKey="id" itemName="name"/>
+          <ListSelection
+            list={studentList}
+            listName="Student"
+            itemKey="id"
+            itemName="name"
+          />
+          <ListSelection
+            list={courseList}
+            listName="Course"
+            itemKey="id"
+            itemName="name"
+          />
           <Form.Item
             name="date"
             rules={[

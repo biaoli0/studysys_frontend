@@ -32,7 +32,7 @@ export const StudentAddConfig = {
         key: "01",
         name: "name",
         rulesMessage: "Please input a student name",
-        component: <Styled_Input placeholder="Sourse name" />,
+        component: <Styled_Input placeholder="Student name" />,
       },
       {
         key: "02",

@@ -19,7 +19,7 @@ function StudentList() {
   const [originData, setOriginData] = useState(null);
   const [displayData, setDisplayData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const searchBarTarget = "student_name";
+  const searchBarTarget = "name";
 
   useEffect(() => {
     let fetchData;

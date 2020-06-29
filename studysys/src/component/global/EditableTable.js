@@ -38,7 +38,7 @@ export default function EditableTable(props) {
       api.updateCourse(updateItem).then((res) => {
         if (res) {
           newDisplayData.splice(index, 1, updateItem);
-          setDisplayData(newDisplayData);
+          // setDisplayData(newDisplayData);
           setEditingKey("");
           updateOriginData(updateItem);
         }

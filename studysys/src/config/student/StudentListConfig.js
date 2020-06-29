@@ -1,13 +1,5 @@
 import React from "react";
-
-const arr = [];
-
-const filter = arr.map((course_name) => {
-  return {
-    text: course_name,
-    value: course_name,
-  };
-});
+import {Log} from "../../library/Log";
 
 export const ColumnsConfig = [
   {
@@ -28,13 +20,6 @@ export const ColumnsConfig = [
     ellipsis: false,
   },
   {
-    title: "Selected Curriculum",
-    dataIndex: "course_name",
-    ellipsis: false,
-    filters: filter,
-    onFilter: (value, record) => record.course_name.indexOf(value) === 0,
-  },
-  {
     title: "Student Type",
     dataIndex: "type_name",
     ellipsis: false,
@@ -48,11 +33,21 @@ export const ColumnsConfig = [
     title: "Action",
     key: "action",
     ellipsis: false,
-    render: () => (
-      <span>
-        <a style={{ marginRight: 16 }}>Edit</a>
-        <a>Delete</a>
-      </span>
-    ),
+    render: (_, record) => {
+      return (
+        <a onClick={() => {
+          Log.print(record);
+          // edit(record)
+        }}>
+          Edit
+        </a>
+      );
+    },
+    // render: () => (
+    //   <span>
+    //     <a style={{ marginRight: 16 }} >Edit</a>
+    //     <a>Delete</a>
+    //   </span>
+    // ),
   },
 ];
