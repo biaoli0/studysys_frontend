@@ -12,6 +12,7 @@ const Styled_DatePicker = styled(DatePicker)`
 `;
 
 export function SelectCourseModalDialog(props) {
+  const {fetchData} = props;
   const [visible, setVisible] = useState(false);
   const [studentList, setStudentList] = useState(null);
   const [courseList, setCourseList] = useState(null);
@@ -47,6 +48,7 @@ export function SelectCourseModalDialog(props) {
         if (res) {
           if (res["code"] === 0) {
             message.success(res["datas"]);
+            fetchData();
             form.resetFields();
           }
           else message.error(res["message"]);

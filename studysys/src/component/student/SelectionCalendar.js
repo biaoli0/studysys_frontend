@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Calendar, Select, Col, Row, Badge, Button } from "antd";
 import styled from "styled-components";
-import {Log} from "../../library/Log";
+import { Log } from "../../library/Log";
 import Kit from "../../library/Kit";
+import { SelectionDisplayModalDialog } from "./SelectionDisplayModalDialog";
 
 const Styled_ul = styled.ul`
   &&& {
@@ -32,14 +33,13 @@ function onPanelChange(value, mode) {
   console.log(value, mode);
 }
 
-function onSelect(value){
-    Log.print(Kit.dateConvert(value));
-}
-
 function dateCellRender() {
   const listData = [
     { type: "warning", content: "This is warning event" },
-    { type: "success", content: "This is very long usual event。。............." },
+    {
+      type: "success",
+      content: "This is very long usual event。。.............",
+    },
     { type: "error", content: "This is error event 1." },
   ];
   return (
@@ -54,6 +54,15 @@ function dateCellRender() {
 }
 
 export default function SelectionCalendar(props) {
+  const [visible, setVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  function onSelect(value) {
+    Log.print(Kit.dateConvert(value));
+    setSelectedDate(value);
+    setVisible(true);
+  }
+
   return (
     <Calendar
       fullscreen={true}
@@ -120,6 +129,11 @@ export default function SelectionCalendar(props) {
                 </Select>
               </Col>
             </Row>
+            <SelectionDisplayModalDialog
+              visible={visible}
+              setVisible={setVisible}
+              selectedDate={selectedDate}
+            />
           </div>
         );
       }}

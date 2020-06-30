@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
-import {Calendar, Col, Menu, message, Row, Table, Tabs} from "antd";
+import { Calendar, Col, Menu, message, Row, Table, Tabs } from "antd";
 import { ColumnsConfig } from "../../../../config/student/StudentSelectionConfig";
 import { SelectCourseModalDialog } from "../../../../component/student/SelectCourseModalDialog";
 import SearchBar from "../../../../component/global/SearchBar";
@@ -17,12 +17,12 @@ const Styled_Row = styled(Row)`
   }
 `;
 
-export default function StudentAdd() {
+export default function SelectionAdd() {
   const [list, setList] = useState(null);
   const [displayList, setDisplayList] = useState(null);
   const searchBarTarget = "student_name";
 
-  useEffect(() => {
+  const fetchData = () => {
     api.getStudentCourseList().then((res) => {
       if (res) {
         const data = res.map((item, key) => ({
@@ -36,6 +36,9 @@ export default function StudentAdd() {
         setDisplayList(data);
       }
     });
+  };
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const state = {
@@ -54,7 +57,7 @@ export default function StudentAdd() {
     <HomepageWrapper>
       <Styled_Row gutter={8}>
         <Col>
-          <SelectCourseModalDialog />
+          <SelectCourseModalDialog fetchData={fetchData}/>
         </Col>
         <Col>
           <SearchBar
