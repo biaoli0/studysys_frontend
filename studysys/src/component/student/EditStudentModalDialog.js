@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { message, Button, DatePicker, Modal, Input, Spin } from "antd";
+import {message, Button, DatePicker, Modal, Input, Spin, Space} from "antd";
 import { api } from "../../library/axios/Api";
 import Form from "antd/lib/form";
 import styled from "styled-components";
@@ -46,7 +46,7 @@ export function EditStudentModalDialog(props) {
   };
 
   return (
-    <div>
+    <Space>
       <a
         onClick={() => {
           setVisible(true);
@@ -118,6 +118,6 @@ export function EditStudentModalDialog(props) {
           </Form>
         </Spin>
       </Modal>
-    </div>
+    </Space>
   );
 }

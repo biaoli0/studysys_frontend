@@ -83,9 +83,17 @@ export const api = {
     return responseData;
   },
 
-  deleteStudent: async () => {
-    const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_TYPE_LIST);
-    return responseData;
+  deleteStudent: async (id) => {
+    const requestBody = {
+      id: id,
+    };
+
+    const responseData = await Rest.post(
+      requestBody,
+      BACKEND_API_TARGET.DELETE_STUDENT
+    );
+    if (responseData) return responseData;
+    else return false;
   },
 
   addCourse: async (courseName, typeId) => {

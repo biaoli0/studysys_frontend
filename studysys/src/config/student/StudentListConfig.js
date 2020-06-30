@@ -1,6 +1,8 @@
 import React from "react";
 import { Log } from "../../library/Log";
 import { EditStudentModalDialog } from "../../component/student/EditStudentModalDialog";
+import { Popconfirm, message } from "antd";
+import { api } from "../../library/axios/Api";
 
 export function ColumnsConfig(fetchData) {
   return [
@@ -35,15 +37,30 @@ export function ColumnsConfig(fetchData) {
       title: "Action",
       key: "action",
       ellipsis: false,
-      render: (_, record) => {
-        return <EditStudentModalDialog record={record} fetchData={fetchData}/>;
-      },
-      // render: () => (
-      //   <span>
-      //     <a style={{ marginRight: 16 }} >Edit</a>
-      //     <a>Delete</a>
-      //   </span>
-      // ),
+      render: (_, record) => (
+        <span>
+          <EditStudentModalDialog record={record} fetchData={fetchData} />
+          <Popconfirm
+            title="Are you sure?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => {
+              api.deleteStudent(record["id"]).then((res) => {
+                if (res) {
+                  if (res["error"]) {
+                    message.error(res["message"]);
+                  } else {
+                    message.success(res["datas"]);
+                    fetchData();
+                  }
+                }
+              });
+            }}
+          >
+            <a>Delete</a>
+          </Popconfirm>
+        </span>
+      ),
     },
   ];
 }
