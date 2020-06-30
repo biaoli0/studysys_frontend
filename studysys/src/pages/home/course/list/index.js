@@ -15,19 +15,23 @@ export default function CourseList() {
   const [displayData, setDisplayData] = useState(null);
   const searchBarTarget = "type_name";
 
-  useEffect(() => {
-    let fetchData;
+  const fetchData = () => {
+    let newData;
     api.getCourseList().then((res) => {
       if (res) {
-        fetchData = res.map((item, key) => ({
+        newData = res.map((item, key) => ({
           ...item,
           key: key,
           join_time: <MyTimeAgo ctime={item["ctime"]} />,
         }));
-      } else fetchData = null;
-      setDisplayData(fetchData);
-      setOriginData(fetchData);
+      } else newData = null;
+      setDisplayData(newData);
+      setOriginData(newData);
     });
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   return (
@@ -39,6 +43,7 @@ export default function CourseList() {
       />
 
       <EditableTable
+        fetchData={fetchData}
         EditableCell={editableCell}
         originData={originData}
         setOriginData={setOriginData}

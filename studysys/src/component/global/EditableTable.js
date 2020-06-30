@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Table, Form } from "antd";
+import { Table, Form, Popconfirm, message, Space } from "antd";
 import { Log } from "../../library/Log";
 import { api } from "../../library/axios/Api";
 
 export default function EditableTable(props) {
   const {
+    fetchData,
     EditableCell,
     originData,
     setOriginData,
@@ -63,6 +64,30 @@ export default function EditableTable(props) {
     }
   };
 
+  const deleteButton = (record) => {
+    return (
+      <Popconfirm
+        title="Are you sure?"
+        okText="Yes"
+        cancelText="No"
+        onConfirm={() => {
+          api.deleteCourse(record["id"]).then((res) => {
+            if (res) {
+              if (res["error"]) {
+                message.error(res["message"]);
+              } else {
+                message.success("课程删除成功");
+                fetchData();
+              }
+            }
+          });
+        }}
+      >
+        <a>Delete</a>
+      </Popconfirm>
+    );
+  };
+
   const columns = [
     ...columnsSetting,
     {
@@ -71,7 +96,7 @@ export default function EditableTable(props) {
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
-          <span>
+          <Space>
             <a
               onClick={() => save(record.key)}
               style={{
@@ -81,11 +106,15 @@ export default function EditableTable(props) {
               Save
             </a>
             <a onClick={cancel}>Cancel</a>
-          </span>
+            {deleteButton(record)}
+          </Space>
         ) : (
-          <a disabled={editingKey !== ""} onClick={() => edit(record)}>
-            Edit
-          </a>
+          <Space>
+            <a disabled={editingKey !== ""} onClick={() => edit(record)}>
+              Edit
+            </a>
+            {deleteButton(record)}
+          </Space>
         );
       },
     },
