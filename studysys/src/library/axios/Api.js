@@ -91,6 +91,19 @@ export const api = {
     else return false;
   },
 
+  deleteCourseType: async (id) => {
+    const requestBody = {
+      id: id,
+    };
+
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.DELETE_COURSE_TYPE
+    );
+    if (responseData) return responseData;
+    else return false;
+  },
+
   deleteStudent: async (id) => {
     const requestBody = {
       id: id,
@@ -183,18 +196,16 @@ export const api = {
     else return false;
   },
 
-  addCourseType: async (typeName, typeId) => {
+  addCourseType: async (typeName) => {
     const requestBody = {
       name: typeName,
-      homework: "no",
-      type_id: typeId,
     };
 
     const responseData = await Rest.post(
       requestBody,
-      BACKEND_API_TARGET.ADD_COURSE
+      BACKEND_API_TARGET.ADD_COURSE_TYPE
     );
-    if (responseData) return true;
+    if (responseData) return responseData;
     else return false;
   },
 

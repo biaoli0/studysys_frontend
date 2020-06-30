@@ -1,18 +1,28 @@
-import React, {useEffect, useState} from "react";
-import { Button, Input, Modal } from "antd";
-import {api} from "../../library/axios/Api";
+import React, { useEffect, useState } from "react";
+import { Button, Input, Modal, message } from "antd";
+import { api } from "../../library/axios/Api";
+import {Log} from "../../library/Log";
 
 function AddCourseTypeModalDialog(props) {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [newTypeName, setNewTypeName] = useState(null);
+  const { fetchData } = props;
 
   const onSave = () => {
     setConfirmLoading(true);
+    api.addCourseType(newTypeName).then((res) => {
+      if (res) {
+        if (res["error"]) message.error(res["message"]);
+        else message.success("课程类型添加成功");
+        fetchData();
+      }
+      setConfirmLoading(false);
+    });
   };
 
   const onChange = (e) => {
-    setNewTypeName(e.target);
+    setNewTypeName(e.target.value);
   };
 
   return (
@@ -36,7 +46,6 @@ function AddCourseTypeModalDialog(props) {
         }}
       >
         <Input onChange={onChange} />
-
       </Modal>
     </div>
   );

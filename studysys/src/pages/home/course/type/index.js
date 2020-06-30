@@ -19,19 +19,23 @@ export default function CourseType() {
   const [displayData, setDisplayData] = useState(null);
   const searchBarTarget = "name";
 
-  useEffect(() => {
-    let fetchData;
+  const fetchData = () => {
+    let newData;
     api.getCourseTypeList().then((res) => {
       Log.print(res);
       if (res) {
-        fetchData = res.map((item, key) => ({
+        newData = res.map((item, key) => ({
           ...item,
           key: key,
         }));
-      } else fetchData = null;
-      setDisplayData(fetchData);
-      setOriginData(fetchData);
+      } else newData = null;
+      setDisplayData(newData);
+      setOriginData(newData);
     });
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const state = {
@@ -50,7 +54,7 @@ export default function CourseType() {
     <HomepageWrapper>
       <Styled_Row gutter={8}>
         <Col>
-          <AddCourseTypeModalDialog />
+          <AddCourseTypeModalDialog fetchData={fetchData}/>
         </Col>
         <Col>
           <SearchBar
@@ -63,7 +67,7 @@ export default function CourseType() {
 
       <Table
         {...state}
-        columns={CourseTypeListColumnsConfig}
+        columns={CourseTypeListColumnsConfig(fetchData)}
         dataSource={displayData}
       />
     </HomepageWrapper>
