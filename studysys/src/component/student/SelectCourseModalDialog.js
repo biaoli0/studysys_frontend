@@ -84,8 +84,8 @@ export function SelectCourseModalDialog(props) {
         }}
       >
         <Form form={form} layout="vertical" name="form_in_modal">
-          <ListSelection list={studentList} listName="Student" itemKey="id" itemName="name"/>
-          <ListSelection list={courseList} listName="Course" itemKey="id" itemName="name"/>
+          <ListSelection list={studentList} listName="Student" itemKey="id" itemName="name" width="400px"/>
+          <ListSelection list={courseList} listName="Course" itemKey="id" itemName="name" width="400px"/>
           <Form.Item
             name="date"
             rules={[

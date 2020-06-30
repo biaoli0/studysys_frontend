@@ -55,43 +55,36 @@ export const api = {
 
   getStudentList: async () => {
     const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_LIST);
-    Log.print(responseData);
     return responseData.datas;
   },
 
   getStudentById: async (id) => {
-    const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_LIST);
-    Log.print(responseData);
+    const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_BY_ID + id);
     return responseData.datas;
   },
 
   getCourseList: async () => {
     const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_LIST);
-    Log.print(responseData);
     return responseData.datas;
   },
 
   getStudentCourseList: async () => {
     const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_COURSE_LIST);
-    Log.print(responseData);
     return responseData.datas;
   },
 
   getCourseTypeList: async () => {
     const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_TYPE_LIST);
-    Log.print(responseData);
     return responseData.datas;
   },
 
   deleteCourse: async () => {
     const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_TYPE_LIST);
-    Log.print(responseData);
     return responseData;
   },
 
   deleteStudent: async () => {
     const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_TYPE_LIST);
-    Log.print(responseData);
     return responseData;
   },
 
@@ -106,7 +99,6 @@ export const api = {
       requestBody,
       BACKEND_API_TARGET.ADD_COURSE
     );
-    Log.print(responseData);
     if (responseData) return true;
     else return false;
   },
@@ -123,7 +115,6 @@ export const api = {
       requestBody,
       BACKEND_API_TARGET.ADD_STUDENT
     );
-    Log.print(responseData);
     if (responseData) return true;
     else return false;
   },
@@ -139,7 +130,6 @@ export const api = {
       requestBody,
       BACKEND_API_TARGET.STUDENT_COURSE_SELECTION
     );
-    Log.print(responseData);
     if (responseData) {
       return responseData;
     } else return false;
@@ -152,14 +142,28 @@ export const api = {
       homework: "no",
       type_Id: updateCourse.type_id,
     };
-    Log.print(requestBody);
 
     const responseData = await Rest.post(
       requestBody,
       BACKEND_API_TARGET.UPDATE_COURSE
     );
-    Log.print(responseData);
     if (responseData) return true;
+    else return false;
+  },
+
+  updateStudent: async (id, name, typeId, address) => {
+    const requestBody = {
+      id: id,
+      name: name,
+      type_id: typeId,
+      address: address,
+    };
+
+    const responseData = await Rest.post(
+      requestBody,
+      BACKEND_API_TARGET.UPDATE_STUDENT
+    );
+    if (responseData) return responseData;
     else return false;
   },
 
@@ -174,16 +178,15 @@ export const api = {
       requestBody,
       BACKEND_API_TARGET.ADD_COURSE
     );
-    Log.print(responseData);
     if (responseData) return true;
     else return false;
   },
 
   getStudentTypeList: async () => {
     const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_TYPE_LIST);
-    Log.print(responseData);
     return responseData.datas;
   },
+
   logout: async () => {
     localStorage.removeItem("token");
     Router.push(BACKEND_API_TARGET.TEACHER_LOGIN);

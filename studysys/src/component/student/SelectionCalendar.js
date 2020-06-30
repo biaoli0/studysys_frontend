@@ -1,11 +1,59 @@
 import React from "react";
-import { Calendar, Select, Col, Row } from "antd";
+import { Calendar, Select, Col, Row, Badge, Button } from "antd";
+import styled from "styled-components";
+import {Log} from "../../library/Log";
+import Kit from "../../library/Kit";
+
+const Styled_ul = styled.ul`
+  &&& {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    text-overflow: ellipsis;
+    list-style: none;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+  }
+`;
+
+const Styled_Badge = styled(Badge)`
+  &&& {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    text-overflow: ellipsis;
+    list-style: none;
+    font-size: 12px;
+  }
+`;
 
 function onPanelChange(value, mode) {
   console.log(value, mode);
 }
 
-function SelectionCalendar(props) {
+function onSelect(value){
+    Log.print(Kit.dateConvert(value));
+}
+
+function dateCellRender() {
+  const listData = [
+    { type: "warning", content: "This is warning event" },
+    { type: "success", content: "This is very long usual event。。............." },
+    { type: "error", content: "This is error event 1." },
+  ];
+  return (
+    <Styled_ul>
+      {listData.map((item) => (
+        <li key={item.content}>
+          <Styled_Badge status={item.type} text={item.content} />
+        </li>
+      ))}
+    </Styled_ul>
+  );
+}
+
+export default function SelectionCalendar(props) {
   return (
     <Calendar
       fullscreen={true}
@@ -76,8 +124,8 @@ function SelectionCalendar(props) {
         );
       }}
       onPanelChange={onPanelChange}
+      dateCellRender={dateCellRender}
+      onSelect={onSelect}
     />
   );
 }
-
-export default SelectionCalendar;

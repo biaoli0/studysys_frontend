@@ -4,15 +4,13 @@ import styled from "styled-components";
 import { Select } from "antd";
 const { Option } = Select;
 
-const Styled_Select = styled(Select)`
-  &&& {
-    width: 400px;
-  }
-`;
-
 function ListSelection(props) {
-  const { list, listName, itemKey, itemName } = props;
-
+  const { list, listName, itemKey, itemName, initialValue, width } = props;
+  const Styled_Select = styled(Select)`
+    &&& {
+      width: ${width};
+    }
+  `;
   return (
     <Form.Item
       name={listName}
@@ -22,6 +20,7 @@ function ListSelection(props) {
           message: `Please select a ${listName}`,
         },
       ]}
+      initialValue={initialValue ? initialValue : null}
     >
       <Styled_Select
         showSearch
@@ -30,6 +29,7 @@ function ListSelection(props) {
         filterOption={(input, option) =>
           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
         }
+        defaultValue={initialValue ? initialValue : null}
       >
         {list
           ? list.map((item, key) => {

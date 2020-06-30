@@ -6,7 +6,7 @@ import EditableTable from "../../../../component/global/EditableTable";
 import {
   editableCell,
   editDataIndex,
-  columnsSetting
+  columnsSetting,
 } from "../../../../config/course/CourseListConfig";
 import MyTimeAgo from "../../../../library/MyTimeAgo";
 
@@ -22,7 +22,7 @@ export default function CourseList() {
         fetchData = res.map((item, key) => ({
           ...item,
           key: key,
-          join_time:<MyTimeAgo ctime = {item["ctime"]}/>,
+          join_time: <MyTimeAgo ctime={item["ctime"]} />,
         }));
       } else fetchData = null;
       setDisplayData(fetchData);

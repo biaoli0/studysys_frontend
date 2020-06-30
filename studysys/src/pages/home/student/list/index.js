@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Table, Row, Col } from "antd";
-import { ColumnsConfig } from "../../../../config/student/StudentListConfig";
 import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
 import SearchBar from "../../../../component/global/SearchBar";
@@ -8,6 +7,7 @@ import MyTimeAgo from "../../../../library/MyTimeAgo";
 import StudentTypeListService from "../../../../library/StudentTypeListService";
 import { Log } from "../../../../library/Log";
 import styled from "styled-components";
+import {ColumnsConfig} from "../../../../config/student/StudentListConfig";
 
 const Styled_Row = styled(Row)`
   &&& {
@@ -21,24 +21,29 @@ function StudentList() {
   const [loading, setLoading] = useState(true);
   const searchBarTarget = "name";
 
-  useEffect(() => {
-    let fetchData;
+  const fetchData = async () => {
+    setLoading(true);
+    let newData;
     StudentTypeListService.updateList().then((r) => {
       api.getStudentList().then((res) => {
         if (res) {
-          fetchData = res.map((item, key) => ({
+          newData = res.map((item, key) => ({
             ...item,
             key: key,
             join_time: <MyTimeAgo ctime={item["ctime"]} />,
             type_name: StudentTypeListService.findNameById(item["type_id"]),
           }));
-          Log.print(fetchData);
-          setDisplayData(fetchData);
-          setOriginData(fetchData);
+          Log.print(newData);
+          setDisplayData(newData);
+          setOriginData(newData);
           setLoading(false);
         }
       });
     });
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const state = {
@@ -65,7 +70,7 @@ function StudentList() {
         </Col>
       </Styled_Row>
 
-      <Table {...state} columns={ColumnsConfig} dataSource={displayData} />
+      <Table {...state} columns={ColumnsConfig(fetchData)} dataSource={displayData} />
     </HomepageWrapper>
   );
 }

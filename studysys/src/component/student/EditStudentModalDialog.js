@@ -1,33 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { message, Button, DatePicker, Modal } from "antd";
+import { message, Button, DatePicker, Modal, Input, Spin } from "antd";
 import { api } from "../../library/axios/Api";
 import Form from "antd/lib/form";
 import styled from "styled-components";
 import ListSelection from "../global/ListSelection";
 
-const Styled_DatePicker = styled(DatePicker)`
-  &&& {
-    width: 400px;
-  }
-`;
-
 export function EditStudentModalDialog(props) {
-  const { record } = props;
+  const { record, fetchData } = props;
   const [visible, setVisible] = useState(false);
-  const [studentList, setStudentList] = useState(null);
-  const [courseList, setCourseList] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [studentType, setStudentType] = useState(null);
   const [form] = Form.useForm();
   const dateFormat = "DD/MM/YYYY";
 
   useEffect(() => {
-    api.getStudentList().then((res) => {
+    api.getStudentTypeList().then((res) => {
       if (res) {
-        setStudentList(res);
-      }
-    });
-    api.getCourseList().then((res) => {
-      if (res) {
-        setCourseList(res);
+        setStudentType(res);
       }
     });
   }, []);
@@ -36,19 +25,21 @@ export function EditStudentModalDialog(props) {
    * Submit form to backend when click save button.
    * @param values: Form value.
    */
-  const onCreate = (values) => {
+  const onSave = (values) => {
     console.log("Received values of form: ", values);
     api
-      .courseSelection(
-        values["Student"],
-        values["Course"],
-        values["date"].format("YYYY-MM-DD")
+      .updateStudent(
+        values["id"],
+        values["name"],
+        values["studentType"],
+        values["address"]
       )
       .then((res) => {
+        setLoading(false);
         if (res) {
           if (res["code"] === 0) {
             message.success(res["datas"]);
-            form.resetFields();
+            fetchData();
           } else message.error(res["message"]);
         }
       });
@@ -56,58 +47,76 @@ export function EditStudentModalDialog(props) {
 
   return (
     <div>
-      <Button
-        type="primary"
+      <a
         onClick={() => {
           setVisible(true);
         }}
       >
-        Add Selection
-      </Button>
+        Edit
+      </a>
+
       <Modal
         visible={visible}
-        title="Add Course Selection"
+        title={`Student ID: ${record["id"]}`}
         okText="Save"
         cancelText="Cancel"
         onCancel={() => {
           setVisible(false);
         }}
         onOk={() => {
+          setLoading(true);
           form
             .validateFields()
             .then((values) => {
-              onCreate(values);
+              onSave(values);
             })
             .catch((info) => {
               console.log("Validate Failed:", info);
             });
         }}
       >
-        <Form form={form} layout="vertical" name="form_in_modal">
-          <ListSelection
-            list={studentList}
-            listName="Student"
-            itemKey="id"
-            itemName="name"
-          />
-          <ListSelection
-            list={courseList}
-            listName="Course"
-            itemKey="id"
-            itemName="name"
-          />
-          <Form.Item
-            name="date"
-            rules={[
-              {
-                required: true,
-                message: `Please select a date`,
-              },
-            ]}
-          >
-            <Styled_DatePicker format={dateFormat} />
-          </Form.Item>
-        </Form>
+        <Spin spinning={loading}>
+          <Form form={form} layout="vertical" name="form_in_modal">
+            <Form.Item name="id" initialValue={record["id"]}>
+              <span>{`ID: ${record["id"]}`}</span>
+            </Form.Item>
+
+            <Form.Item
+              name="name"
+              rules={[
+                {
+                  required: true,
+                  message: `Please input a name`,
+                },
+              ]}
+              initialValue={record["name"]}
+            >
+              <Input defaultValue={record["name"]} />
+            </Form.Item>
+
+            <ListSelection
+              list={studentType}
+              listName="studentType"
+              itemKey="id"
+              itemName="name"
+              initialValue={record["type_id"]}
+              width="100%"
+            />
+
+            <Form.Item
+              name="address"
+              rules={[
+                {
+                  required: true,
+                  message: `Please input a address`,
+                },
+              ]}
+              initialValue={record["address"]}
+            >
+              <Input defaultValue={record["address"]} />
+            </Form.Item>
+          </Form>
+        </Spin>
       </Modal>
     </div>
   );

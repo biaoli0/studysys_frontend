@@ -7,6 +7,7 @@ import { SelectCourseModalDialog } from "../../../../component/student/SelectCou
 import SearchBar from "../../../../component/global/SearchBar";
 import styled from "styled-components";
 import SelectionCalendar from "../../../../component/student/SelectionCalendar";
+import Kit from "../../../../library/Kit";
 
 const { TabPane } = Tabs;
 
@@ -28,7 +29,7 @@ export default function StudentAdd() {
           ...item,
           key: key,
           course_date: item.hasOwnProperty("course_date")
-            ? new Date(item["course_date"]).toLocaleDateString()
+            ? Kit.dateConvert(item["course_date"])
             : "",
         }));
         setList(data);

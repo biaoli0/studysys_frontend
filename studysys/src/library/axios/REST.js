@@ -27,6 +27,7 @@ export const Rest = {
         getHeadersConfig()
       );
       if (res.data.code === 555) Router.push(URL_TARGET.TEACHER_LOGIN);
+      Log.print(res.data);
       return res.data;
     } catch (e) {
       Log.print(e);
@@ -41,6 +42,7 @@ export const Rest = {
       res = await Axios.get(BASE_URL + api_url, getHeadersConfig());
       if (res.data.code === 5) Router.push(URL_TARGET.TEACHER_LOGIN);
       if (res.data.code === 555) Router.push(URL_TARGET.TEACHER_LOGIN);
+      Log.print(res.data);
       return res.data;
     } catch (e) {
       Log.print(e);
