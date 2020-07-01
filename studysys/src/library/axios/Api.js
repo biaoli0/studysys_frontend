@@ -84,8 +84,8 @@ export const api = {
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.DELETE_COURSE
+      requestBody,
+      BACKEND_API_TARGET.DELETE_COURSE
     );
     if (responseData) return responseData;
     else return false;
@@ -97,8 +97,8 @@ export const api = {
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.DELETE_COURSE_TYPE
+      requestBody,
+      BACKEND_API_TARGET.DELETE_COURSE_TYPE
     );
     if (responseData) return responseData;
     else return false;
@@ -211,6 +211,13 @@ export const api = {
 
   getStudentTypeList: async () => {
     const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_TYPE_LIST);
+    return responseData.datas;
+  },
+
+  getSelectionByDate: async (date) => {
+    const responseData = await Rest.get(
+      BACKEND_API_TARGET.SELECTION_BY_DATE + date
+    );
     return responseData.datas;
   },
 

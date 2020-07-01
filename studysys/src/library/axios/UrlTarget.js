@@ -7,9 +7,9 @@ export const BACKEND_API_TARGET = {
   ADD_STUDENT: "student/add",
   DELETE_STUDENT: "student/delete",
   UPDATE_STUDENT: "student/update",
-  STUDENT_COURSE_LIST:"student/course/list",
-  STUDENT_COURSE_SELECTION:"student/course/add",
-  STUDENT_BY_ID:"student/info?id=",
+  STUDENT_COURSE_LIST: "student/course/list",
+  STUDENT_COURSE_SELECTION: "student/course/add",
+  STUDENT_BY_ID: "student/info?id=",
 
   // Course
   COURSE_LIST: "course/list",
@@ -18,13 +18,15 @@ export const BACKEND_API_TARGET = {
   DELETE_COURSE: "course/delete",
   UPDATE_COURSE: "course/update",
 
-// Course Type
+  // Course Selection
+  SELECTION_BY_DATE: "student/course/list?date=",
+
+  // Course Type
   ADD_COURSE_TYPE: "course/type/add",
   DELETE_COURSE_TYPE: "course/type/delete",
 
-// Student Type
-  STUDENT_TYPE_LIST:"student/type/list",
-
+  // Student Type
+  STUDENT_TYPE_LIST: "student/type/list",
 };
 
 export const URL_TARGET = {

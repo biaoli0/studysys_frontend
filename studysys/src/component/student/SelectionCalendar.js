@@ -3,7 +3,7 @@ import { Calendar, Select, Col, Row, Badge, Button } from "antd";
 import styled from "styled-components";
 import { Log } from "../../library/Log";
 import Kit from "../../library/Kit";
-import { SelectionDisplayModalDialog } from "./SelectionDisplayModalDialog";
+import { CalendarOnclickModalDialog } from "./CalendarOnclickModalDialog";
 
 const Styled_ul = styled.ul`
   &&& {
@@ -58,7 +58,6 @@ export default function SelectionCalendar(props) {
   const [selectedDate, setSelectedDate] = useState(null);
 
   function onSelect(value) {
-    Log.print(Kit.dateConvert(value));
     setSelectedDate(value);
     setVisible(true);
   }
@@ -129,7 +128,7 @@ export default function SelectionCalendar(props) {
                 </Select>
               </Col>
             </Row>
-            <SelectionDisplayModalDialog
+            <CalendarOnclickModalDialog
               visible={visible}
               setVisible={setVisible}
               selectedDate={selectedDate}
