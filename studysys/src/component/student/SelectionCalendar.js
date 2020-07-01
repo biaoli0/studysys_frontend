@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Calendar, Select, Col, Row, Badge, Button } from "antd";
 import styled from "styled-components";
-import { Log } from "../../library/Log";
 import Kit from "../../library/Kit";
 import { CalendarOnclickModalDialog } from "./CalendarOnclickModalDialog";
+import { api } from "../../library/axios/Api";
+import { Colors } from "../../config/student/StudentSelectionConfig";
 
 const Styled_ul = styled.ul`
   &&& {
@@ -29,37 +30,50 @@ const Styled_Badge = styled(Badge)`
   }
 `;
 
-function onPanelChange(value, mode) {
-  console.log(value, mode);
-}
-
-function dateCellRender() {
-  const listData = [
-    { type: "warning", content: "This is warning event" },
-    {
-      type: "success",
-      content: "This is very long usual event。。.............",
-    },
-    { type: "error", content: "This is error event 1." },
-  ];
-  return (
-    <Styled_ul>
-      {listData.map((item) => (
-        <li key={item.content}>
-          <Styled_Badge status={item.type} text={item.content} />
-        </li>
-      ))}
-    </Styled_ul>
-  );
-}
-
 export default function SelectionCalendar(props) {
   const [visible, setVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectionList, setSelectionList] = useState([
+    { key: 0, color: "pink", course_name: "null" },
+  ]);
+
+  useEffect(() => {
+    api.getStudentCourseList().then((res) => {
+      let newData = null;
+      if (res) {
+        newData = res.map((item, key) => ({
+          ...item,
+          key: key,
+          color: Colors[item.course_id],
+          month: parseInt(Kit.dateConvert(item["course_date"], "MM")),
+          day: parseInt(Kit.dateConvert(item["course_date"], "DD")) - 1,
+        }));
+      }
+      setSelectionList(newData);
+    });
+  }, []);
 
   function onSelect(value) {
-    setSelectedDate(value);
-    setVisible(true);
+    if (Kit.dateConvert(value) === Kit.dateConvert(selectedDate)) {
+      setVisible(true);
+    } else setSelectedDate(value);
+  }
+
+  function dateCellRender(value) {
+    const month = value.month();
+    const day = value.date();
+    const listData = selectionList.filter(
+      (item) => item["month"] === month && item["day"] === day
+    );
+    return (
+      <Styled_ul>
+        {listData.map((item) => (
+          <li key={item.key}>
+            <Styled_Badge color={item.color} text={item["course_name"]} />
+          </li>
+        ))}
+      </Styled_ul>
+    );
   }
 
   return (
@@ -136,7 +150,6 @@ export default function SelectionCalendar(props) {
           </div>
         );
       }}
-      onPanelChange={onPanelChange}
       dateCellRender={dateCellRender}
       onSelect={onSelect}
     />

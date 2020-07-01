@@ -28,10 +28,26 @@ export const ColumnsConfig = [
     key: "action",
     ellipsis: false,
     render: () => (
-        <span>
+      <span>
         <a style={{ marginRight: 16 }}>Edit</a>
         <a>Delete</a>
       </span>
     ),
   },
 ];
+
+export const Colors = {
+  1: "pink",
+  2: "red",
+  3: "yellow",
+  4: "orange",
+  5: "cyan",
+  6: "green",
+  7: "blue",
+  8: "purple",
+  9: "geekblue",
+  10: "magenta",
+  11: "volcano",
+  12: "gold",
+  13: "lime",
+};

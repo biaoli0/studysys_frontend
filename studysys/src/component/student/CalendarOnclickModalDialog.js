@@ -19,16 +19,21 @@ import Kit from "../../library/Kit";
 export function CalendarOnclickModalDialog(props) {
   const { visible, setVisible, selectedDate } = props;
   const dateFormat = "YYYY-MM-DD";
-  const [list, setList] = useState(null);
+  const [list, setList] = useState([{key: 0}]);
 
   useEffect(() => {
     if (selectedDate) {
+      let newList;
       api
         .getSelectionByDate(Kit.dateConvert(selectedDate, dateFormat))
         .then((res) => {
           if (res) {
-              setList(res);
-          }
+            newList = res.map((item, key) => ({
+              ...item,
+              key: key,
+            }));
+          } else newList = null;
+          setList(newList);
         });
     }
   }, [selectedDate]);
