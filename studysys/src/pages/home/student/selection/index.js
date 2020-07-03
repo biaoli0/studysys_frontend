@@ -3,10 +3,10 @@ import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
 import { Calendar, Col, Menu, message, Row, Table, Tabs } from "antd";
 import { ColumnsConfig } from "../../../../config/student/StudentSelectionConfig";
-import { SelectCourseModalDialog } from "../../../../component/student/SelectCourseModalDialog";
+import { SelectCourseModalDialog } from "../../../../component/student/selection/list_mode/SelectCourseModalDialog";
 import SearchBar from "../../../../component/global/SearchBar";
 import styled from "styled-components";
-import SelectionCalendar from "../../../../component/student/SelectionCalendar";
+import SelectionCalendar from "../../../../component/student/selection/calendar_mode/SelectionCalendar";
 import Kit from "../../../../library/Kit";
 
 const { TabPane } = Tabs;

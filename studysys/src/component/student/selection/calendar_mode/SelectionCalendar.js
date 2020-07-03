@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Calendar, Select, Col, Row, Badge, Button } from "antd";
 import styled from "styled-components";
-import Kit from "../../library/Kit";
+import Kit from "../../../../library/Kit";
 import { CalendarOnclickModalDialog } from "./CalendarOnclickModalDialog";
-import { api } from "../../library/axios/Api";
-import { Colors } from "../../config/student/StudentSelectionConfig";
+import { api } from "../../../../library/axios/Api";
+import { Colors } from "../../../../config/student/StudentSelectionConfig";
+import CourseListDropdown from "./CourseListDropdown";
 
 const Styled_ul = styled.ul`
   &&& {
@@ -37,8 +38,9 @@ export default function SelectionCalendar(props) {
     { key: 0, color: "pink", course_name: "null" },
   ]);
 
-  useEffect(() => {
-    api.getStudentCourseList().then((res) => {
+  const fetchData = async (courseId) => {
+    if (courseId === "all") courseId = "";
+    api.getStudentCourseList(courseId).then((res) => {
       let newData = null;
       if (res) {
         newData = res.map((item, key) => ({
@@ -51,14 +53,24 @@ export default function SelectionCalendar(props) {
       }
       setSelectionList(newData);
     });
+  };
+
+  useEffect(() => {
+    fetchData("all");
   }, []);
 
+  /**
+   * Action when a date is selected
+   */
   function onSelect(value) {
     if (Kit.dateConvert(value) === Kit.dateConvert(selectedDate)) {
       setVisible(true);
     } else setSelectedDate(value);
   }
 
+  /**
+   * Render a course selection list in a date cell
+   */
   function dateCellRender(value) {
     const month = value.month();
     const day = value.date();
@@ -75,6 +87,16 @@ export default function SelectionCalendar(props) {
       </Styled_ul>
     );
   }
+
+  /**
+   * Action when changing month or year
+   */
+  function onPanelChange() {}
+
+  /**
+   * Action when changing a course
+   */
+  function onCourseChange(newCourseId) {}
 
   return (
     <Calendar
@@ -100,7 +122,6 @@ export default function SelectionCalendar(props) {
           );
         }
         const month = value.month();
-
         const year = value.year();
         const options = [];
         for (let i = year - 10; i < year + 10; i += 1) {
@@ -110,6 +131,7 @@ export default function SelectionCalendar(props) {
             </Select.Option>
           );
         }
+
         return (
           <div style={{ padding: 8 }}>
             <Row gutter={8}>
@@ -141,7 +163,12 @@ export default function SelectionCalendar(props) {
                   {monthOptions}
                 </Select>
               </Col>
+
+              <Col>
+                <CourseListDropdown onChange={fetchData}/>
+              </Col>
             </Row>
+
             <CalendarOnclickModalDialog
               visible={visible}
               setVisible={setVisible}
@@ -152,6 +179,7 @@ export default function SelectionCalendar(props) {
       }}
       dateCellRender={dateCellRender}
       onSelect={onSelect}
+      onPanelChange={onPanelChange}
     />
   );
 }

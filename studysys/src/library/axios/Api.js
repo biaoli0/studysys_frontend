@@ -68,8 +68,11 @@ export const api = {
     return responseData.datas;
   },
 
-  getStudentCourseList: async () => {
-    const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_COURSE_LIST);
+  getStudentCourseList: async (courseId) => {
+    const courseParams = courseId ? `course_id=${courseId}` : "";
+    const responseData = await Rest.get(
+      BACKEND_API_TARGET.STUDENT_COURSE_LIST + courseParams
+    );
     return responseData.datas;
   },
 

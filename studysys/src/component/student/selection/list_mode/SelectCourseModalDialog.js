@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { message, Button, DatePicker, Modal } from "antd";
-import { api } from "../../library/axios/Api";
+import { api } from "../../../../library/axios/Api";
 import Form from "antd/lib/form";
 import styled from "styled-components";
-import ListSelection from "../global/ListSelection";
+import ListSelection from "../../../global/ListSelection";
 
 const Styled_DatePicker = styled(DatePicker)`
   &&& {

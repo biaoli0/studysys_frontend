@@ -7,7 +7,7 @@ export const BACKEND_API_TARGET = {
   ADD_STUDENT: "student/add",
   DELETE_STUDENT: "student/delete",
   UPDATE_STUDENT: "student/update",
-  STUDENT_COURSE_LIST: "student/course/list",
+  STUDENT_COURSE_LIST: "student/course/list?",
   STUDENT_COURSE_SELECTION: "student/course/add",
   STUDENT_BY_ID: "student/info?id=",
 

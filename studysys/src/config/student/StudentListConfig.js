@@ -1,6 +1,6 @@
 import React from "react";
 import { Log } from "../../library/Log";
-import { EditStudentModalDialog } from "../../component/student/EditStudentModalDialog";
+import { EditStudentModalDialog } from "../../component/student/list/EditStudentModalDialog";
 import { Popconfirm, message } from "antd";
 import { api } from "../../library/axios/Api";
 
