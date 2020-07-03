@@ -1,7 +1,7 @@
 export const BACKEND_API_TARGET = {
   // Login
   TEACHER_LOGIN: "teacher/login",
-
+  STUDENT_LOGIN: "student/login",
   // Student
   STUDENT_LIST: "student/list",
   ADD_STUDENT: "student/add",
@@ -19,7 +19,7 @@ export const BACKEND_API_TARGET = {
   UPDATE_COURSE: "course/update",
 
   // Course Selection
-  SELECTION_BY_DATE: "student/course/list?date=",
+  SELECTION_BY_DATE: "student/course/list",
 
   // Course Type
   ADD_COURSE_TYPE: "course/type/add",
@@ -27,6 +27,7 @@ export const BACKEND_API_TARGET = {
 
   // Student Type
   STUDENT_TYPE_LIST: "student/type/list",
+
 };
 
 export const URL_TARGET = {

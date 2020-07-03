@@ -24,17 +24,25 @@ export const api = {
    *            {token} If user succeed, this is the token from backend server.
    *            {isAuthenticated} Whether user succeed.
    */
-  verifyUser: async (email, password) => {
+  verifyUser: async (login_type, email, password) => {
     const requestBody = {
       email: email,
       password: password,
     };
 
+    let apiTarget;
+    switch (login_type) {
+      case "student":
+        apiTarget = BACKEND_API_TARGET.STUDENT_LOGIN;
+        break;
+      case "teacher":
+        apiTarget = BACKEND_API_TARGET.TEACHER_LOGIN;
+        break;
+      default:
+        return { message: "false", isAuthenticated: false };
+    }
     // Send a POST request with userId and password
-    const responseData = await Rest.post(
-      requestBody,
-      BACKEND_API_TARGET.TEACHER_LOGIN
-    );
+    const responseData = await Rest.post(requestBody, apiTarget);
     if (!responseData) {
       return {
         message: "Server is down, please try again later",
@@ -217,9 +225,10 @@ export const api = {
     return responseData.datas;
   },
 
-  getSelectionByDate: async (date) => {
+  getSelection: async (date, course_id) => {
+    if (!course_id) course_id= "";
     const responseData = await Rest.get(
-      BACKEND_API_TARGET.SELECTION_BY_DATE + date
+      `${BACKEND_API_TARGET.SELECTION_BY_DATE}?course_id=${course_id}&date=${date}`
     );
     return responseData.datas;
   },

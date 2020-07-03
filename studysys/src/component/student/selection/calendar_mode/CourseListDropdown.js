@@ -15,7 +15,7 @@ const Styled_Select = styled(Select)`
 
 function CourseListDropdown(props) {
   const [list, setList] = useState();
-  const { onChange } = props;
+  const { setSelectedCourse } = props;
 
   useEffect(() => {
     api.getCourseList().then((res) => {
@@ -25,7 +25,7 @@ function CourseListDropdown(props) {
           ...item,
           key: key,
         }));
-        newList.unshift({ name: "All", id: "all" });
+        newList.unshift({ name: "All", id: "" });
         setList(newList);
       }
     });
@@ -36,7 +36,7 @@ function CourseListDropdown(props) {
       showSearch
       placeholder="Course"
       optionFilterProp="children"
-      onChange={(e) => onChange(e)}
+      onChange={(e) => setSelectedCourse(e)}
       filterOption={(input, option) =>
         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }

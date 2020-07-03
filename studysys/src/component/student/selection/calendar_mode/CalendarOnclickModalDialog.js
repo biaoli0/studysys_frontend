@@ -17,7 +17,7 @@ import { Log } from "../../../../library/Log";
 import Kit from "../../../../library/Kit";
 
 export function CalendarOnclickModalDialog(props) {
-  const { visible, setVisible, selectedDate } = props;
+  const { visible, setVisible, selectedDate,selectedCourse } = props;
   const dateFormat = "YYYY-MM-DD";
   const [list, setList] = useState([{key: 0}]);
 
@@ -25,7 +25,7 @@ export function CalendarOnclickModalDialog(props) {
     if (selectedDate) {
       let newList;
       api
-        .getSelectionByDate(Kit.dateConvert(selectedDate, dateFormat))
+        .getSelection(Kit.dateConvert(selectedDate, dateFormat),selectedCourse)
         .then((res) => {
           if (res) {
             newList = res.map((item, key) => ({
@@ -36,7 +36,7 @@ export function CalendarOnclickModalDialog(props) {
           setList(newList);
         });
     }
-  }, [selectedDate]);
+  }, [selectedDate,selectedCourse]);
 
   const columns = [
     {

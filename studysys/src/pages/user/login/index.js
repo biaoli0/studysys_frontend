@@ -1,32 +1,25 @@
 import React, { useState } from "react";
-import { Form, Button, Row, Col, Divider } from "antd";
+import { Form, Button, Row, Col, Divider, Select, Space, message } from "antd";
 import { inputConfig } from "../../../config/user/FormConfig";
 import styled from "styled-components";
 import Router from "next/router";
 import { api } from "../../../library/axios/Api";
-import AlertMessage from "../../../component/user/AlertMessage";
 import { Log } from "../../../library/Log";
 
-const layout = {
-  labelCol: {
-    span: 5,
-  },
-  wrapperCol: {
-    span: 17,
-  },
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 4,
-    span: 16,
-  },
-};
+const Option = Select.Option;
 
 const Styled_Button = styled(Button)`
   &&& {
-    width: 50%;
+    width: 100%;
   }
 `;
+
+const Styled_Select = styled(Select)`
+  &&& {
+    width: 100%;
+  }
+`;
+
 const DemoBox = styled.p`
   &&& {
     height: 100px;
@@ -35,77 +28,92 @@ const DemoBox = styled.p`
 
 //Login page
 export default function Login() {
-  const [isAuthenticated, setIsAuthenticated] = useState(undefined);
-  const [message, setMessage] = useState(undefined);
-
   /**
    * Handle submit action. if user is authenticated, the website will redirect to the URL user input
    */
   const onFinish = (values) => {
     console.log(values);
-    api.verifyUser(values.username, values.password).then((data) => {
-      Log.print(data);
-      setMessage(data.message);
-      setIsAuthenticated(data.isAuthenticated);
-      // If user is authenticated, save the token and redirect to the URL user input
-      if (data.isAuthenticated) {
-        // let path = props.location.state.from || "/home";
-        // console.log(path);
-        Router.push("/home/student/list");
-      }
-    });
+    api
+      .verifyUser(values.login_type, values.username, values.password)
+      .then((data) => {
+        Log.print(data);
+        if (data.isAuthenticated) message.success(data.message);
+        else message.error(data.message);
+        // If user is authenticated, save the token and redirect to the URL user input
+        if (data.isAuthenticated) {
+          // let path = props.location.state.from || "/home";
+          // console.log(path);
+          Router.push("/home/student/list");
+        }
+      });
   };
 
   return (
-    <div align="middle" style={{ height: "100%" }}>
-      {isAuthenticated !== undefined ? (
-        <AlertMessage isAuthenticated={isAuthenticated} message={message} />
-      ) : null}
+    <div align="center" style={{ height: "100%" }}>
       <Row justify="space-around">
         <Col span={8}>
           <DemoBox>{}</DemoBox>
         </Col>
       </Row>
-      <Row type="flex" justify="center" align="middle">
-        <Col span={8}>
-          <h2>Curriculum Assistant</h2>
-          <Divider />
-          {/* Email and password input item */}
-          <Form
-            {...layout}
-            name="basic"
-            initialValues={{
-              remember: true,
-            }}
-            onFinish={onFinish}
-          >
-            {inputConfig.map((item) => {
-              return (
-                <Form.Item
-                  key={item.key}
-                  label={item.label}
-                  name={item.name}
-                  rules={[
-                    {
-                      type: item.type,
-                      required: true,
-                      message: item.message,
-                    },
-                  ]}
-                >
-                  {item.input}
-                </Form.Item>
-              );
-            })}
 
-            <Form.Item {...tailLayout}>
-              <Styled_Button type="primary" htmlType="submit">
-                Login
-              </Styled_Button>
-            </Form.Item>
-          </Form>
-        </Col>
-      </Row>
+      <Space direction="vertical">
+        <h2>Curriculum Assistant</h2>
+        <Divider />
+        {/* Email and password input item */}
+
+        <Form
+          name="basic"
+          layout="vertical"
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
+        >
+          <Form.Item
+            key="2"
+            name="login_type"
+            rules={[
+              {
+                required: true,
+                message: "Please select a login type",
+              },
+            ]}
+          >
+            <Styled_Select showSearch placeholder="Login Type">
+              <Option key="0" value="teacher">
+                Teacher
+              </Option>
+              <Option key="1" value="student">
+                Student
+              </Option>
+            </Styled_Select>
+          </Form.Item>
+
+          {inputConfig.map((item) => {
+            return (
+              <Form.Item
+                key={item.key}
+                name={item.name}
+                rules={[
+                  {
+                    type: item.type,
+                    required: true,
+                    message: item.message,
+                  },
+                ]}
+              >
+                {item.input}
+              </Form.Item>
+            );
+          })}
+
+          <Form.Item>
+            <Styled_Button type="primary" htmlType="submit">
+              Login
+            </Styled_Button>
+          </Form.Item>
+        </Form>
+      </Space>
     </div>
   );
 }

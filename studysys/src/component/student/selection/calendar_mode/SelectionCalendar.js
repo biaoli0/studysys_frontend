@@ -6,6 +6,7 @@ import { CalendarOnclickModalDialog } from "./CalendarOnclickModalDialog";
 import { api } from "../../../../library/axios/Api";
 import { Colors } from "../../../../config/student/StudentSelectionConfig";
 import CourseListDropdown from "./CourseListDropdown";
+import { Log } from "../../../../library/Log";
 
 const Styled_ul = styled.ul`
   &&& {
@@ -33,14 +34,18 @@ const Styled_Badge = styled(Badge)`
 
 export default function SelectionCalendar(props) {
   const [visible, setVisible] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState("2020-07-01");
+  const [selectedMonth, setSelectedMonth] = useState("2020-07");
+  const [selectedCourse, setSelectedCourse] = useState("");
   const [selectionList, setSelectionList] = useState([
     { key: 0, color: "pink", course_name: "null" },
   ]);
 
-  const fetchData = async (courseId) => {
-    if (courseId === "all") courseId = "";
-    api.getStudentCourseList(courseId).then((res) => {
+  const fetchData = async (date, courseId) => {
+      Log.print("date");
+      Log.print(date);
+      Log.print(courseId);
+    api.getSelection(date, courseId).then((res) => {
       let newData = null;
       if (res) {
         newData = res.map((item, key) => ({
@@ -48,16 +53,18 @@ export default function SelectionCalendar(props) {
           key: key,
           color: Colors[item.course_id],
           month: parseInt(Kit.dateConvert(item["course_date"], "MM")),
-          day: parseInt(Kit.dateConvert(item["course_date"], "DD")) - 1,
+          day: parseInt(Kit.dateConvert(item["course_date"], "DD")),
         }));
       }
+      Log.print("newData");
+      Log.print(newData);
       setSelectionList(newData);
     });
   };
 
   useEffect(() => {
-    fetchData("all");
-  }, []);
+    fetchData(selectedMonth, selectedCourse);
+  }, [selectedMonth,selectedCourse]);
 
   /**
    * Action when a date is selected
@@ -75,7 +82,7 @@ export default function SelectionCalendar(props) {
     const month = value.month();
     const day = value.date();
     const listData = selectionList.filter(
-      (item) => item["month"] === month && item["day"] === day
+      (item) => item["month"] === month+1 && item["day"] === day
     );
     return (
       <Styled_ul>
@@ -91,7 +98,12 @@ export default function SelectionCalendar(props) {
   /**
    * Action when changing month or year
    */
-  function onPanelChange() {}
+  function onPanelChange(value) {
+      const newDate = Kit.dateConvert(value, "YYYY-MM");
+      Log.print("onPanelChange");
+      Log.print(newDate);
+      setSelectedMonth(newDate);
+  }
 
   /**
    * Action when changing a course
@@ -165,7 +177,7 @@ export default function SelectionCalendar(props) {
               </Col>
 
               <Col>
-                <CourseListDropdown onChange={fetchData}/>
+                <CourseListDropdown setSelectedCourse={setSelectedCourse} />
               </Col>
             </Row>
 
@@ -173,6 +185,7 @@ export default function SelectionCalendar(props) {
               visible={visible}
               setVisible={setVisible}
               selectedDate={selectedDate}
+              selectedCourse={selectedCourse}
             />
           </div>
         );

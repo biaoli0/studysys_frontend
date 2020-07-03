@@ -8,7 +8,7 @@ export const inputConfig = [
     name: "username",
     type: "email",
     message: "Your input email format is not valid",
-    input: <Input />,
+    input: <Input placeholder="Email"/>,
   },
   {
     key: "1",
@@ -16,6 +16,6 @@ export const inputConfig = [
     name: "password",
     type: "",
     message: "Please input your Password",
-    input: <Input.Password />,
+    input: <Input placeholder="Password" type="password" />,
   },
 ];
