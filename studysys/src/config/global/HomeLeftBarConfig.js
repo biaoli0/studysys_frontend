@@ -1,27 +1,25 @@
 import React from "react";
 import { HomeOutlined, UserOutlined, ReadOutlined } from "@ant-design/icons";
+import Router from "next/router";
+import { URL_TARGET } from "../../library/axios/UrlTarget";
+import { Log } from "../../library/Log";
 
-export default class LeftMenuConfig {
-  static getAll() {
-    return [
-      ...homeRoutes,
-      ...studentRoutes.menuItems,
-      ...courseRoutes.menuItems,
-    ];
-  }
+export const LeftMenuConfig = {
+  getAll: () => {
+    if (localStorage === undefined) Router.push(URL_TARGET.TEACHER_LOGIN);
+    const login_type = localStorage.getItem("login-type");
+    Log.print("login-type");
+    Log.print(login_type);
+    if (login_type === "teacher")
+      return [{ ...studentRoutesForTeacher }, { ...courseRoutesForTeacher }];
+    else if (login_type === "student") return [{ ...studentRoutesForStudent }];
+    else Router.push(URL_TARGET.TEACHER_LOGIN);
+  },
 
-  static getHome() {
+  getHome: () => {
     return [...homeRoutes];
-  }
-
-  static getStudent() {
-    return { ...studentRoutes };
-  }
-
-  static getCourse() {
-    return { ...courseRoutes };
-  }
-}
+  },
+};
 
 const homeRoutes = [
   {
@@ -33,7 +31,7 @@ const homeRoutes = [
   },
 ];
 
-const studentRoutes = {
+const studentRoutesForTeacher = {
   key: "student",
   title: "Students",
   icon: () => <UserOutlined />,
@@ -65,7 +63,23 @@ const studentRoutes = {
   ],
 };
 
-const courseRoutes = {
+const studentRoutesForStudent = {
+  key: "student",
+  title: "Student",
+  icon: () => <UserOutlined />,
+  menuItems: [
+    {
+      key: "student selection",
+      category: "student",
+      subcategory: "selection",
+      exact: true,
+      title: "Selection",
+      icon: () => null,
+    },
+  ],
+};
+
+const courseRoutesForTeacher = {
   key: "course",
   title: "Course",
   icon: () => <ReadOutlined />,

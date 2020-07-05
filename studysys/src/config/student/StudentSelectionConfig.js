@@ -50,4 +50,6 @@ export const Colors = {
   11: "volcano",
   12: "gold",
   13: "lime",
+  14: "#708090",
+  15: "#FFF5EE",
 };

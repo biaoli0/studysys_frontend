@@ -7,7 +7,7 @@ import { api } from "../../library/axios/Api";
 import { Log } from "../../library/Log";
 import MyBreadCrumb from "./MyBreadCrumb";
 import LeftMenu from "./LeftMenu";
-import HomeLeftBarConfig from "../../config/global/HomeLeftBarConfig";
+import {LeftMenuConfig} from "../../config/global/HomeLeftBarConfig";
 const { Header, Content, Sider } = Layout;
 
 const Styled_Header = styled(Header)`
@@ -37,7 +37,7 @@ export default function HomepageWrapper({ children }) {
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
         <div className="logo" />
-        <LeftMenu location={location} locationString={locationString} homeLeftBarConfig={HomeLeftBarConfig}/>
+        <LeftMenu location={location} locationString={locationString} homeLeftBarConfig={LeftMenuConfig}/>
       </Sider>
 
       <Layout>

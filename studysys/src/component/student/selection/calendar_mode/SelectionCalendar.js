@@ -51,7 +51,7 @@ export default function SelectionCalendar(props) {
         newData = res.map((item, key) => ({
           ...item,
           key: key,
-          color: Colors[item.course_id],
+          color: Colors[parseInt(item.course_id)%14],
           month: parseInt(Kit.dateConvert(item["course_date"], "MM")),
           day: parseInt(Kit.dateConvert(item["course_date"], "DD")),
         }));

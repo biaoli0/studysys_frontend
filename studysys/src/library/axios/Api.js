@@ -49,14 +49,19 @@ export const api = {
         isAuthenticated: false,
       };
     } else {
+      let message, isAuthenticated;
       // Message
-      const message = responseData.message;
+      message = responseData.message;
       // Token
       const token = !responseData.datas ? undefined : responseData.datas.token;
       await saveToken(token);
-      // Whether user is successful
-      const isAuthenticated = responseData.code === 0;
-
+      // Whether user is successfully login
+      if (responseData.hasOwnProperty("code") && responseData.code === 0){
+        isAuthenticated = responseData.code === 0;
+        const loginType = responseData.datas.login_type;
+        Log.print("save loginType to LocalStorage, login-type: " + loginType);
+        await localStorage.setItem("login-type", login_type);
+      }
       return { message, isAuthenticated };
     }
   },
