@@ -43,12 +43,10 @@ export default function LeftMenu(props) {
   const { location, locationString, homeLeftBarConfig } = props;
   const [menus, setMenus] = useState();
 
-  // useEffect(() => {
-  //   homeLeftBarConfig.getAll().then(res => {
-  //     setMenus(res);
-  //     Log.print(res);
-  //   });
-  // });
+  useEffect(() => {
+    const res = homeLeftBarConfig.getAll();
+    setMenus(res);
+  }, []);
 
   return (
     <Menu
@@ -58,7 +56,7 @@ export default function LeftMenu(props) {
       defaultOpenKeys={[location[2]]}
     >
       {renderMenuItems(homeLeftBarConfig.getHome())}
-      {renderMenu( homeLeftBarConfig.getAll())}
+      {renderMenu(menus)}
     </Menu>
   );
 }

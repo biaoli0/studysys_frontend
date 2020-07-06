@@ -6,10 +6,7 @@ import { Log } from "../../library/Log";
 
 export const LeftMenuConfig = {
   getAll: () => {
-    if (localStorage === undefined) Router.push(URL_TARGET.TEACHER_LOGIN);
     const login_type = localStorage.getItem("login-type");
-    Log.print("login-type");
-    Log.print(login_type);
     if (login_type === "teacher")
       return [{ ...studentRoutesForTeacher }, { ...courseRoutesForTeacher }];
     else if (login_type === "student") return [{ ...studentRoutesForStudent }];
