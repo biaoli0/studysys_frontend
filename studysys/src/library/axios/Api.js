@@ -66,9 +66,11 @@ export const api = {
     }
   },
 
-  getStudentList: async () => {
-    const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_LIST);
-    return responseData.datas;
+  getStudentList: async (current,pageSize) => {
+    const pageParam = `page=${current}`;
+    const pageSizeParam = `pagesize=${pageSize}`;
+    const responseData = await Rest.get(`${BACKEND_API_TARGET.STUDENT_LIST}?${pageParam}&${pageSizeParam}`);
+    return responseData;
   },
 
   getStudentById: async (id) => {
@@ -76,9 +78,12 @@ export const api = {
     return responseData.datas;
   },
 
-  getCourseList: async () => {
-    const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_LIST);
-    return responseData.datas;
+  getCourseList: async (current,pageSize) => {
+    const pageParam = current?`page=${current}`:`page=0`;
+    const pageSizeParam = pageSize?`pagesize=${pageSize}`:`pagesize=5000`;
+    const responseData = await Rest.get(`${BACKEND_API_TARGET.COURSE_LIST}?${pageParam}&${pageSizeParam}`);
+    console.log(responseData);
+    return responseData;
   },
 
   getStudentCourseList: async (courseId) => {
@@ -87,6 +92,14 @@ export const api = {
       BACKEND_API_TARGET.STUDENT_COURSE_LIST + courseParams
     );
     return responseData.datas;
+  },
+
+  getStudentCourseListWithPage: async (current,pageSize) => {
+    const pageParam = `page=${current}`;
+    const pageSizeParam = `pagesize=${pageSize}`;
+    const responseData = await Rest.get(`${BACKEND_API_TARGET.STUDENT_COURSE_LIST}${pageParam}&${pageSizeParam}`);
+
+    return responseData;
   },
 
   getCourseTypeList: async () => {

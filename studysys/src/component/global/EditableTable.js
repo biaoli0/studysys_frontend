@@ -10,9 +10,11 @@ export default function EditableTable(props) {
     originData,
     setOriginData,
     displayData,
-    setDisplayData,
+    pagination,
+    onChange,
     editDataIndex,
     columnsSetting,
+    loading,
   } = props;
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
@@ -140,6 +142,7 @@ export default function EditableTable(props) {
   return (
     <Form form={form} component={false}>
       <Table
+        loading={loading}
         components={{
           body: {
             cell: EditableCell,
@@ -150,8 +153,10 @@ export default function EditableTable(props) {
         columns={mergedColumns}
         rowClassName="editable-row"
         pagination={{
+          ...pagination,
           onChange: cancel,
         }}
+        onChange={onChange}
       />
     </Form>
   );

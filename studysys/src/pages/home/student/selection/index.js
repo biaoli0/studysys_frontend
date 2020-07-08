@@ -18,33 +18,47 @@ const Styled_Row = styled(Row)`
 `;
 
 export default function SelectionAdd() {
+  const [loading, setLoading] = useState(true);
   const [list, setList] = useState(null);
   const [displayList, setDisplayList] = useState(null);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    position: "bottom",
+    showSizeChanger: true,
+    total: 400,
+  });
   const searchBarTarget = "student_name";
 
-  const fetchData = () => {
-    api.getStudentCourseList().then((res) => {
-      if (res) {
-        const data = res.map((item, key) => ({
-          ...item,
-          key: key,
-          course_date: item.hasOwnProperty("course_date")
-            ? Kit.dateConvert(item["course_date"])
-            : "",
-        }));
-        setList(data);
-        setDisplayList(data);
-      }
-    });
+  const fetchData = async (page) => {
+    console.log(page);
+    setLoading(true);
+    api
+      .getStudentCourseListWithPage(page.current - 1, page.pageSize)
+      .then((res) => {
+        if (res && res.hasOwnProperty("datas")) {
+          const data = res.datas.map((item, key) => ({
+            ...item,
+            key: key,
+            course_date: item.hasOwnProperty("course_date")
+              ? Kit.dateConvert(item["course_date"])
+              : "",
+          }));
+          setPagination({ ...page, total: res.pager.rowcount });
+          setList(data);
+          setDisplayList(data);
+          setLoading(false);
+        }
+      });
   };
   useEffect(() => {
-    fetchData();
+    fetchData(pagination);
   }, []);
 
   const state = {
     bordered: false,
-    loading: false,
-    pagination: { position: "bottom" },
+    loading,
+    pagination,
     size: "default",
     title: undefined,
     showHeader: true,
@@ -57,7 +71,7 @@ export default function SelectionAdd() {
     <HomepageWrapper>
       <Styled_Row gutter={8}>
         <Col>
-          <SelectCourseModalDialog fetchData={fetchData}/>
+          <SelectCourseModalDialog fetchData={fetchData} />
         </Col>
         <Col>
           <SearchBar
@@ -69,7 +83,14 @@ export default function SelectionAdd() {
       </Styled_Row>
       <Tabs defaultActiveKey="1">
         <TabPane tab="List Mode" key="1">
-          <Table {...state} columns={ColumnsConfig} dataSource={displayList} />
+          <Table
+            {...state}
+            columns={ColumnsConfig}
+            dataSource={displayList}
+            onChange={(pagination, filters, sorter) => {
+              fetchData(pagination);
+            }}
+          />
         </TabPane>
         <TabPane tab="Calendar Mode" key="2">
           <SelectionCalendar />

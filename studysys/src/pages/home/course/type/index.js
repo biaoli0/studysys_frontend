@@ -15,12 +15,14 @@ const Styled_Row = styled(Row)`
 `;
 
 export default function CourseType() {
+  const [loading, setLoading] = useState(true);
   const [originData, setOriginData] = useState(null);
   const [displayData, setDisplayData] = useState(null);
   const searchBarTarget = "name";
 
   const fetchData = () => {
     let newData;
+    setLoading(true);
     api.getCourseTypeList().then((res) => {
       Log.print(res);
       if (res) {
@@ -31,6 +33,8 @@ export default function CourseType() {
       } else newData = null;
       setDisplayData(newData);
       setOriginData(newData);
+      setLoading(false);
+
     });
   };
 
@@ -40,7 +44,7 @@ export default function CourseType() {
 
   const state = {
     bordered: false,
-    loading: false,
+    loading,
     pagination: { position: "bottom" },
     size: "default",
     title: undefined,

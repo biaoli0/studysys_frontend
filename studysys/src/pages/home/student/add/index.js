@@ -17,8 +17,8 @@ export default function StudentAdd() {
       }
     });
     api.getCourseList().then((res) => {
-      if (res) {
-        setCourseList(res);
+      if (res && res.hasOwnProperty("datas")) {
+        setCourseList(res.datas);
       }
     });
   }, []);

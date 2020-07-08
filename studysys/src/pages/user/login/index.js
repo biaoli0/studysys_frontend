@@ -43,7 +43,10 @@ export default function Login() {
         if (data.isAuthenticated) {
           // let path = props.location.state.from || "/home";
           // console.log(path);
-          Router.push("/home/student/list");
+          const loginType = localStorage.getItem("login-type");
+          if (loginType === "teacher") Router.push("/home/student/list");
+          else if (loginType === "student")
+            Router.push("/home/student/selection");
         }
       });
   };

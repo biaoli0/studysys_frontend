@@ -11,27 +11,38 @@ import {
 import MyTimeAgo from "../../../../library/MyTimeAgo";
 
 export default function CourseList() {
+  const [loading, setLoading] = useState(true);
   const [originData, setOriginData] = useState(null);
   const [displayData, setDisplayData] = useState(null);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    position: "bottom",
+    showSizeChanger: true,
+    total: 400,
+  });
   const searchBarTarget = "type_name";
 
-  const fetchData = () => {
+  const fetchData = async (page) => {
+    setLoading(true);
     let newData;
-    api.getCourseList().then((res) => {
-      if (res) {
-        newData = res.map((item, key) => ({
+    api.getCourseList(page.current - 1, page.pageSize).then((res) => {
+      if (res && res.hasOwnProperty("datas")) {
+        newData = res.datas.map((item, key) => ({
           ...item,
           key: key,
           join_time: <MyTimeAgo ctime={item["ctime"]} />,
         }));
       } else newData = null;
+      setPagination({ ...page, total: res.pager.rowcount });
       setDisplayData(newData);
       setOriginData(newData);
+      setLoading(false);
     });
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(pagination);
   }, []);
 
   return (
@@ -43,14 +54,18 @@ export default function CourseList() {
       />
 
       <EditableTable
+        loading={loading}
+        pagination={pagination}
         fetchData={fetchData}
         EditableCell={editableCell}
         originData={originData}
         setOriginData={setOriginData}
         displayData={displayData}
-        setDisplayData={setDisplayData}
         editDataIndex={editDataIndex}
         columnsSetting={columnsSetting}
+        onChange={(pagination, filters, sorter) => {
+          fetchData(pagination);
+        }}
       />
     </HomepageWrapper>
   );
