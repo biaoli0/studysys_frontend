@@ -27,6 +27,10 @@ export const BACKEND_API_TARGET = {
 
   // Manager
   MANAGER_LOGIN: "manager/login",
+  MANAGER_LIST:"manager/list",
+  MANAGER_ADD:"manager/add",
+  MANAGER_UPDATE:"manager/update",
+  MANAGER_DELETE:"manager/delete",
 
   // Course Selection
   SELECTION_BY_DATE: "student/course/list",

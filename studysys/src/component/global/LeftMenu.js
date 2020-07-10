@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Menu } from "antd";
 import Link from "next/link";
 import { Log } from "../../library/Log";
+import {LeftMenuConfig} from "../../config/global/HomeLeftBarConfig";
 const ROUTE_PATH = "home";
 const { SubMenu } = Menu;
 
@@ -40,11 +41,11 @@ function renderMenuItems(menuItems) {
 }
 
 export default function LeftMenu(props) {
-  const { location, locationString, homeLeftBarConfig } = props;
+  const { location, locationString } = props;
   const [menus, setMenus] = useState();
 
   useEffect(() => {
-    const res = homeLeftBarConfig.getAll();
+    const res = LeftMenuConfig.getAll();
     setMenus(res);
   }, []);
 
@@ -55,7 +56,7 @@ export default function LeftMenu(props) {
       mode="inline"
       defaultOpenKeys={[location[2]]}
     >
-      {renderMenuItems(homeLeftBarConfig.getHome())}
+      {renderMenuItems(LeftMenuConfig.getHome())}
       {renderMenu(menus)}
     </Menu>
   );

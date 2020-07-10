@@ -173,8 +173,21 @@ export const api = {
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.DELETE_TEACHER
+      requestBody,
+      BACKEND_API_TARGET.DELETE_TEACHER
+    );
+    if (responseData) return responseData;
+    else return false;
+  },
+
+  deleteManager: async (id) => {
+    const requestBody = {
+      id: id,
+    };
+
+    const responseData = await Rest.post(
+      requestBody,
+      BACKEND_API_TARGET.MANAGER_DELETE
     );
     if (responseData) return responseData;
     else return false;
@@ -293,7 +306,7 @@ export const api = {
   addTeacher: async (username, email, password) => {
     const requestBody = {
       name: username,
-      email:email,
+      email: email,
       password: password,
     };
 
@@ -304,5 +317,28 @@ export const api = {
 
     if (responseData) return responseData;
     else return false;
+  },
+
+  addManager: async (nickname, email, password) => {
+    const requestBody = {
+      nickname: nickname,
+      email: email,
+      password: password,
+    };
+
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.MANAGER_ADD
+    );
+
+    if (responseData) return responseData;
+    else return false;
+  },
+
+  getManagerList: async (params) => {
+    const responseData = await Rest.get(
+      `${BACKEND_API_TARGET.MANAGER_LIST}?${toURLParam(params)}`
+    );
+    return responseData;
   },
 };

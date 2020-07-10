@@ -14,7 +14,7 @@ export const LeftMenuConfig = {
       return [
         { ...teacherRoutesForManager },
         { ...studentRoutesForTeacher },
-        { ...courseRoutesForTeacher },
+        { ...managerRoutesForManager },
       ];
     else Router.push(URL_TARGET.TEACHER_LOGIN);
   },
@@ -125,6 +125,22 @@ const teacherRoutesForManager = {
       subcategory: "list",
       exact: true,
       title: "Teacher List",
+      icon: () => null,
+    },
+  ],
+};
+
+const managerRoutesForManager = {
+  key: "manager",
+  title: "Manager",
+  icon: () => <UserOutlined />,
+  menuItems: [
+    {
+      key: "manager list",
+      category: "manager",
+      subcategory: "list",
+      exact: true,
+      title: "Manager List",
       icon: () => null,
     },
   ],
