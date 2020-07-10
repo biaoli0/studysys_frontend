@@ -37,17 +37,16 @@ export default function Login() {
       .verifyUser(values.login_type, values.username, values.password)
       .then((data) => {
         Log.print(data);
-        if (data.isAuthenticated) message.success(data.message);
-        else message.error(data.message);
         // If user is authenticated, save the token and redirect to the URL user input
         if (data.isAuthenticated) {
-          // let path = props.location.state.from || "/home";
-          // console.log(path);
+          message.success(data.message);
           const loginType = localStorage.getItem("login-type");
-          if (loginType === "teacher") Router.push("/home/student/list");
-          else if (loginType === "student")
-            Router.push("/home/student/selection");
-        }
+          switch (loginType) {
+            case "teacher":Router.push("/home/student/list");break;
+            case "student":Router.push("/home/student/selection");break;
+            case "manager":Router.push("/home/teacher/list");break;
+          }
+        } else message.error(data.message);
       });
   };
 
@@ -88,6 +87,9 @@ export default function Login() {
               </Option>
               <Option key="1" value="student">
                 Student
+              </Option>
+              <Option key="2" value="manager">
+                Manager
               </Option>
             </Styled_Select>
           </Form.Item>

@@ -14,6 +14,15 @@ async function saveToken(token) {
   }
 }
 
+function toURLParam(params) {
+  if (params)
+    return Object.keys(params)
+      .map((i) => {
+        return i + "=" + params[i];
+      })
+      .join("&");
+}
+
 export const api = {
   /**
    * Verify user authentication with backend server
@@ -38,6 +47,9 @@ export const api = {
       case "teacher":
         apiTarget = BACKEND_API_TARGET.TEACHER_LOGIN;
         break;
+      case "manager":
+        apiTarget = BACKEND_API_TARGET.MANAGER_LOGIN;
+        break;
       default:
         return { message: "false", isAuthenticated: false };
     }
@@ -56,7 +68,7 @@ export const api = {
       const token = !responseData.datas ? undefined : responseData.datas.token;
       await saveToken(token);
       // Whether user is successfully login
-      if (responseData.hasOwnProperty("code") && responseData.code === 0){
+      if (responseData.hasOwnProperty("code") && responseData.code === 0) {
         isAuthenticated = responseData.code === 0;
         const loginType = responseData.datas.login_type;
         Log.print("save loginType to LocalStorage, login-type: " + loginType);
@@ -66,10 +78,17 @@ export const api = {
     }
   },
 
-  getStudentList: async (current,pageSize) => {
-    const pageParam = `page=${current}`;
-    const pageSizeParam = `pagesize=${pageSize}`;
-    const responseData = await Rest.get(`${BACKEND_API_TARGET.STUDENT_LIST}?${pageParam}&${pageSizeParam}`);
+  getStudentList: async (params) => {
+    const responseData = await Rest.get(
+      `${BACKEND_API_TARGET.STUDENT_LIST}?${toURLParam(params)}`
+    );
+    return responseData;
+  },
+
+  getTeacherList: async (params) => {
+    const responseData = await Rest.get(
+      `${BACKEND_API_TARGET.TEACHER_LIST}?${toURLParam(params)}`
+    );
     return responseData;
   },
 
@@ -78,10 +97,10 @@ export const api = {
     return responseData.datas;
   },
 
-  getCourseList: async (current,pageSize) => {
-    const pageParam = current?`page=${current}`:`page=0`;
-    const pageSizeParam = pageSize?`pagesize=${pageSize}`:`pagesize=5000`;
-    const responseData = await Rest.get(`${BACKEND_API_TARGET.COURSE_LIST}?${pageParam}&${pageSizeParam}`);
+  getCourseList: async (params) => {
+    const responseData = await Rest.get(
+      `${BACKEND_API_TARGET.COURSE_LIST}?${toURLParam(params)}`
+    );
     console.log(responseData);
     return responseData;
   },
@@ -94,16 +113,18 @@ export const api = {
     return responseData.datas;
   },
 
-  getStudentCourseListWithPage: async (current,pageSize) => {
-    const pageParam = `page=${current}`;
-    const pageSizeParam = `pagesize=${pageSize}`;
-    const responseData = await Rest.get(`${BACKEND_API_TARGET.STUDENT_COURSE_LIST}${pageParam}&${pageSizeParam}`);
+  getStudentCourseListWithPage: async (params) => {
+    const responseData = await Rest.get(
+      `${BACKEND_API_TARGET.STUDENT_COURSE_LIST}?${toURLParam(params)}`
+    );
 
     return responseData;
   },
 
-  getCourseTypeList: async () => {
-    const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_TYPE_LIST);
+  getCourseTypeList: async (params) => {
+    const responseData = await Rest.get(
+      `${BACKEND_API_TARGET.COURSE_TYPE_LIST}?${toURLParam(params)}`
+    );
     return responseData.datas;
   },
 
@@ -141,6 +162,19 @@ export const api = {
     const responseData = await Rest.post(
       requestBody,
       BACKEND_API_TARGET.DELETE_STUDENT
+    );
+    if (responseData) return responseData;
+    else return false;
+  },
+
+  deleteTeacher: async (id) => {
+    const requestBody = {
+      id: id,
+    };
+
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.DELETE_TEACHER
     );
     if (responseData) return responseData;
     else return false;
@@ -198,7 +232,7 @@ export const api = {
       id: updateCourse.id,
       name: updateCourse.name,
       homework: "no",
-      type_Id: updateCourse.type_id,
+      type_id: updateCourse.type_id,
     };
 
     const responseData = await Rest.post(
@@ -244,7 +278,7 @@ export const api = {
   },
 
   getSelection: async (date, course_id) => {
-    if (!course_id) course_id= "";
+    if (!course_id) course_id = "";
     const responseData = await Rest.get(
       `${BACKEND_API_TARGET.SELECTION_BY_DATE}?course_id=${course_id}&date=${date}`
     );
@@ -254,5 +288,21 @@ export const api = {
   logout: async () => {
     localStorage.removeItem("token");
     Router.push(BACKEND_API_TARGET.TEACHER_LOGIN);
+  },
+
+  addTeacher: async (username, email, password) => {
+    const requestBody = {
+      name: username,
+      email:email,
+      password: password,
+    };
+
+    const responseData = await Rest.post(
+      requestBody,
+      BACKEND_API_TARGET.ADD_TEACHER
+    );
+
+    if (responseData) return responseData;
+    else return false;
   },
 };

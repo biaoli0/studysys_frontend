@@ -3,10 +3,10 @@ import { Table, Row, Col } from "antd";
 import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
 import SearchBar from "../../../../component/global/SearchBar";
-import MyTimeAgo from "../../../../library/MyTimeAgo";
 import { Log } from "../../../../library/Log";
 import styled from "styled-components";
-import { ColumnsConfig } from "../../../../config/student/StudentListConfig";
+import { ColumnsConfig } from "../../../../config/teacher/TeacherListConfig";
+import { AddTeacherModalDialog } from "../../../../component/teacher/AddTeacherModalDialog";
 
 const Styled_Row = styled(Row)`
   &&& {
@@ -14,7 +14,7 @@ const Styled_Row = styled(Row)`
   }
 `;
 
-function StudentList() {
+function TeacherList() {
   const [originData, setOriginData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -26,22 +26,24 @@ function StudentList() {
     total: 400,
   });
 
-  const fetchData = async (page) => {
+  const fetchData = async () => {
     setLoading(true);
     let newData;
     const params = {
-      current: page.current-1,
-      pagesize:page.pageSize,
-      kw:searchKeyword,
-    }
-    api.getStudentList(params).then((res) => {
+      page: pagination.current - 1,
+      pagesize: pagination.pageSize,
+      kw: searchKeyword,
+    };
+
+    api.getTeacherList(params).then((res) => {
       if (res && res.hasOwnProperty("datas")) {
         newData = res.datas.map((item, key) => ({
           ...item,
           key: key,
-          join_time: <MyTimeAgo ctime={item["ctime"]} />,
         }));
-        setPagination({ ...page, total: res.pager.rowcount });
+        if (res.pager.rowcount !== pagination.total) {
+          setPagination({ ...pagination, total: res.pager.rowcount });
+        }
         Log.print(newData);
         setOriginData(newData);
         setLoading(false);
@@ -50,8 +52,8 @@ function StudentList() {
   };
 
   useEffect(() => {
-    fetchData(pagination);
-  }, [searchKeyword]);
+    fetchData();
+  }, [searchKeyword, pagination]);
 
   const state = {
     bordered: false,
@@ -65,17 +67,18 @@ function StudentList() {
     scroll: { y: 400 },
   };
 
-  const onChange =(keyword)=>{
-      setSearchKeyword(keyword);
-  }
+  const onChange = (keyword) => {
+    setSearchKeyword(keyword);
+  };
 
   return (
     <HomepageWrapper>
-      <Styled_Row>
+      <Styled_Row gutter={8}>
         <Col>
-          <SearchBar
-            onChange = {onChange}
-          />
+          <AddTeacherModalDialog fetchData={fetchData} />
+        </Col>
+        <Col>
+          <SearchBar onChange={onChange} />
         </Col>
       </Styled_Row>
 
@@ -83,12 +86,12 @@ function StudentList() {
         {...state}
         columns={ColumnsConfig(fetchData)}
         dataSource={originData}
-        onChange={(pagination, filters, sorter) => {
-          fetchData(pagination);
+        onChange={(page, filters, sorter) => {
+          setPagination({ ...pagination, ...page });
         }}
       />
     </HomepageWrapper>
   );
 }
 
-export default StudentList;
+export default TeacherList;

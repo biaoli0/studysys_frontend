@@ -17,13 +17,24 @@ const Styled_Row = styled(Row)`
 export default function CourseType() {
   const [loading, setLoading] = useState(true);
   const [originData, setOriginData] = useState(null);
-  const [displayData, setDisplayData] = useState(null);
-  const searchBarTarget = "name";
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    position: "bottom",
+    showSizeChanger: true,
+    total: 400,
+  });
 
-  const fetchData = () => {
+  const fetchData = (page) => {
     let newData;
     setLoading(true);
-    api.getCourseTypeList().then((res) => {
+    const params = {
+      page: page.current-1,
+      pagesize:page.pageSize,
+      kw:searchKeyword,
+    }
+    api.getCourseTypeList(params).then((res) => {
       Log.print(res);
       if (res) {
         newData = res.map((item, key) => ({
@@ -31,7 +42,6 @@ export default function CourseType() {
           key: key,
         }));
       } else newData = null;
-      setDisplayData(newData);
       setOriginData(newData);
       setLoading(false);
 
@@ -39,13 +49,17 @@ export default function CourseType() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(pagination);
+  }, [searchKeyword]);
+
+  const onChange =(keyword)=>{
+    setSearchKeyword(keyword);
+  }
 
   const state = {
     bordered: false,
     loading,
-    pagination: { position: "bottom" },
+    pagination,
     size: "default",
     title: undefined,
     showHeader: true,
@@ -62,9 +76,7 @@ export default function CourseType() {
         </Col>
         <Col>
           <SearchBar
-            originData={originData}
-            setDisplayData={setDisplayData}
-            searchBarTarget={searchBarTarget}
+            onChange={onChange}
           />
         </Col>
       </Styled_Row>
@@ -72,7 +84,10 @@ export default function CourseType() {
       <Table
         {...state}
         columns={CourseTypeListColumnsConfig(fetchData)}
-        dataSource={displayData}
+        dataSource={originData}
+        onChange={(pagination, filters, sorter) => {
+          fetchData(pagination);
+        }}
       />
     </HomepageWrapper>
   );

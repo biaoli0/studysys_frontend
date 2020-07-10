@@ -19,8 +19,8 @@ const Styled_Row = styled(Row)`
 
 export default function SelectionAdd() {
   const [loading, setLoading] = useState(true);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [list, setList] = useState(null);
-  const [displayList, setDisplayList] = useState(null);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
@@ -28,13 +28,17 @@ export default function SelectionAdd() {
     showSizeChanger: true,
     total: 400,
   });
-  const searchBarTarget = "student_name";
 
   const fetchData = async (page) => {
     console.log(page);
     setLoading(true);
+    const params = {
+      page: page.current-1,
+      pagesize:page.pageSize,
+      kw:searchKeyword,
+    }
     api
-      .getStudentCourseListWithPage(page.current - 1, page.pageSize)
+      .getStudentCourseListWithPage(params)
       .then((res) => {
         if (res && res.hasOwnProperty("datas")) {
           const data = res.datas.map((item, key) => ({
@@ -46,14 +50,17 @@ export default function SelectionAdd() {
           }));
           setPagination({ ...page, total: res.pager.rowcount });
           setList(data);
-          setDisplayList(data);
           setLoading(false);
         }
       });
   };
   useEffect(() => {
     fetchData(pagination);
-  }, []);
+  }, [searchKeyword]);
+
+  const onChange =(keyword)=>{
+    setSearchKeyword(keyword);
+  }
 
   const state = {
     bordered: false,
@@ -75,9 +82,7 @@ export default function SelectionAdd() {
         </Col>
         <Col>
           <SearchBar
-            originData={list}
-            setDisplayData={setDisplayList}
-            searchBarTarget={searchBarTarget}
+              onChange={onChange}
           />
         </Col>
       </Styled_Row>
@@ -86,7 +91,7 @@ export default function SelectionAdd() {
           <Table
             {...state}
             columns={ColumnsConfig}
-            dataSource={displayList}
+            dataSource={list}
             onChange={(pagination, filters, sorter) => {
               fetchData(pagination);
             }}

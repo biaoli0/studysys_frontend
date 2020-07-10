@@ -10,6 +10,12 @@ export const LeftMenuConfig = {
     if (login_type === "teacher")
       return [{ ...studentRoutesForTeacher }, { ...courseRoutesForTeacher }];
     else if (login_type === "student") return [{ ...studentRoutesForStudent }];
+    else if (login_type === "manager")
+      return [
+        { ...teacherRoutesForManager },
+        { ...studentRoutesForTeacher },
+        { ...courseRoutesForTeacher },
+      ];
     else Router.push(URL_TARGET.TEACHER_LOGIN);
   },
 
@@ -103,6 +109,22 @@ const courseRoutesForTeacher = {
       subcategory: "type",
       exact: true,
       title: "Course Type",
+      icon: () => null,
+    },
+  ],
+};
+
+const teacherRoutesForManager = {
+  key: "teacher",
+  title: "Teachers",
+  icon: () => <UserOutlined />,
+  menuItems: [
+    {
+      key: "teacher list",
+      category: "teacher",
+      subcategory: "list",
+      exact: true,
+      title: "Teacher List",
       icon: () => null,
     },
   ],

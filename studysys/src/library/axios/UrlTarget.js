@@ -2,14 +2,21 @@ export const BACKEND_API_TARGET = {
   // Login
   TEACHER_LOGIN: "teacher/login",
   STUDENT_LOGIN: "student/login",
+
   // Student
   STUDENT_LIST: "student/list",
   ADD_STUDENT: "student/add",
   DELETE_STUDENT: "student/delete",
   UPDATE_STUDENT: "student/update",
-  STUDENT_COURSE_LIST: "student/course/list?",
+  STUDENT_COURSE_LIST: "student/course/list",
   STUDENT_COURSE_SELECTION: "student/course/add",
   STUDENT_BY_ID: "student/info?id=",
+
+  // Teacher
+  TEACHER_LIST: "teacher/list",
+  ADD_TEACHER: "teacher/add",
+  DELETE_TEACHER: "teacher/delete",
+  UPDATE_TEACHER: "teacher/update",
 
   // Course
   COURSE_LIST: "course/list",
@@ -17,6 +24,9 @@ export const BACKEND_API_TARGET = {
   ADD_COURSE: "course/add",
   DELETE_COURSE: "course/delete",
   UPDATE_COURSE: "course/update",
+
+  // Manager
+  MANAGER_LOGIN: "manager/login",
 
   // Course Selection
   SELECTION_BY_DATE: "student/course/list",
@@ -27,7 +37,6 @@ export const BACKEND_API_TARGET = {
 
   // Student Type
   STUDENT_TYPE_LIST: "student/type/list",
-
 };
 
 export const URL_TARGET = {

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { message, Button, DatePicker, Modal } from "antd";
-import { api } from "../../../../library/axios/Api";
+import { message, Button, DatePicker, Modal, Input } from "antd";
+import { api } from "../../../src/library/axios/Api";
 import Form from "antd/lib/form";
 import styled from "styled-components";
-import ListSelection from "../../../global/ListSelection";
 
 const Styled_DatePicker = styled(DatePicker)`
   &&& {
@@ -11,26 +10,15 @@ const Styled_DatePicker = styled(DatePicker)`
   }
 `;
 
-export function SelectCourseModalDialog(props) {
-  const {fetchData} = props;
+const Styled_Input = styled(Input)`
+  &&& {
+    width: 300px;
+  }
+`;
+export function AddTeacherModalDialog(props) {
+  const { fetchData } = props;
   const [visible, setVisible] = useState(false);
-  const [studentList, setStudentList] = useState(null);
-  const [courseList, setCourseList] = useState(null);
   const [form] = Form.useForm();
-  const dateFormat = "DD/MM/YYYY";
-
-  useEffect(() => {
-    api.getStudentList().then((res) => {
-      if (res) {
-        setStudentList(res.datas);
-      }
-    });
-    api.getCourseList().then((res) => {
-      if (res) {
-        setCourseList(res.datas);
-      }
-    });
-  }, []);
 
   /**
    * Submit form to backend when click save button.
@@ -39,19 +27,14 @@ export function SelectCourseModalDialog(props) {
   const onCreate = (values) => {
     console.log("Received values of form: ", values);
     api
-      .courseSelection(
-        values["Student"],
-        values["Course"],
-        values["date"].format("YYYY-MM-DD")
-      )
+      .addTeacher(values["username"], values["email"], values["password"])
       .then((res) => {
         if (res) {
           if (res["code"] === 0) {
             message.success(res["datas"]);
             fetchData();
             form.resetFields();
-          }
-          else message.error(res["message"]);
+          } else message.error(res["message"]);
         }
       });
   };
@@ -64,12 +47,11 @@ export function SelectCourseModalDialog(props) {
           setVisible(true);
         }}
       >
-        Add Selection
+        Add Teacher
       </Button>
       <Modal
         visible={visible}
-        title="Add Course Selection"
-        okText="Save"
+        okText="Ok"
         cancelText="Cancel"
         onCancel={() => {
           setVisible(false);
@@ -86,18 +68,44 @@ export function SelectCourseModalDialog(props) {
         }}
       >
         <Form form={form} layout="vertical" name="form_in_modal">
-          <ListSelection list={studentList} listName="Student" itemKey="id" itemName="name" width="400px"/>
-          <ListSelection list={courseList} listName="Course" itemKey="id" itemName="name" width="400px"/>
           <Form.Item
-            name="date"
+            key="username"
+            name="username"
             rules={[
               {
                 required: true,
-                message: `Please select a date`,
+                message: "please input an username",
               },
             ]}
           >
-            <Styled_DatePicker format={dateFormat} />
+            {<Styled_Input placeholder="Username" />}
+          </Form.Item>
+
+          <Form.Item
+            key="email"
+            name="email"
+            rules={[
+              {
+                type: "email",
+                required: true,
+                message: "please input an valid email",
+              },
+            ]}
+          >
+            {<Styled_Input placeholder="Email" />}
+          </Form.Item>
+
+          <Form.Item
+            key="password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input password",
+              },
+            ]}
+          >
+            <Styled_Input placeholder="Password" />
           </Form.Item>
         </Form>
       </Modal>

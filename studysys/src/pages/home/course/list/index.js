@@ -12,8 +12,8 @@ import MyTimeAgo from "../../../../library/MyTimeAgo";
 
 export default function CourseList() {
   const [loading, setLoading] = useState(true);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [originData, setOriginData] = useState(null);
-  const [displayData, setDisplayData] = useState(null);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
@@ -21,12 +21,16 @@ export default function CourseList() {
     showSizeChanger: true,
     total: 400,
   });
-  const searchBarTarget = "type_name";
 
   const fetchData = async (page) => {
     setLoading(true);
     let newData;
-    api.getCourseList(page.current - 1, page.pageSize).then((res) => {
+    const params = {
+      page: page.current-1,
+      pagesize:page.pageSize,
+      kw:searchKeyword,
+    }
+    api.getCourseList(params).then((res) => {
       if (res && res.hasOwnProperty("datas")) {
         newData = res.datas.map((item, key) => ({
           ...item,
@@ -35,7 +39,6 @@ export default function CourseList() {
         }));
       } else newData = null;
       setPagination({ ...page, total: res.pager.rowcount });
-      setDisplayData(newData);
       setOriginData(newData);
       setLoading(false);
     });
@@ -43,14 +46,16 @@ export default function CourseList() {
 
   useEffect(() => {
     fetchData(pagination);
-  }, []);
+  }, [searchKeyword]);
+
+  const onChange =(keyword)=>{
+    setSearchKeyword(keyword);
+  }
 
   return (
     <HomepageWrapper>
       <SearchBar
-        originData={originData}
-        setDisplayData={setDisplayData}
-        searchBarTarget={searchBarTarget}
+          onChange={onChange}
       />
 
       <EditableTable
@@ -60,7 +65,6 @@ export default function CourseList() {
         EditableCell={editableCell}
         originData={originData}
         setOriginData={setOriginData}
-        displayData={displayData}
         editDataIndex={editDataIndex}
         columnsSetting={columnsSetting}
         onChange={(pagination, filters, sorter) => {

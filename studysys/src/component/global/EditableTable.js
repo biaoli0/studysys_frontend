@@ -9,7 +9,6 @@ export default function EditableTable(props) {
     EditableCell,
     originData,
     setOriginData,
-    displayData,
     pagination,
     onChange,
     editDataIndex,
@@ -33,8 +32,8 @@ export default function EditableTable(props) {
   };
 
   const updateDisplayData = (key, row) => {
-    const newDisplayData = [...displayData];
-    const index = displayData.findIndex((item) => key === item.key);
+    const newDisplayData = [...originData];
+    const index = originData.findIndex((item) => key === item.key);
     if (index > -1) {
       let updateItem = newDisplayData[index];
       updateItem = { ...updateItem, ...row };
@@ -149,7 +148,7 @@ export default function EditableTable(props) {
           },
         }}
         bordered
-        dataSource={displayData}
+        dataSource={originData}
         columns={mergedColumns}
         rowClassName="editable-row"
         pagination={{
