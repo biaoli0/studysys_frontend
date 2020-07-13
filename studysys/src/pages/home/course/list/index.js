@@ -45,7 +45,9 @@ export default function CourseList() {
   };
 
   useEffect(() => {
-    fetchData(pagination);
+    let newpage = pagination;
+    newpage.current = 1;
+    fetchData(newpage);
   }, [searchKeyword]);
 
   const onChange =(keyword)=>{

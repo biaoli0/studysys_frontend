@@ -14,6 +14,13 @@ async function saveToken(token) {
   }
 }
 
+async function saveRole(role) {
+  if (role !== undefined) {
+    Log.print("save role to LocalStorage, token: " + role);
+    await localStorage.setItem("info", JSON.stringify(role));
+  }
+}
+
 function toURLParam(params) {
   if (params)
     return Object.keys(params)
@@ -21,6 +28,15 @@ function toURLParam(params) {
         return i + "=" + params[i];
       })
       .join("&");
+}
+
+function toJSON(params) {
+  let json = {};
+  if (params)
+    Object.keys(params).map((i) => {
+      json[i] = params[i];
+    });
+  return json;
 }
 
 export const api = {
@@ -67,6 +83,9 @@ export const api = {
       // Token
       const token = !responseData.datas ? undefined : responseData.datas.token;
       await saveToken(token);
+      // User Info
+      const role = !responseData.datas ? undefined : responseData.datas.info;
+      await saveRole(role);
       // Whether user is successfully login
       if (responseData.hasOwnProperty("code") && responseData.code === 0) {
         isAuthenticated = responseData.code === 0;
@@ -77,26 +96,120 @@ export const api = {
       return { message, isAuthenticated };
     }
   },
-
+  // Student
   getStudentList: async (params) => {
     const responseData = await Rest.get(
       `${BACKEND_API_TARGET.STUDENT_LIST}?${toURLParam(params)}`
     );
     return responseData;
   },
+  getStudentById: async (id) => {
+    const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_BY_ID + id);
+    return responseData.datas;
+  },
+  getStudentTypeList: async () => {
+    const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_TYPE_LIST);
+    return responseData.datas;
+  },
+  addStudent: async (name, typeId, courseId, address) => {
+    const requestBody = {
+      name: name,
+      type_id: typeId,
+      course_id: courseId,
+      address: address,
+    };
 
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.ADD_STUDENT
+    );
+    if (responseData) return true;
+    else return false;
+  },
+  updateStudent: async (id, name, typeId, address) => {
+    const requestBody = {
+      id: id,
+      name: name,
+      type_id: typeId,
+      address: address,
+    };
+
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.UPDATE_STUDENT
+    );
+    if (responseData) return responseData;
+    else return false;
+  },
+  deleteStudent: async (id) => {
+    const requestBody = {
+      id: id,
+    };
+
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.DELETE_STUDENT
+    );
+    if (responseData) return responseData;
+    else return false;
+  },
+  courseSelection: async (studentId, courseId, courseDate) => {
+    const requestBody = {
+      student_id: studentId,
+      course_id: courseId,
+      course_date: courseDate,
+    };
+
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.STUDENT_COURSE_SELECTION
+    );
+    if (responseData) {
+      return responseData;
+    } else return false;
+  },
+  getSelection: async (date, course_id) => {
+    if (!course_id) course_id = "";
+    const responseData = await Rest.get(
+        `${BACKEND_API_TARGET.SELECTION_BY_DATE}?course_id=${course_id}&date=${date}`
+    );
+    return responseData.datas;
+  },
+  // Teacher
   getTeacherList: async (params) => {
     const responseData = await Rest.get(
       `${BACKEND_API_TARGET.TEACHER_LIST}?${toURLParam(params)}`
     );
     return responseData;
   },
+  addTeacher: async (username, email, password) => {
+    const requestBody = {
+      name: username,
+      email: email,
+      password: password,
+    };
 
-  getStudentById: async (id) => {
-    const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_BY_ID + id);
-    return responseData.datas;
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.ADD_TEACHER
+    );
+
+    if (responseData) return responseData;
+    else return false;
   },
+  deleteTeacher: async (id) => {
+    const requestBody = {
+      id: id,
+    };
 
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.DELETE_TEACHER
+    );
+    if (responseData) return responseData;
+    else return false;
+  },
+  // Course
   getCourseList: async (params) => {
     const responseData = await Rest.get(
       `${BACKEND_API_TARGET.COURSE_LIST}?${toURLParam(params)}`
@@ -104,7 +217,6 @@ export const api = {
     console.log(responseData);
     return responseData;
   },
-
   getStudentCourseList: async (courseId) => {
     const courseParams = courseId ? `course_id=${courseId}` : "";
     const responseData = await Rest.get(
@@ -112,7 +224,6 @@ export const api = {
     );
     return responseData.datas;
   },
-
   getStudentCourseListWithPage: async (params) => {
     const responseData = await Rest.get(
       `${BACKEND_API_TARGET.STUDENT_COURSE_LIST}?${toURLParam(params)}`
@@ -120,14 +231,35 @@ export const api = {
 
     return responseData;
   },
+  addCourse: async (courseName, typeId) => {
+    const requestBody = {
+      name: courseName,
+      homework: "no",
+      typeId: typeId,
+    };
 
-  getCourseTypeList: async (params) => {
-    const responseData = await Rest.get(
-      `${BACKEND_API_TARGET.COURSE_TYPE_LIST}?${toURLParam(params)}`
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.ADD_COURSE
     );
-    return responseData.datas;
+    if (responseData) return true;
+    else return false;
   },
+  updateCourse: async (updateCourse) => {
+    const requestBody = {
+      id: updateCourse.id,
+      name: updateCourse.name,
+      homework: "no",
+      type_id: updateCourse.type_id,
+    };
 
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.UPDATE_COURSE
+    );
+    if (responseData) return true;
+    else return false;
+  },
   deleteCourse: async (id) => {
     const requestBody = {
       id: id,
@@ -140,7 +272,25 @@ export const api = {
     if (responseData) return responseData;
     else return false;
   },
+  // Course Type
+  getCourseTypeList: async (params) => {
+    const responseData = await Rest.get(
+        `${BACKEND_API_TARGET.COURSE_TYPE_LIST}?${toURLParam(params)}`
+    );
+    return responseData.datas;
+  },
+  addCourseType: async (typeName) => {
+    const requestBody = {
+      name: typeName,
+    };
 
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.ADD_COURSE_TYPE
+    );
+    if (responseData) return responseData;
+    else return false;
+  },
   deleteCourseType: async (id) => {
     const requestBody = {
       id: id,
@@ -153,33 +303,24 @@ export const api = {
     if (responseData) return responseData;
     else return false;
   },
-
-  deleteStudent: async (id) => {
-    const requestBody = {
-      id: id,
-    };
+  // Manager
+  getManagerList: async (params) => {
+    const responseData = await Rest.get(
+        `${BACKEND_API_TARGET.MANAGER_LIST}?${toURLParam(params)}`
+    );
+    return responseData;
+  },
+  addManager: async (params) => {
+    const requestBody = toJSON(params);
 
     const responseData = await Rest.post(
-      requestBody,
-      BACKEND_API_TARGET.DELETE_STUDENT
+        requestBody,
+        BACKEND_API_TARGET.MANAGER_ADD
     );
+
     if (responseData) return responseData;
     else return false;
   },
-
-  deleteTeacher: async (id) => {
-    const requestBody = {
-      id: id,
-    };
-
-    const responseData = await Rest.post(
-      requestBody,
-      BACKEND_API_TARGET.DELETE_TEACHER
-    );
-    if (responseData) return responseData;
-    else return false;
-  },
-
   deleteManager: async (id) => {
     const requestBody = {
       id: id,
@@ -192,153 +333,45 @@ export const api = {
     if (responseData) return responseData;
     else return false;
   },
-
-  addCourse: async (courseName, typeId) => {
-    const requestBody = {
-      name: courseName,
-      homework: "no",
-      typeId: typeId,
-    };
-
-    const responseData = await Rest.post(
-      requestBody,
-      BACKEND_API_TARGET.ADD_COURSE
-    );
-    if (responseData) return true;
-    else return false;
-  },
-
-  addStudent: async (name, typeId, courseId, address) => {
-    const requestBody = {
-      name: name,
-      type_id: typeId,
-      course_id: courseId,
-      address: address,
-    };
-
-    const responseData = await Rest.post(
-      requestBody,
-      BACKEND_API_TARGET.ADD_STUDENT
-    );
-    if (responseData) return true;
-    else return false;
-  },
-
-  courseSelection: async (studentId, courseId, courseDate) => {
-    const requestBody = {
-      student_id: studentId,
-      course_id: courseId,
-      course_date: courseDate,
-    };
-
-    const responseData = await Rest.post(
-      requestBody,
-      BACKEND_API_TARGET.STUDENT_COURSE_SELECTION
-    );
-    if (responseData) {
-      return responseData;
-    } else return false;
-  },
-
-  updateCourse: async (updateCourse) => {
-    const requestBody = {
-      id: updateCourse.id,
-      name: updateCourse.name,
-      homework: "no",
-      type_id: updateCourse.type_id,
-    };
-
-    const responseData = await Rest.post(
-      requestBody,
-      BACKEND_API_TARGET.UPDATE_COURSE
-    );
-    if (responseData) return true;
-    else return false;
-  },
-
-  updateStudent: async (id, name, typeId, address) => {
-    const requestBody = {
-      id: id,
-      name: name,
-      type_id: typeId,
-      address: address,
-    };
-
-    const responseData = await Rest.post(
-      requestBody,
-      BACKEND_API_TARGET.UPDATE_STUDENT
-    );
-    if (responseData) return responseData;
-    else return false;
-  },
-
-  addCourseType: async (typeName) => {
-    const requestBody = {
-      name: typeName,
-    };
-
-    const responseData = await Rest.post(
-      requestBody,
-      BACKEND_API_TARGET.ADD_COURSE_TYPE
-    );
-    if (responseData) return responseData;
-    else return false;
-  },
-
-  getStudentTypeList: async () => {
-    const responseData = await Rest.get(BACKEND_API_TARGET.STUDENT_TYPE_LIST);
-    return responseData.datas;
-  },
-
-  getSelection: async (date, course_id) => {
-    if (!course_id) course_id = "";
+  // Role
+  getRoleList: async (params) => {
     const responseData = await Rest.get(
-      `${BACKEND_API_TARGET.SELECTION_BY_DATE}?course_id=${course_id}&date=${date}`
+        `${BACKEND_API_TARGET.ROLE_LIST}?${toURLParam(params)}`
     );
-    return responseData.datas;
+    return responseData;
   },
-
-  logout: async () => {
-    localStorage.removeItem("token");
-    Router.push(BACKEND_API_TARGET.TEACHER_LOGIN);
-  },
-
-  addTeacher: async (username, email, password) => {
-    const requestBody = {
-      name: username,
-      email: email,
-      password: password,
-    };
-
+  addRole: async (params) => {
+    const requestBody = toJSON(params);
     const responseData = await Rest.post(
-      requestBody,
-      BACKEND_API_TARGET.ADD_TEACHER
+        requestBody,
+        BACKEND_API_TARGET.ROLE_ADD
     );
 
     if (responseData) return responseData;
     else return false;
   },
-
-  addManager: async (nickname, email, password) => {
-    const requestBody = {
-      nickname: nickname,
-      email: email,
-      password: password,
-    };
+  updateRole: async (params) => {
+    const requestBody = toJSON(params);
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.ROLE_UPDATE
+    );
+    if (responseData) return true;
+    else return false;
+  },
+  deleteRole: async (params) => {
+    const requestBody = toJSON(params);
 
     const responseData = await Rest.post(
         requestBody,
-        BACKEND_API_TARGET.MANAGER_ADD
+        BACKEND_API_TARGET.MANAGER_DELETE
     );
-
     if (responseData) return responseData;
     else return false;
   },
-
-  getManagerList: async (params) => {
-    const responseData = await Rest.get(
-      `${BACKEND_API_TARGET.MANAGER_LIST}?${toURLParam(params)}`
-    );
-    return responseData;
+  // Other
+  logout: async () => {
+    localStorage.removeItem("token");
+    Router.push(BACKEND_API_TARGET.TEACHER_LOGIN);
   },
 };

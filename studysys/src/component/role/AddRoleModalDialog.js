@@ -3,25 +3,26 @@ import { message, Button, DatePicker, Modal, Input, Select } from "antd";
 import { api } from "../../../src/library/axios/Api";
 import Form from "antd/lib/form";
 import styled from "styled-components";
+import { LeftMenuConfig } from "../../config/global/HomeLeftBarConfig";
 
 const { Option } = Select;
+
+const Styled_DatePicker = styled(DatePicker)`
+  &&& {
+    width: 400px;
+  }
+`;
 
 const Styled_Input = styled(Input)`
   &&& {
     width: 100%;
   }
 `;
-export function AddManagerModalDialog(props) {
+export function AddRoleModalDialog(props) {
   const { fetchData } = props;
   const [visible, setVisible] = useState(false);
-  const [roleList, setRoleList] = useState(null);
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    api.getRoleList().then((res) => {
-      if (res && res.hasOwnProperty("datas")) setRoleList(res.datas);
-    });
-  },[]);
   /**
    * Submit form to backend when click save button.
    * @param values: Form value.
@@ -29,12 +30,10 @@ export function AddManagerModalDialog(props) {
   const onCreate = (values) => {
     console.log("Received values of form: ", values);
     const params = {
-      role_id: values["role"],
-      email: values["email"],
-      nickname: values["nickname"],
-      password: values["password"],
+      name: values["name"],
+      menu: values["menu"],
     };
-    api.addManager(params).then((res) => {
+    api.addRole(params).then((res) => {
       if (res) {
         if (res["code"] === 0) {
           message.success(res["datas"]);
@@ -53,11 +52,11 @@ export function AddManagerModalDialog(props) {
           setVisible(true);
         }}
       >
-        Add Manager
+        Add Role
       </Button>
       <Modal
-        title="Add Manager"
         visible={visible}
+        title="Add Role"
         okText="Ok"
         cancelText="Cancel"
         onCancel={() => {
@@ -76,68 +75,32 @@ export function AddManagerModalDialog(props) {
       >
         <Form form={form} layout="vertical" name="form_in_modal">
           <Form.Item
-            key="nickname"
-            name="nickname"
+            key="name"
+            name="name"
             rules={[
               {
                 required: true,
-                message: "please input an nickname",
+                message: "please input an role name",
               },
             ]}
           >
-            {<Styled_Input placeholder="Nickname" />}
+            {<Styled_Input placeholder="Name" />}
           </Form.Item>
 
           <Form.Item
-            key="email"
-            name="email"
-            rules={[
-              {
-                type: "email",
-                required: true,
-                message: "please input an valid email",
-              },
-            ]}
-          >
-            {<Styled_Input placeholder="Email" />}
-          </Form.Item>
-
-          <Form.Item
-            key="password"
-            name="password"
+            key="menu"
+            name="menu"
             rules={[
               {
                 required: true,
-                message: "Please input password",
+                message: "please select a menu",
               },
             ]}
           >
-            <Styled_Input placeholder="Password" />
-          </Form.Item>
-
-          <Form.Item
-            key="role"
-            name="role"
-            rules={[
-              {
-                required: true,
-                message: "Please input role",
-              },
-            ]}
-          >
-            <Select
-              showSearch
-              placeholder="Select a role"
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
-            >
-              {roleList
-                ? roleList.map((item) => (
-                    <Option value={item.id}>{item.name}</Option>
-                  ))
-                : ""}
+            <Select mode="multiple" placeholder="Please select">
+              {LeftMenuConfig.getList().map((item) => (
+                <Option key={item}>{item}</Option>
+              ))}
             </Select>
           </Form.Item>
         </Form>

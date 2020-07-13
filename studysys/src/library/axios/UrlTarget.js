@@ -32,6 +32,12 @@ export const BACKEND_API_TARGET = {
   MANAGER_UPDATE:"manager/update",
   MANAGER_DELETE:"manager/delete",
 
+  // Role
+  ROLE_LIST:"role/list",
+  ROLE_ADD:"role/add",
+  ROLE_UPDATE:"role/update",
+  ROLE_DELETE:"role/delete",
+
   // Course Selection
   SELECTION_BY_DATE: "student/course/list",
 

@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { Table, Row, Col } from "antd";
 import { api } from "../../../../library/axios/Api";
 import HomepageWrapper from "../../../../component/global/HomepageWrapper";
-import { Calendar, Col, Menu, message, Row, Table, Tabs } from "antd";
-import { ColumnsConfig } from "../../../../config/student/StudentSelectionConfig";
-import { SelectCourseModalDialog } from "../../../../component/student/selection/list_mode/SelectCourseModalDialog";
 import SearchBar from "../../../../component/global/SearchBar";
+import { Log } from "../../../../library/Log";
 import styled from "styled-components";
-import SelectionCalendar from "../../../../component/student/selection/calendar_mode/SelectionCalendar";
-import Kit from "../../../../library/Kit";
-
-const { TabPane } = Tabs;
+import { ColumnsConfig } from "../../../../config/role/RoleListConfig";
+import { AddRoleModalDialog } from "../../../../component/role/AddRoleModalDialog";
 
 const Styled_Row = styled(Row)`
   &&& {
@@ -17,10 +14,10 @@ const Styled_Row = styled(Row)`
   }
 `;
 
-export default function SelectionAdd() {
+function RoleList() {
+  const [originData, setOriginData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchKeyword, setSearchKeyword] = useState("");
-  const [list, setList] = useState(null);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
@@ -30,29 +27,37 @@ export default function SelectionAdd() {
   });
 
   const fetchData = async () => {
-    console.log(pagination);
     setLoading(true);
+    let newData;
     const params = {
       page: pagination.current - 1,
       pagesize: pagination.pageSize,
       kw: searchKeyword,
     };
-    api.getStudentCourseListWithPage(params).then((res) => {
+
+    api.getRoleList(params).then((res) => {
       if (res && res.hasOwnProperty("datas")) {
-        const data = res.datas.map((item, key) => ({
+        newData = res.datas.map((item, key) => ({
           ...item,
+          menu: (
+            <ul>
+              {item.menu.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          ),
           key: key,
-          course_date: item.hasOwnProperty("course_date")
-            ? Kit.dateConvert(item["course_date"])
-            : "",
         }));
-        if (res.pager.rowcount !== pagination.total)
+        if (res.pager.rowcount !== pagination.total) {
           setPagination({ ...pagination, total: res.pager.rowcount });
-        setList(data);
+        }
+        Log.print(newData);
+        setOriginData(newData);
         setLoading(false);
       }
     });
   };
+
   useEffect(() => {
     fetchData();
   }, [pagination]);
@@ -60,10 +65,6 @@ export default function SelectionAdd() {
   useEffect(() => {
     setPagination({ ...pagination, current: 1 });
   }, [searchKeyword]);
-
-  const onChange = (keyword) => {
-    setSearchKeyword(keyword);
-  };
 
   const state = {
     bordered: false,
@@ -77,31 +78,31 @@ export default function SelectionAdd() {
     scroll: { y: 400 },
   };
 
+  const onChange = (keyword) => {
+    setSearchKeyword(keyword);
+  };
+
   return (
     <HomepageWrapper>
       <Styled_Row gutter={8}>
         <Col>
-          <SelectCourseModalDialog fetchData={fetchData} />
+          <AddRoleModalDialog fetchData={fetchData} />
         </Col>
         <Col>
           <SearchBar onChange={onChange} />
         </Col>
       </Styled_Row>
-      <Tabs defaultActiveKey="1">
-        <TabPane tab="List Mode" key="1">
-          <Table
-            {...state}
-            columns={ColumnsConfig}
-            dataSource={list}
-            onChange={(pagination, filters, sorter) => {
-              setPagination(pagination);
-            }}
-          />
-        </TabPane>
-        <TabPane tab="Calendar Mode" key="2">
-          <SelectionCalendar />
-        </TabPane>
-      </Tabs>
+
+      <Table
+        {...state}
+        columns={ColumnsConfig(fetchData)}
+        dataSource={originData}
+        onChange={(page, filters, sorter) => {
+          setPagination({ ...pagination, ...page });
+        }}
+      />
     </HomepageWrapper>
   );
 }
+
+export default RoleList;

@@ -53,7 +53,10 @@ function TeacherList() {
 
   useEffect(() => {
     fetchData();
-  }, [searchKeyword, pagination]);
+  }, [pagination]);
+  useEffect(() => {
+    setPagination({ ...pagination, current:1});
+  }, [searchKeyword]);
 
   const state = {
     bordered: false,

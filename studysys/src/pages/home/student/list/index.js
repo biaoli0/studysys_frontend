@@ -26,14 +26,14 @@ function StudentList() {
     total: 400,
   });
 
-  const fetchData = async (page) => {
+  const fetchData = async () => {
     setLoading(true);
     let newData;
     const params = {
-      current: page.current-1,
-      pagesize:page.pageSize,
-      kw:searchKeyword,
-    }
+      current: pagination.current - 1,
+      pagesize: pagination.pageSize,
+      kw: searchKeyword,
+    };
     api.getStudentList(params).then((res) => {
       if (res && res.hasOwnProperty("datas")) {
         newData = res.datas.map((item, key) => ({
@@ -41,7 +41,8 @@ function StudentList() {
           key: key,
           join_time: <MyTimeAgo ctime={item["ctime"]} />,
         }));
-        setPagination({ ...page, total: res.pager.rowcount });
+        if (res.pager.rowcount !== pagination.total)
+          setPagination({ ...pagination, total: res.pager.rowcount });
         Log.print(newData);
         setOriginData(newData);
         setLoading(false);
@@ -50,7 +51,11 @@ function StudentList() {
   };
 
   useEffect(() => {
-    fetchData(pagination);
+    fetchData();
+  }, [pagination]);
+
+  useEffect(() => {
+    setPagination({ ...pagination, current: 1 });
   }, [searchKeyword]);
 
   const state = {
@@ -65,17 +70,15 @@ function StudentList() {
     scroll: { y: 400 },
   };
 
-  const onChange =(keyword)=>{
-      setSearchKeyword(keyword);
-  }
+  const onChange = (keyword) => {
+    setSearchKeyword(keyword);
+  };
 
   return (
     <HomepageWrapper>
       <Styled_Row>
         <Col>
-          <SearchBar
-            onChange = {onChange}
-          />
+          <SearchBar onChange={onChange} />
         </Col>
       </Styled_Row>
 
@@ -84,7 +87,7 @@ function StudentList() {
         columns={ColumnsConfig(fetchData)}
         dataSource={originData}
         onChange={(pagination, filters, sorter) => {
-          fetchData(pagination);
+          setPagination(pagination);
         }}
       />
     </HomepageWrapper>

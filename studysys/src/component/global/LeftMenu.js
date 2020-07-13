@@ -45,7 +45,7 @@ export default function LeftMenu(props) {
   const [menus, setMenus] = useState();
 
   useEffect(() => {
-    const res = LeftMenuConfig.getAll();
+    const res = LeftMenuConfig.get();
     setMenus(res);
   }, []);
 
