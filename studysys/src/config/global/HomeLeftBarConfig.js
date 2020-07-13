@@ -123,8 +123,8 @@ function getCategory(categorykey) {
 
 export const LeftMenuConfig = {
   get: () => {
-    // const menu = UserInfo.getMenu();
-    const menu = LeftMenuConfig.getList();
+    const menu = UserInfo.getMenu();
+    // const menu = LeftMenuConfig.getList();
     let menusRoutes = [];
     if (menu) {
       menu.map((menukey) => {
