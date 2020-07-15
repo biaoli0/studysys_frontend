@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { message, Button, DatePicker, Modal, Input, Select } from "antd";
+import {message, Button, DatePicker, Modal, Input, Select, TreeSelect} from "antd";
 import { api } from "../../../src/library/axios/Api";
 import Form from "antd/lib/form";
 import styled from "styled-components";
@@ -21,8 +21,12 @@ const Styled_Input = styled(Input)`
 export function AddRoleModalDialog(props) {
   const { fetchData } = props;
   const [visible, setVisible] = useState(false);
+  const [roleList, setRoleList] = useState(null);
   const [form] = Form.useForm();
 
+  useEffect(()=>{
+    setRoleList(LeftMenuConfig.getList())
+  },[])
   /**
    * Submit form to backend when click save button.
    * @param values: Form value.
@@ -97,11 +101,19 @@ export function AddRoleModalDialog(props) {
               },
             ]}
           >
-            <Select mode="multiple" placeholder="Please select">
-              {LeftMenuConfig.getList().map((item) => (
-                <Option key={item}>{item}</Option>
-              ))}
-            </Select>
+            {/*<Select mode="multiple" placeholder="Please select">*/}
+            {/*  {LeftMenuConfig.getList().map((item) => (*/}
+            {/*    <Option key={item}>{item}</Option>*/}
+            {/*  ))}*/}
+            {/*</Select>*/}
+              <TreeSelect
+                  multiple
+                  treeCheckable={true}
+                  dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                  treeData={roleList}
+                  placeholder="Please select"
+                  treeDefaultExpandAll
+              />
           </Form.Item>
         </Form>
       </Modal>

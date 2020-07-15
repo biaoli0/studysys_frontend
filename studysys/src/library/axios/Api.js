@@ -120,8 +120,8 @@ export const api = {
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.ADD_STUDENT
+      requestBody,
+      BACKEND_API_TARGET.ADD_STUDENT
     );
     if (responseData) return true;
     else return false;
@@ -135,8 +135,8 @@ export const api = {
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.UPDATE_STUDENT
+      requestBody,
+      BACKEND_API_TARGET.UPDATE_STUDENT
     );
     if (responseData) return responseData;
     else return false;
@@ -147,8 +147,8 @@ export const api = {
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.DELETE_STUDENT
+      requestBody,
+      BACKEND_API_TARGET.DELETE_STUDENT
     );
     if (responseData) return responseData;
     else return false;
@@ -161,8 +161,8 @@ export const api = {
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.STUDENT_COURSE_SELECTION
+      requestBody,
+      BACKEND_API_TARGET.STUDENT_COURSE_SELECTION
     );
     if (responseData) {
       return responseData;
@@ -171,7 +171,7 @@ export const api = {
   getSelection: async (date, course_id) => {
     if (!course_id) course_id = "";
     const responseData = await Rest.get(
-        `${BACKEND_API_TARGET.SELECTION_BY_DATE}?course_id=${course_id}&date=${date}`
+      `${BACKEND_API_TARGET.SELECTION_BY_DATE}?course_id=${course_id}&date=${date}`
     );
     return responseData.datas;
   },
@@ -190,8 +190,8 @@ export const api = {
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.ADD_TEACHER
+      requestBody,
+      BACKEND_API_TARGET.ADD_TEACHER
     );
 
     if (responseData) return responseData;
@@ -203,8 +203,8 @@ export const api = {
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.DELETE_TEACHER
+      requestBody,
+      BACKEND_API_TARGET.DELETE_TEACHER
     );
     if (responseData) return responseData;
     else return false;
@@ -239,8 +239,8 @@ export const api = {
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.ADD_COURSE
+      requestBody,
+      BACKEND_API_TARGET.ADD_COURSE
     );
     if (responseData) return true;
     else return false;
@@ -254,8 +254,8 @@ export const api = {
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.UPDATE_COURSE
+      requestBody,
+      BACKEND_API_TARGET.UPDATE_COURSE
     );
     if (responseData) return true;
     else return false;
@@ -275,7 +275,7 @@ export const api = {
   // Course Type
   getCourseTypeList: async (params) => {
     const responseData = await Rest.get(
-        `${BACKEND_API_TARGET.COURSE_TYPE_LIST}?${toURLParam(params)}`
+      `${BACKEND_API_TARGET.COURSE_TYPE_LIST}?${toURLParam(params)}`
     );
     return responseData.datas;
   },
@@ -285,8 +285,8 @@ export const api = {
     };
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.ADD_COURSE_TYPE
+      requestBody,
+      BACKEND_API_TARGET.ADD_COURSE_TYPE
     );
     if (responseData) return responseData;
     else return false;
@@ -306,7 +306,7 @@ export const api = {
   // Manager
   getManagerList: async (params) => {
     const responseData = await Rest.get(
-        `${BACKEND_API_TARGET.MANAGER_LIST}?${toURLParam(params)}`
+      `${BACKEND_API_TARGET.MANAGER_LIST}?${toURLParam(params)}`
     );
     return responseData;
   },
@@ -314,8 +314,8 @@ export const api = {
     const requestBody = toJSON(params);
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.MANAGER_ADD
+      requestBody,
+      BACKEND_API_TARGET.MANAGER_ADD
     );
 
     if (responseData) return responseData;
@@ -336,15 +336,15 @@ export const api = {
   // Role
   getRoleList: async (params) => {
     const responseData = await Rest.get(
-        `${BACKEND_API_TARGET.ROLE_LIST}?${toURLParam(params)}`
+      `${BACKEND_API_TARGET.ROLE_LIST}?${toURLParam(params)}`
     );
     return responseData;
   },
   addRole: async (params) => {
     const requestBody = toJSON(params);
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.ROLE_ADD
+      requestBody,
+      BACKEND_API_TARGET.ROLE_ADD
     );
 
     if (responseData) return responseData;
@@ -353,8 +353,8 @@ export const api = {
   updateRole: async (params) => {
     const requestBody = toJSON(params);
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.ROLE_UPDATE
+      requestBody,
+      BACKEND_API_TARGET.ROLE_UPDATE
     );
     if (responseData) return true;
     else return false;
@@ -363,8 +363,8 @@ export const api = {
     const requestBody = toJSON(params);
 
     const responseData = await Rest.post(
-        requestBody,
-        BACKEND_API_TARGET.MANAGER_DELETE
+      requestBody,
+      BACKEND_API_TARGET.MANAGER_DELETE
     );
     if (responseData) return responseData;
     else return false;
@@ -373,5 +373,16 @@ export const api = {
   logout: async () => {
     localStorage.removeItem("token");
     Router.push(BACKEND_API_TARGET.TEACHER_LOGIN);
+  },
+  changePassword: async (params) => {
+    const requestBody = toJSON(params);
+
+    const responseData = await Rest.post(
+        requestBody,
+        BACKEND_API_TARGET.CHANGE_PASSWORD
+    );
+    if (responseData) return responseData;
+    else return false;
+
   },
 };

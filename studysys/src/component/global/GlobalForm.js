@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Space } from "antd";
 
 function GlobalForm(props) {
-  const { list, itemkey, itemname, formConfig,callBack } = props;
+  const { list, itemkey, itemname, formConfig, callBack } = props;
 
   return (
     <Space direction="vertical" size="large">
@@ -18,6 +18,11 @@ function GlobalForm(props) {
             <Form.Item
               key={formItem.key}
               name={formItem.name}
+              dependencies={
+                formItem.hasOwnProperty("dependency")
+                  ? [formItem["dependency"]]
+                  : []
+              }
               rules={[
                 {
                   required: true,

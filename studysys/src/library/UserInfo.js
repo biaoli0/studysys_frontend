@@ -23,4 +23,24 @@ export default class UserInfo {
       return "";
     } else return userinfo.role.menu;
   }
+
+  static getAll(){
+    return [
+      "-student-list",
+      "-student-edit",
+      "-student-selection",
+      // course
+      "-course-list",
+      "-course-edit",
+      "-course-type-list",
+      // teacher
+      "-teacher-list",
+      // manager
+      "-manager-list",
+      // role
+      "-role-list",
+      // settings
+      "-password",
+    ];
+  }
 }

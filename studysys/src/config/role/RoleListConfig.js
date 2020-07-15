@@ -1,8 +1,9 @@
 import React from "react";
 import { Log } from "../../library/Log";
 import { EditStudentModalDialog } from "../../component/student/list/EditStudentModalDialog";
-import { Popconfirm, message } from "antd";
+import {Popconfirm, message, Tag} from "antd";
 import { api } from "../../library/axios/Api";
+import {LeftMenuConfig} from "../global/HomeLeftBarConfig";
 
 export function ColumnsConfig(fetchData) {
   return [
@@ -22,6 +23,17 @@ export function ColumnsConfig(fetchData) {
       title: "Menus",
       dataIndex: "menu",
       ellipsis: false,
+      render: (menus) => <span>
+        {
+          menus.map(menu=>{
+            const color = LeftMenuConfig.getColor(menu);
+            const name = LeftMenuConfig.getName(menu);
+            return <Tag color={color} key={menu}>
+              {name}
+            </Tag>
+          })
+        }
+      </span>,
     },
     {
       title: "Action",
@@ -35,7 +47,7 @@ export function ColumnsConfig(fetchData) {
             okText="Yes"
             cancelText="No"
             onConfirm={() => {
-              api.deleteRole({id: record["id"]}).then((res) => {
+              api.deleteRole({ id: record["id"] }).then((res) => {
                 if (res) {
                   if (res["error"]) {
                     message.error(res["message"]);

@@ -39,13 +39,6 @@ function RoleList() {
       if (res && res.hasOwnProperty("datas")) {
         newData = res.datas.map((item, key) => ({
           ...item,
-          menu: (
-            <ul>
-              {item.menu.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          ),
           key: key,
         }));
         if (res.pager.rowcount !== pagination.total) {
