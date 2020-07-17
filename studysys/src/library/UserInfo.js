@@ -1,4 +1,3 @@
-
 export default class UserInfo {
   static getInfo() {
     return JSON.parse(localStorage.getItem("info"));
@@ -24,8 +23,10 @@ export default class UserInfo {
     } else return userinfo.role.menu;
   }
 
-  static getAll(){
+  static getAll() {
     return [
+      // home
+      "-dashboard",
       "-student-list",
       "-student-edit",
       "-student-selection",

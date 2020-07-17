@@ -49,8 +49,11 @@ export const BACKEND_API_TARGET = {
   STUDENT_TYPE_LIST: "student/type/list",
 
   // Settings
-  CHANGE_PASSWORD: "settings/password"
+  CHANGE_PASSWORD: "settings/password",
 
+  // Stat
+  COURSE_DATE: "/stat/course-date",
+  COURSE_PIE: "/stat/course-pie",
 };
 
 export const URL_TARGET = {

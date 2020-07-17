@@ -4,12 +4,31 @@ import Router from "next/router";
 import { URL_TARGET } from "../../library/axios/UrlTarget";
 import UserInfo from "../../library/UserInfo";
 import { Log } from "../../library/Log";
+import ControlOutlined from "@ant-design/icons/lib/icons/ControlOutlined";
+import ContactsOutlined from "@ant-design/icons/lib/icons/ContactsOutlined";
+import UsbOutlined from "@ant-design/icons/lib/icons/UsbOutlined";
+import TeamOutlined from "@ant-design/icons/lib/icons/TeamOutlined";
 
 const menuKeyToMenuItem = {
+  dashboard: {
+    key: "home",
+    title: "Home",
+    icon: () => <HomeOutlined />,
+    children: {
+      "-dashboard": {
+        key: "home dashboard",
+        category: "home",
+        subcategory: "dashboard",
+        exact: true,
+        title: "Dashboard",
+        icon: () => null,
+      },
+    },
+  },
   student: {
     key: "student",
     title: "Students",
-    icon: () => <UserOutlined />,
+    icon: () => <TeamOutlined />,
     children: {
       "-student-list": {
         key: "student list",
@@ -86,7 +105,7 @@ const menuKeyToMenuItem = {
   manager: {
     key: "manager",
     title: "Manager",
-    icon: () => <UserOutlined />,
+    icon: () => <UsbOutlined />,
     children: {
       "-manager-list": {
         key: "manager list",
@@ -101,7 +120,7 @@ const menuKeyToMenuItem = {
   role: {
     key: "role",
     title: "Role",
-    icon: () => <UserOutlined />,
+    icon: () => <ContactsOutlined />,
     children: {
       "-role-list": {
         key: "role list",
@@ -116,7 +135,7 @@ const menuKeyToMenuItem = {
   password: {
     key: "password",
     title: "Settings",
-    icon: () => <UserOutlined />,
+    icon: () => <ControlOutlined />,
     children: {
       "-password": {
         key: "setting password",
@@ -127,11 +146,11 @@ const menuKeyToMenuItem = {
         icon: () => null,
       },
     },
-  }
+  },
 };
 
 function getCategory(categorykey) {
-  const menu = {...menuKeyToMenuItem[categorykey]};
+  const menu = { ...menuKeyToMenuItem[categorykey] };
   delete menu.children;
   return menu;
 }
@@ -142,8 +161,8 @@ function getChildren(categorykey, nodekey) {
 
 export const LeftMenuConfig = {
   get: () => {
-    const menu = UserInfo.getMenu();
-    // const menu = UserInfo.getAll();
+    // const menu = UserInfo.getMenu();
+    const menu = UserInfo.getAll();
     let menusRoutes = [];
     if (menu) {
       menu.map((menukey) => {
@@ -163,29 +182,30 @@ export const LeftMenuConfig = {
     }
     return menusRoutes;
   },
-  getColor:(menukey)=>{
-    const category = menukey.split('-')[1];
+  getColor: (menukey) => {
+    const category = menukey.split("-")[1];
     switch (category) {
-      case "student": return "OLIVEDRAB";
-      case "course": return "SALMON";
-      case "teacher": return "LIGHTSLATEGREY";
-      case "manager": return "REBECCAPURPLE";
-      case "role": return "ORANGE";
-      case "password": return "lightskyblue";
+      case "student":
+        return "OLIVEDRAB";
+      case "course":
+        return "SALMON";
+      case "teacher":
+        return "LIGHTSLATEGREY";
+      case "manager":
+        return "REBECCAPURPLE";
+      case "role":
+        return "ORANGE";
+      case "password":
+        return "lightskyblue";
+      case "dashboard":
+        return "MEDIUMSPRINGGREEN";
     }
-
   },
-  getName:(menukey)=>{
-    const category = menukey.split('-')[1];
-    if (!menuKeyToMenuItem[category])
-    console.log(menukey);
-    // console.log(menuKeyToMenuItem[category].children);
+  getName: (menukey) => {
+    const category = menukey.split("-")[1];
+    if (!menuKeyToMenuItem[category]) console.log(menukey);
     return menuKeyToMenuItem[category]["children"][menukey].title;
   },
-  getHome: () => {
-    return [...homeRoutes];
-  },
-
   getList: () => {
     const treeNodes = [];
     for (const [key, menu] of Object.entries(menuKeyToMenuItem)) {
@@ -198,13 +218,3 @@ export const LeftMenuConfig = {
     return treeNodes;
   },
 };
-
-const homeRoutes = [
-  {
-    key: "0",
-    path: "/home",
-    exact: true,
-    title: "Home",
-    icon: () => <HomeOutlined />,
-  },
-];

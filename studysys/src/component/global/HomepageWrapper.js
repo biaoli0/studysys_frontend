@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Layout } from "antd";
 import styled from "styled-components";
-
 import { useRouter } from "next/router";
 import { api } from "../../library/axios/Api";
 import { Log } from "../../library/Log";
@@ -14,6 +13,22 @@ const Styled_Header = styled(Header)`
     height: 68px;
   }
 `;
+const Styled_Div = styled.div`
+  &&& {
+      width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 24px 16px 0;
+  float: left;
+  }
+`;
+
+const Styled_Img = styled.img`
+  &&& {
+    height: 68px;
+  }
+`;
+
 const Styled_Content = styled(Content)`
   &&& {
     margin: 0 16px;
@@ -35,13 +50,15 @@ export default function HomepageWrapper({ children }) {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
-        <div className="logo" />
+          {/*<Styled_Div>*/}
+          {/*    <Styled_Img src="/logo.png"/>*/}
+          {/*</Styled_Div>*/}
         <LeftMenu location={location} locationString={locationString}/>
       </Sider>
 
       <Layout>
         <Styled_Header>
-          <Logout
+            <Logout
             onclick={() => {
               api.logout();
             }}

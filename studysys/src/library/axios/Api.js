@@ -374,6 +374,15 @@ export const api = {
     localStorage.removeItem("token");
     Router.push(BACKEND_API_TARGET.TEACHER_LOGIN);
   },
+  getDashboardData:async ()=>{
+    const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_DATE);
+    return responseData;
+  },
+  getDashboardPie:async ()=>{
+    const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_PIE);
+    return responseData;
+  },
+
   changePassword: async (params) => {
     const requestBody = toJSON(params);
 

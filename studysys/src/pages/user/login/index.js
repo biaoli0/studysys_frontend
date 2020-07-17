@@ -44,7 +44,7 @@ export default function Login() {
           switch (loginType) {
             case "teacher":Router.push("/home/student/list");break;
             case "student":Router.push("/home/student/selection");break;
-            case "manager":Router.push("/home/teacher/list");break;
+            case "manager":Router.push("/home/home/dashboard");break;
           }
         } else message.error(data.message);
       });

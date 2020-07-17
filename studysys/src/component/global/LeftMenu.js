@@ -7,8 +7,6 @@ const ROUTE_PATH = "home";
 const { SubMenu } = Menu;
 
 function renderMenu(menu) {
-  Log.print("menu");
-  Log.print(menu);
   if (menu)
     return menu.map((menuItem) => (
       <SubMenu
@@ -56,7 +54,6 @@ export default function LeftMenu(props) {
       mode="inline"
       defaultOpenKeys={[location[2]]}
     >
-      {renderMenuItems(LeftMenuConfig.getHome())}
       {renderMenu(menus)}
     </Menu>
   );
