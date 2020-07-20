@@ -161,8 +161,8 @@ function getChildren(categorykey, nodekey) {
 
 export const LeftMenuConfig = {
   get: () => {
-    // const menu = UserInfo.getMenu();
-    const menu = UserInfo.getAll();
+    const menu = UserInfo.getMenu();
+    // const menu = UserInfo.getAll();
     let menusRoutes = [];
     if (menu) {
       menu.map((menukey) => {

@@ -25,6 +25,7 @@ export default class UserInfo {
 
   static getAll() {
     return [
+      "-password",
       // home
       "-dashboard",
       "-student-list",
@@ -41,7 +42,7 @@ export default class UserInfo {
       // role
       "-role-list",
       // settings
-      "-password",
+
     ];
   }
 }

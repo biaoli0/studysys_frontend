@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 
 import {mount} from "enzyme";
-import HomepageWrapper from "../component/global/HomepageWrapper";
 import SearchBar from "../component/global/SearchBar";
 
 const searchBarTarget = "type_name";

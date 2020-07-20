@@ -382,7 +382,6 @@ export const api = {
     const responseData = await Rest.get(BACKEND_API_TARGET.COURSE_PIE);
     return responseData;
   },
-
   changePassword: async (params) => {
     const requestBody = toJSON(params);
 
