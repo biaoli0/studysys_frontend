@@ -164,6 +164,11 @@ export const LeftMenuConfig = {
     const menu = UserInfo.getMenu();
     // const menu = UserInfo.getAll();
     let menusRoutes = [];
+    const settingIndex = menu.findIndex((element) => element === "-password");
+    if (settingIndex !== -1) {
+      menu.splice(settingIndex, 1);
+      menu.push("-password");
+    }
     if (menu) {
       menu.map((menukey) => {
         const categorykey = menukey.split("-")[1];
