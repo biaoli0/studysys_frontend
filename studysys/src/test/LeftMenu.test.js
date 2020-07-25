@@ -59,6 +59,7 @@ describe("Test Left Menu Function", () => {
 
   it("Left Menu has three sub categories", () => {
     // expect(component).toMatchSnapshot();
+    console.log("test"+ component.find(Link));
     expect(component.find(Link)).toHaveLength(4);
   });
 });

@@ -1,0 +1,12 @@
+{
+  "env": {
+    "manager": { "email": "manager333@manager.com", "password": "123123123" },
+    "teacher": { "email": "admin@admin.com", "password": "admin" },
+    "newManager": {
+      "nickName": "cypress_test_bill",
+      "email": "123@123.com",
+      "password": "123123123",
+      "role": "管理人员"
+    }
+  }
+}
